@@ -11,10 +11,17 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as LoginImport } from './routes/login'
 import { Route as AdminRouteImport } from './routes/admin/route'
 import { Route as AdminUserImport } from './routes/admin/user'
 
 // Create/Update Routes
+
+const LoginRoute = LoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AdminRouteRoute = AdminRouteImport.update({
   id: '/admin',
@@ -37,6 +44,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
     '/admin/user': {
@@ -65,35 +79,40 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 
 export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteRouteWithChildren
+  '/login': typeof LoginRoute
   '/admin/user': typeof AdminUserRoute
 }
 
 export interface FileRoutesByTo {
   '/admin': typeof AdminRouteRouteWithChildren
+  '/login': typeof LoginRoute
   '/admin/user': typeof AdminUserRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/admin': typeof AdminRouteRouteWithChildren
+  '/login': typeof LoginRoute
   '/admin/user': typeof AdminUserRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/admin' | '/admin/user'
+  fullPaths: '/admin' | '/login' | '/admin/user'
   fileRoutesByTo: FileRoutesByTo
-  to: '/admin' | '/admin/user'
-  id: '__root__' | '/admin' | '/admin/user'
+  to: '/admin' | '/login' | '/admin/user'
+  id: '__root__' | '/admin' | '/login' | '/admin/user'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   AdminRouteRoute: AdminRouteRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 
 export const routeTree = rootRoute
@@ -106,7 +125,8 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/admin"
+        "/admin",
+        "/login"
       ]
     },
     "/admin": {
@@ -114,6 +134,9 @@ export const routeTree = rootRoute
       "children": [
         "/admin/user"
       ]
+    },
+    "/login": {
+      "filePath": "login.tsx"
     },
     "/admin/user": {
       "filePath": "admin/user.tsx",
