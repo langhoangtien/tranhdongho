@@ -13,6 +13,8 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as AdminRouteImport } from './routes/admin/route'
+import { Route as IndexImport } from './routes/index'
+import { Route as ProductsPurfectFuelBlendImport } from './routes/products/purfect-fuel-blend'
 import { Route as AdminUserImport } from './routes/admin/user'
 
 // Create/Update Routes
@@ -29,6 +31,18 @@ const AdminRouteRoute = AdminRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const IndexRoute = IndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProductsPurfectFuelBlendRoute = ProductsPurfectFuelBlendImport.update({
+  id: '/products/purfect-fuel-blend',
+  path: '/products/purfect-fuel-blend',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AdminUserRoute = AdminUserImport.update({
   id: '/user',
   path: '/user',
@@ -39,6 +53,13 @@ const AdminUserRoute = AdminUserImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -60,6 +81,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUserImport
       parentRoute: typeof AdminRouteImport
     }
+    '/products/purfect-fuel-blend': {
+      id: '/products/purfect-fuel-blend'
+      path: '/products/purfect-fuel-blend'
+      fullPath: '/products/purfect-fuel-blend'
+      preLoaderRoute: typeof ProductsPurfectFuelBlendImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -78,41 +106,62 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 )
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/admin/user': typeof AdminUserRoute
+  '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
 }
 
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/admin/user': typeof AdminUserRoute
+  '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/admin/user': typeof AdminUserRoute
+  '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/admin' | '/login' | '/admin/user'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/admin/user'
+    | '/products/purfect-fuel-blend'
   fileRoutesByTo: FileRoutesByTo
-  to: '/admin' | '/login' | '/admin/user'
-  id: '__root__' | '/admin' | '/login' | '/admin/user'
+  to: '/' | '/admin' | '/login' | '/admin/user' | '/products/purfect-fuel-blend'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/admin/user'
+    | '/products/purfect-fuel-blend'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
+  ProductsPurfectFuelBlendRoute: typeof ProductsPurfectFuelBlendRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AdminRouteRoute: AdminRouteRouteWithChildren,
   LoginRoute: LoginRoute,
+  ProductsPurfectFuelBlendRoute: ProductsPurfectFuelBlendRoute,
 }
 
 export const routeTree = rootRoute
@@ -125,9 +174,14 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/",
         "/admin",
-        "/login"
+        "/login",
+        "/products/purfect-fuel-blend"
       ]
+    },
+    "/": {
+      "filePath": "index.tsx"
     },
     "/admin": {
       "filePath": "admin/route.tsx",
@@ -141,6 +195,9 @@ export const routeTree = rootRoute
     "/admin/user": {
       "filePath": "admin/user.tsx",
       "parent": "/admin"
+    },
+    "/products/purfect-fuel-blend": {
+      "filePath": "products/purfect-fuel-blend.tsx"
     }
   }
 }
