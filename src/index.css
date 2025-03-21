@@ -12,7 +12,12 @@
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
+  /* --primary: oklch(0.208 0.042 265.755); */
+  --primary: oklch(0.63 0.17 149.19);
+  --primary-light: oklch(0.73 0.17 149.19);
+  --primary-lighter: oklch(0.83 0.17 149.19);
+  --primary-dark: oklch(0.53 0.17 149.19);
+  --primary-darker: oklch(0.43 0.17 149.19);
   --primary-foreground: oklch(0.984 0.003 247.858);
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
@@ -46,7 +51,12 @@
   --card-foreground: oklch(0.984 0.003 247.858);
   --popover: oklch(0.208 0.042 265.755);
   --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
+  /* --primary: oklch(0.929 0.013 255.508); */
+  --primary: oklch(0.73 0.17 149.19);
+  --primary-light: oklch(0.83 0.17 149.19);
+  --primary-lighter: oklch(0.93 0.17 149.19);
+  --primary-dark: oklch(0.53 0.17 149.19);
+  --primary-darker: oklch(0.43 0.17 149.19);
   --primary-foreground: oklch(0.208 0.042 265.755);
   --secondary: oklch(0.279 0.041 260.031);
   --secondary-foreground: oklch(0.984 0.003 247.858);
@@ -117,5 +127,201 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* CUSTOM */
+
+* {
+  outline: none;
+}
+*:focus {
+  outline: none;
+}
+/* BUTTON */
+
+.ripple {
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.ripple:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #64748b 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition:
+    transform 0.5s,
+    opacity 1s;
+}
+
+.ripple:active:after {
+  transform: scale(0, 0);
+  opacity: 0.2;
+  transition: 0s;
+}
+
+/* SPLASH SCREEN */
+.logo-animate {
+  animation: logoAnimation 3s ease-in-out infinite;
+}
+
+.outer-circle {
+  animation: outerCircleAnimation 3.2s linear infinite;
+}
+
+.inner-circle {
+  animation: circleAnimation 3.2s linear infinite;
+}
+
+@keyframes logoAnimation {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  16% {
+    transform: scale(0.9);
+    opacity: 0.48;
+  }
+  32% {
+    transform: scale(0.9);
+    opacity: 0.48;
+  }
+  48% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  64% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes circleAnimation {
+  0% {
+    transform: scale(1.6) rotate(270deg);
+    opacity: 0.25;
+    border-radius: 25%;
+  }
+  25% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    border-radius: 25%;
+  }
+  50% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    border-radius: 50%;
+  }
+  75% {
+    transform: scale(1.6) rotate(270deg);
+    opacity: 1;
+    border-radius: 50%;
+  }
+  100% {
+    transform: scale(1.6) rotate(270deg);
+    opacity: 0.25;
+    border-radius: 25%;
+  }
+}
+@keyframes outerCircleAnimation {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    border-radius: 25%;
+  }
+  25% {
+    transform: scale(1.2) rotate(270deg);
+    opacity: 0.25;
+    border-radius: 25%;
+  }
+  50% {
+    transform: scale(1.2) rotate(270deg);
+    opacity: 0.25;
+    border-radius: 50%;
+  }
+  75% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.25;
+    border-radius: 50%;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    border-radius: 25%;
+  }
+}
+/* END-SPLASH-SCREEN */
+
+/* LOADING SCREEN */
+.loading-screen {
+  animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100px);
+  }
+  50% {
+    transform: translateX(160px);
+  }
+  100% {
+    transform: translateX(420px);
+  }
+}
+
+/* END-LOADING-SCREEN */
+/* UKO LOADING-SCREEN */
+.uko-loading-screen {
+  background: linear-gradient(
+      45deg,
+      var(--primary-dark),
+      var(--primary),
+      oklch(0.97 0.01 0),
+      oklch(0.65 0.2 10.69),
+      var(--primary-lighter)
+    )
+    0% 0% / 300%;
+  animation: 20s linear 0s infinite normal none running ukoAnimation;
+}
+@keyframes ukoAnimation {
+  0% {
+    background-position: 0px 0px;
+  }
+
+  50% {
+    background-position: 400% 0%;
+  }
+
+  100% {
+    background-position: 0px 0px;
+  }
+}
+
+/* END-UKO-LOADING-SCREEN  */
+
+.bgo-responsive {
+  background-image: url("/purfect/slide10.avif");
+  background-size: cover;
+  background-position: cover;
+}
+
+@media (min-width: 768px) {
+  /* md: từ 768px trở lên */
+  .bgo-responsive {
+    background-image: url("/purfect/img11.avif");
   }
 }

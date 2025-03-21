@@ -3,6 +3,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import { AuthProvider, useAuth } from "./auth";
 import { ThemeProvider } from "./components/theme-provider";
+import { CartProvider } from "./cart";
 
 // Set up a Router instance
 const router = createRouter({
@@ -30,7 +31,9 @@ function App() {
   return (
     <AuthProvider>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <InnerApp />
+        <CartProvider>
+          <InnerApp />
+        </CartProvider>
       </ThemeProvider>
     </AuthProvider>
   );

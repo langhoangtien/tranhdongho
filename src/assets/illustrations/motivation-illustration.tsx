@@ -1,7 +1,5 @@
 import { memo, SVGProps } from "react";
 
-import { CONFIG } from "@/config-global";
-
 import { BackgroundShape } from "./background-shape";
 import { cn } from "@/lib/utils";
 
@@ -28,7 +26,7 @@ function MotivationIllustration({
       {!hideBackground && <BackgroundShape />}
 
       <image
-        href={`${CONFIG.assetsDir}/assets/illustrations/characters/character-2.webp`}
+        href={`/assets/illustrations/characters/character-2.webp`}
         height="300"
         x="322"
         y="30"

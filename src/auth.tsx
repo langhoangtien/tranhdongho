@@ -20,8 +20,17 @@ export interface AuthContext {
   logout: () => void;
   user: User | null;
 }
-
-const AuthContext = React.createContext<AuthContext | null>(null);
+const INIT_AUTH_CONTEXT: AuthContext = {
+  isAuthenticated: false,
+  login: async () => {
+    throw new Error("AuthProvider not yet initialized");
+  },
+  logout: () => {
+    throw new Error("AuthProvider not yet initialized");
+  },
+  user: null,
+};
+const AuthContext = React.createContext<AuthContext>(INIT_AUTH_CONTEXT);
 const key = "token";
 
 async function getStoredUser(): Promise<User | null> {

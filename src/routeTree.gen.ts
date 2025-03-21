@@ -15,6 +15,7 @@ import { Route as LoginImport } from './routes/login'
 import { Route as AdminRouteImport } from './routes/admin/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProductsPurfectFuelBlendImport } from './routes/products/purfect-fuel-blend'
+import { Route as ProductsOptilifeBlendImport } from './routes/products/optilife-blend'
 import { Route as AdminUserImport } from './routes/admin/user'
 
 // Create/Update Routes
@@ -40,6 +41,12 @@ const IndexRoute = IndexImport.update({
 const ProductsPurfectFuelBlendRoute = ProductsPurfectFuelBlendImport.update({
   id: '/products/purfect-fuel-blend',
   path: '/products/purfect-fuel-blend',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProductsOptilifeBlendRoute = ProductsOptilifeBlendImport.update({
+  id: '/products/optilife-blend',
+  path: '/products/optilife-blend',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -81,6 +88,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUserImport
       parentRoute: typeof AdminRouteImport
     }
+    '/products/optilife-blend': {
+      id: '/products/optilife-blend'
+      path: '/products/optilife-blend'
+      fullPath: '/products/optilife-blend'
+      preLoaderRoute: typeof ProductsOptilifeBlendImport
+      parentRoute: typeof rootRoute
+    }
     '/products/purfect-fuel-blend': {
       id: '/products/purfect-fuel-blend'
       path: '/products/purfect-fuel-blend'
@@ -110,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/admin/user': typeof AdminUserRoute
+  '/products/optilife-blend': typeof ProductsOptilifeBlendRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
 }
 
@@ -118,6 +133,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/admin/user': typeof AdminUserRoute
+  '/products/optilife-blend': typeof ProductsOptilifeBlendRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
 }
 
@@ -127,6 +143,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/admin/user': typeof AdminUserRoute
+  '/products/optilife-blend': typeof ProductsOptilifeBlendRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
 }
 
@@ -137,15 +154,23 @@ export interface FileRouteTypes {
     | '/admin'
     | '/login'
     | '/admin/user'
+    | '/products/optilife-blend'
     | '/products/purfect-fuel-blend'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/login' | '/admin/user' | '/products/purfect-fuel-blend'
+  to:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/admin/user'
+    | '/products/optilife-blend'
+    | '/products/purfect-fuel-blend'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/login'
     | '/admin/user'
+    | '/products/optilife-blend'
     | '/products/purfect-fuel-blend'
   fileRoutesById: FileRoutesById
 }
@@ -154,6 +179,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
+  ProductsOptilifeBlendRoute: typeof ProductsOptilifeBlendRoute
   ProductsPurfectFuelBlendRoute: typeof ProductsPurfectFuelBlendRoute
 }
 
@@ -161,6 +187,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRouteRoute: AdminRouteRouteWithChildren,
   LoginRoute: LoginRoute,
+  ProductsOptilifeBlendRoute: ProductsOptilifeBlendRoute,
   ProductsPurfectFuelBlendRoute: ProductsPurfectFuelBlendRoute,
 }
 
@@ -177,6 +204,7 @@ export const routeTree = rootRoute
         "/",
         "/admin",
         "/login",
+        "/products/optilife-blend",
         "/products/purfect-fuel-blend"
       ]
     },
@@ -195,6 +223,9 @@ export const routeTree = rootRoute
     "/admin/user": {
       "filePath": "admin/user.tsx",
       "parent": "/admin"
+    },
+    "/products/optilife-blend": {
+      "filePath": "products/optilife-blend.tsx"
     },
     "/products/purfect-fuel-blend": {
       "filePath": "products/purfect-fuel-blend.tsx"

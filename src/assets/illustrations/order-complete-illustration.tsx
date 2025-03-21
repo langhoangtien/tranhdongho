@@ -1,6 +1,5 @@
 import { memo, SVGProps } from "react";
 import { BackgroundShape } from "./background-shape";
-import { CONFIG } from "@/config-global";
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +20,7 @@ function OrderCompleteIllustration({ hideBackground, ...other }: Props) {
       {!hideBackground && <BackgroundShape />}
 
       <image
-        href={`${CONFIG.assetsDir}/assets/illustrations/characters/character-10.webp`}
+        href={`/assets/illustrations/characters/character-10.webp`}
         height="300"
         x="300"
         y="30"

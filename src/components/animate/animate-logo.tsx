@@ -1,7 +1,7 @@
 import { motion as m } from "motion/react";
 
 import { HTMLProps } from "react";
-import Logo from "../logo";
+import { Logo } from "../logo";
 
 // ----------------------------------------------------------------------
 

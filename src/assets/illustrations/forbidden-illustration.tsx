@@ -1,7 +1,5 @@
 import { memo, SVGProps } from "react";
 
-import { CONFIG } from "@/config-global";
-
 import { BackgroundShape } from "./background-shape";
 
 // ----------------------------------------------------------------------
@@ -23,7 +21,7 @@ function ForbiddenIllustration({ hideBackground, ...other }: Props) {
       {!hideBackground && <BackgroundShape />}
 
       <image
-        href={`${CONFIG.assetsDir}/assets/illustrations/characters/character-4.webp`}
+        href={`/assets/illustrations/characters/character-4.webp`}
         height="300"
         x="220"
         y="30"

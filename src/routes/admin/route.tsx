@@ -14,11 +14,22 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { z } from "zod";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { BellRingIcon } from "lucide-react";
+import { AuthContext } from "@/auth";
 
 export const Route = createFileRoute("/admin")({
   component: RouteComponent,
+  validateSearch: z.object({
+    redirect: z.string().optional().catch(""),
+  }),
+  beforeLoad: ({ context, search }) => {
+    const authContext = context as { auth: AuthContext };
+    if (!authContext.auth.isAuthenticated) {
+      throw redirect({ to: search.redirect || "/login" });
+    }
+  },
 });
 
 function RouteComponent() {
