@@ -10,7 +10,7 @@ export function SplashScreen() {
         <div>
           <div className="relative inline-flex h-[120px] w-[120px] items-center justify-center">
             <div className="logo-animate inline-flex">
-              <Logo disableLink width={64} height={64} />
+              <Logo />
             </div>
 
             <div className="inner-circle absolute h-[calc(100%-20px)] w-[calc(100%-20px)] border-[3px] border-primary/70" />

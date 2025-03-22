@@ -17,6 +17,10 @@ import { Route as IndexImport } from './routes/index'
 import { Route as ProductsPurfectFuelBlendImport } from './routes/products/purfect-fuel-blend'
 import { Route as ProductsOptilifeBlendImport } from './routes/products/optilife-blend'
 import { Route as AdminUserImport } from './routes/admin/user'
+import { Route as AdminUsersIndexImport } from './routes/admin/users/index'
+import { Route as AdminProductsIndexImport } from './routes/admin/products/index'
+import { Route as AdminProductsCreateImport } from './routes/admin/products/create'
+import { Route as AdminProductsProductIdImport } from './routes/admin/products/$productId'
 
 // Create/Update Routes
 
@@ -53,6 +57,30 @@ const ProductsOptilifeBlendRoute = ProductsOptilifeBlendImport.update({
 const AdminUserRoute = AdminUserImport.update({
   id: '/user',
   path: '/user',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminUsersIndexRoute = AdminUsersIndexImport.update({
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminProductsIndexRoute = AdminProductsIndexImport.update({
+  id: '/products/',
+  path: '/products/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminProductsCreateRoute = AdminProductsCreateImport.update({
+  id: '/products/create',
+  path: '/products/create',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminProductsProductIdRoute = AdminProductsProductIdImport.update({
+  id: '/products/$productId',
+  path: '/products/$productId',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 
@@ -102,6 +130,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsPurfectFuelBlendImport
       parentRoute: typeof rootRoute
     }
+    '/admin/products/$productId': {
+      id: '/admin/products/$productId'
+      path: '/products/$productId'
+      fullPath: '/admin/products/$productId'
+      preLoaderRoute: typeof AdminProductsProductIdImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/products/create': {
+      id: '/admin/products/create'
+      path: '/products/create'
+      fullPath: '/admin/products/create'
+      preLoaderRoute: typeof AdminProductsCreateImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/products/': {
+      id: '/admin/products/'
+      path: '/products'
+      fullPath: '/admin/products'
+      preLoaderRoute: typeof AdminProductsIndexImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/users/': {
+      id: '/admin/users/'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersIndexImport
+      parentRoute: typeof AdminRouteImport
+    }
   }
 }
 
@@ -109,10 +165,18 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteRouteChildren {
   AdminUserRoute: typeof AdminUserRoute
+  AdminProductsProductIdRoute: typeof AdminProductsProductIdRoute
+  AdminProductsCreateRoute: typeof AdminProductsCreateRoute
+  AdminProductsIndexRoute: typeof AdminProductsIndexRoute
+  AdminUsersIndexRoute: typeof AdminUsersIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminUserRoute: AdminUserRoute,
+  AdminProductsProductIdRoute: AdminProductsProductIdRoute,
+  AdminProductsCreateRoute: AdminProductsCreateRoute,
+  AdminProductsIndexRoute: AdminProductsIndexRoute,
+  AdminUsersIndexRoute: AdminUsersIndexRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
@@ -126,6 +190,10 @@ export interface FileRoutesByFullPath {
   '/admin/user': typeof AdminUserRoute
   '/products/optilife-blend': typeof ProductsOptilifeBlendRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
+  '/admin/products/$productId': typeof AdminProductsProductIdRoute
+  '/admin/products/create': typeof AdminProductsCreateRoute
+  '/admin/products': typeof AdminProductsIndexRoute
+  '/admin/users': typeof AdminUsersIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -135,6 +203,10 @@ export interface FileRoutesByTo {
   '/admin/user': typeof AdminUserRoute
   '/products/optilife-blend': typeof ProductsOptilifeBlendRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
+  '/admin/products/$productId': typeof AdminProductsProductIdRoute
+  '/admin/products/create': typeof AdminProductsCreateRoute
+  '/admin/products': typeof AdminProductsIndexRoute
+  '/admin/users': typeof AdminUsersIndexRoute
 }
 
 export interface FileRoutesById {
@@ -145,6 +217,10 @@ export interface FileRoutesById {
   '/admin/user': typeof AdminUserRoute
   '/products/optilife-blend': typeof ProductsOptilifeBlendRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
+  '/admin/products/$productId': typeof AdminProductsProductIdRoute
+  '/admin/products/create': typeof AdminProductsCreateRoute
+  '/admin/products/': typeof AdminProductsIndexRoute
+  '/admin/users/': typeof AdminUsersIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -156,6 +232,10 @@ export interface FileRouteTypes {
     | '/admin/user'
     | '/products/optilife-blend'
     | '/products/purfect-fuel-blend'
+    | '/admin/products/$productId'
+    | '/admin/products/create'
+    | '/admin/products'
+    | '/admin/users'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -164,6 +244,10 @@ export interface FileRouteTypes {
     | '/admin/user'
     | '/products/optilife-blend'
     | '/products/purfect-fuel-blend'
+    | '/admin/products/$productId'
+    | '/admin/products/create'
+    | '/admin/products'
+    | '/admin/users'
   id:
     | '__root__'
     | '/'
@@ -172,6 +256,10 @@ export interface FileRouteTypes {
     | '/admin/user'
     | '/products/optilife-blend'
     | '/products/purfect-fuel-blend'
+    | '/admin/products/$productId'
+    | '/admin/products/create'
+    | '/admin/products/'
+    | '/admin/users/'
   fileRoutesById: FileRoutesById
 }
 
@@ -214,7 +302,11 @@ export const routeTree = rootRoute
     "/admin": {
       "filePath": "admin/route.tsx",
       "children": [
-        "/admin/user"
+        "/admin/user",
+        "/admin/products/$productId",
+        "/admin/products/create",
+        "/admin/products/",
+        "/admin/users/"
       ]
     },
     "/login": {
@@ -229,6 +321,22 @@ export const routeTree = rootRoute
     },
     "/products/purfect-fuel-blend": {
       "filePath": "products/purfect-fuel-blend.tsx"
+    },
+    "/admin/products/$productId": {
+      "filePath": "admin/products/$productId.tsx",
+      "parent": "/admin"
+    },
+    "/admin/products/create": {
+      "filePath": "admin/products/create.tsx",
+      "parent": "/admin"
+    },
+    "/admin/products/": {
+      "filePath": "admin/products/index.tsx",
+      "parent": "/admin"
+    },
+    "/admin/users/": {
+      "filePath": "admin/users/index.tsx",
+      "parent": "/admin"
     }
   }
 }

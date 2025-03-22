@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { StarIcon } from "lucide-react";
+import StarIcon from "../icons/star-icon";
 
 const reviews = [
   {
@@ -23,7 +23,8 @@ const reviews = [
 ];
 export default function SectionFive() {
   return (
-    <section className="py-16">
+    <section className="pt-16  relative">
+      {/* Container chính */}
       <div
         className="h-20"
         style={{
@@ -32,8 +33,7 @@ export default function SectionFive() {
           backgroundSize: "cover",
         }}
       ></div>
-      {/* Container chính */}
-      <div className="mx-auto bg-[#bedeb5] py-6 sm:px-8 px-4  md:px-20">
+      <div className="mx-auto bg-[#bedeb5] pt-6 pb-16 sm:px-8 px-4  md:px-20">
         {/* Hàng hiển thị rating */}
         <div className="flex items-center my-4 text-primary justify-center space-x-4">
           <StarIcon className="size-8 " />
@@ -54,7 +54,7 @@ export default function SectionFive() {
         </div>
 
         {/* Phần nội dung chính */}
-        <div className="grid md:grid-cols-4 grid-cols-1 p-4 gap-16 md:gap-32">
+        <div className="grid lg:grid-cols-4 grid-cols-1 md:grid-cols-2 p-4 gap- md:gap-16 lg:gap-32">
           {/* Cột bên trái (thống kê) */}
           <div className="py-8 order-3 md:order- px-4 rounded-2xl shadow-md h-full flex flex-col space-y-2 bg-primary text-white text-left  justify-center">
             <h3 className="text-2xl font-bold ">
@@ -64,7 +64,7 @@ export default function SectionFive() {
             <p className="text-base mb-2">4.9 Average</p>
             <p className=" text-base">833 reviews</p>
           </div>
-          <div className="col-span-3 order-2 grid md:grid-cols-3 grid-cols-1 gap-16  md:gap-32">
+          <div className="col-span-3 order-2 grid md:grid-cols-3 grid-cols-1 gap-8  md:gap-16 lg:gap-32">
             {reviews.map((review) => (
               <div
                 key={review.name}

@@ -10,7 +10,7 @@ import { AuthContext, useAuth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Logo } from "@/components/logo";
+import { LogoWithLink } from "@/components/logo";
 
 const fallback = "/admin" as const;
 export const Route = createFileRoute("/login")({
@@ -60,7 +60,7 @@ function LoginComponent() {
   return (
     <div className="bg-background">
       <div className="relative bg-white/5">
-        <Logo className="absolute z-20 top-4 left-4 w-24 h-24" />
+        <LogoWithLink className="absolute z-20 top-4 left-4 w-24 h-24" />
         <div className="absolute inset-[35%] block rounded-full bg-white/15 blur-2xl" />
         <div className="relative flex min-h-screen w-full flex-col items-center justify-center">
           <Card className="w-96 shadow-lg">

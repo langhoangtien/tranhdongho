@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { Button } from "../ui/button";
 
 const effects = [
   {
@@ -70,11 +71,11 @@ export default function SectionSix() {
           </div>
 
           <div className="mt-8 space-y-4">
-            <Link
-              to="/products/purfect-fuel-blend"
-              className="bg-primary text-white px-6 py-4 rounded-full text-lg font-medium shadow-lg"
-            >
-              Start your PurfectFuel™ Today →
+            <Link to="/products/purfect-fuel-blend">
+              {" "}
+              <Button size="lg" className="rounded-full">
+                Start your PurfectFuel™ Today →
+              </Button>
             </Link>
             <p className="mt-4 text-base font-semibold">
               Love it or your money back, guaranteed.

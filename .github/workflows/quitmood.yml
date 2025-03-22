@@ -1,0 +1,53 @@
+name: Deploy React App
+
+on:
+  push:
+    branches:
+      - quitmood
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout source code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18 # Chọn phiên bản Node.js phù hợp
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Add environment variables
+        run: echo "VITE_HOST_API=https://api.quitmood.net" >> .env
+
+      # Build project
+      - name: Build project
+        run: npm run build
+
+      # Upload build files to server
+      - name: Deploy to Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: dist/ # Thư mục build của Vite
+          target: /var/www/quitmood.net # Đường dẫn đến thư mục trên server
+
+      # Optional: Restart server (nếu cần thiết)
+      - name: Restart Server
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Dừng và khởi động lại dịch vụ Nginx hoặc bất kỳ dịch vụ nào bạn sử dụng
+            sudo systemctl restart nginx

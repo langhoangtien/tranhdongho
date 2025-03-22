@@ -1,28 +1,29 @@
-import * as React from "react"
+import * as React from "react";
 import {
   AudioWaveform,
   BookOpen,
-  Bot,
   Command,
   Frame,
   GalleryVerticalEnd,
   Map,
   PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react"
+  ScrollText,
+  SettingsIcon,
+  ShirtIcon,
+  UsersRound,
+} from "lucide-react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { NavMain } from "@/components/nav-main";
+import { NavProjects } from "@/components/nav-projects";
+import { NavUser } from "@/components/nav-user";
+import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 // This is sample data.
 const data = {
@@ -50,87 +51,86 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
+      title: "Người dùng",
+      url: "/admin/users",
+      icon: UsersRound,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Thêm mới",
+          url: "/admin/users/create",
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
+          title: "Danh sách",
+          url: "/admin/users",
         },
       ],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
+      title: "Sản phẩm",
+      url: "/admin/products",
+      icon: ShirtIcon,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "Thêm mới",
+          url: "/admin/products/create",
         },
         {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
+          title: "Danh sách",
+          url: "/admin/products",
         },
       ],
     },
     {
-      title: "Documentation",
-      url: "#",
+      title: "Reviews",
+      url: "/admin/reviews",
       icon: BookOpen,
       items: [
         {
-          title: "Introduction",
-          url: "#",
+          title: "Thêm mới",
+          url: "/admin/reviews/create",
         },
         {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
+          title: "Danh sách",
+          url: "/admin/reviews",
         },
       ],
     },
     {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
+      title: "Order",
+      url: "/admin/orders",
+      icon: ScrollText,
       items: [
         {
-          title: "General",
-          url: "#",
+          title: "Thêm mới",
+          url: "/admin/orders/create",
         },
         {
-          title: "Team",
-          url: "#",
+          title: "Danh sách",
+          url: "/admin/orders",
+        },
+      ],
+    },
+    {
+      title: "Cài đặt",
+      url: "/admin/settings",
+      icon: SettingsIcon,
+      items: [
+        {
+          title: "Profile",
+          url: "/admin/settings/profile",
         },
         {
           title: "Billing",
-          url: "#",
+          url: "/admin/settings/billing",
         },
         {
-          title: "Limits",
-          url: "#",
+          title: "Notifications",
+          url: "/admin/settings/notifications",
+        },
+        {
+          title: "Security",
+          url: "/admin/settings/security",
         },
       ],
     },
@@ -152,7 +152,7 @@ const data = {
       icon: Map,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -169,5 +169,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

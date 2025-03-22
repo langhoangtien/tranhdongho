@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { Check, StarIcon } from "lucide-react";
+import { Check } from "lucide-react";
 
 import React from "react";
+import StarIcon from "../icons/star-icon";
 const works = [
   {
     image: "/purfect/img8.avif",

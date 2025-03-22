@@ -9,9 +9,9 @@ export type ConfigValue = {
 };
 
 // ----------------------------------------------------------------------
-
+export const API_URL = import.meta.env.VITE_SERVER_URL ?? "";
 export const CONFIG: ConfigValue = {
   appName: packageJson.name,
   appVersion: packageJson.version,
-  serverUrl: import.meta.env.VITE_SERVER_URL ?? "",
+  serverUrl: API_URL,
 };

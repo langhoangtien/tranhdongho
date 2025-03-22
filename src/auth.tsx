@@ -20,6 +20,7 @@ export interface AuthContext {
   logout: () => void;
   user: User | null;
 }
+export const STORAGE_KEY = "token";
 const INIT_AUTH_CONTEXT: AuthContext = {
   isAuthenticated: false,
   login: async () => {
@@ -31,7 +32,7 @@ const INIT_AUTH_CONTEXT: AuthContext = {
   user: null,
 };
 const AuthContext = React.createContext<AuthContext>(INIT_AUTH_CONTEXT);
-const key = "token";
+const key = STORAGE_KEY;
 
 async function getStoredUser(): Promise<User | null> {
   const token = localStorage.getItem(key);

@@ -1,16 +1,15 @@
 import { LogoWithLink } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Link, useMatchRoute } from "@tanstack/react-router";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, User2Icon } from "lucide-react";
 import SearchHeader from "./search";
 
 export const menu = [
-  { name: "About Us", link: "/" },
-  { name: "Buy", link: "/" },
-  { name: "Contact", link: "/admin/user" },
-  { name: "Track Order", link: "/admin" },
+  { name: "About Us", link: "/about-us" },
+  { name: "Buy", link: "/products/optilife-blend" },
+  { name: "Contact", link: "/contact-us" },
+  { name: "Track Order", link: "/track-order" },
 ];
-
 export default function NavDesktop() {
   const matchRoute = useMatchRoute();
 
@@ -24,7 +23,7 @@ export default function NavDesktop() {
               key={item.name}
               className={`text-base font-normal border-b-2 hover:border-accent-foreground  py-1 ${
                 matchRoute({ to: item.link })
-                  ? "border-gray-700"
+                  ? "border-accent-foreground"
                   : "border-transparent"
               }`}
               to={item.link}
@@ -43,6 +42,16 @@ export default function NavDesktop() {
               size={24}
             />
           </Button>
+          <Link to="/login">
+            <Button size="icon" variant="outline">
+              {" "}
+              <User2Icon
+                strokeWidth={1}
+                className="text-accent-foreground"
+                size={24}
+              />
+            </Button>
+          </Link>
         </span>
       </div>
     </div>

@@ -15,7 +15,7 @@ export default function SectionOne() {
         <div className="absolute inset-0 bg-black/35"></div>
         <div className="flex w-full p-4 md:justify-start justify-center">
           {" "}
-          <div className="relative flex flex-col justify-start  text-center md:text-left space-y-4 max-w-lg">
+          <div className="relative flex flex-col text-white justify-start  text-center md:text-left space-y-4 max-w-lg">
             <p className="md:text-5xl text-3xl font-semibold">
               Complete vitality bundle
             </p>

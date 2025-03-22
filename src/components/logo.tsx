@@ -130,10 +130,7 @@ export const LogoWithLink = ({ className }: { className?: string }) => {
   return (
     <Link
       to="."
-      className={cn(
-        "w-24 h-12 justify-center text-primary flex items-center",
-        className
-      )}
+      className={cn("w-24 h-12 justify-center  flex items-center", className)}
     >
       {" "}
       <svg

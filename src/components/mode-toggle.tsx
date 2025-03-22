@@ -14,14 +14,9 @@ export function ModeToggle() {
   };
 
   return (
-    <Button
-      onClick={handleTheme}
-      variant="outline"
-      className="cursor-pointer bg-background p-1 hover:bg-accent"
-      size="icon"
-    >
-      <Moon strokeWidth={1.25} className="size-5 dark:hidden" />
-      <Sun strokeWidth={1.25} className="size-5 hidden  dark:block" />
+    <Button onClick={handleTheme} variant="outline" size="icon">
+      <Moon strokeWidth={1.25} className="dark:hidden" />
+      <Sun strokeWidth={1.25} className="hidden  dark:block" />
       <span className="sr-only">Toggle theme</span>
     </Button>
   );
