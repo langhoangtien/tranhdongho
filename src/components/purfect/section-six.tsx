@@ -3,7 +3,6 @@ import { Button } from "../ui/button";
 import {
   BicepsFlexed,
   HeartPulse,
-  Move,
   MoveRightIcon,
   ShieldCheck,
 } from "lucide-react";
