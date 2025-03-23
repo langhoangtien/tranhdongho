@@ -129,7 +129,7 @@ export const Logo = () => {
 export const LogoWithLink = ({ className }: { className?: string }) => {
   return (
     <Link
-      to="."
+      to="/"
       className={cn("w-24 h-12 justify-center  flex items-center", className)}
     >
       {" "}

@@ -54,7 +54,7 @@ export default function SectionFive() {
         </div>
 
         {/* Phần nội dung chính */}
-        <div className="grid lg:grid-cols-4 grid-cols-1 md:grid-cols-2 p-4 gap- md:gap-16 lg:gap-32">
+        <div className="grid lg:grid-cols-4 grid-cols-1 md:grid-cols-2 p-4 gap-8 md:gap-16 lg:gap-32">
           {/* Cột bên trái (thống kê) */}
           <div className="py-8 order-3 md:order- px-4 rounded-2xl shadow-md h-full flex flex-col space-y-2 bg-primary text-white text-left  justify-center">
             <h3 className="text-2xl font-bold ">
@@ -64,11 +64,11 @@ export default function SectionFive() {
             <p className="text-base mb-2">4.9 Average</p>
             <p className=" text-base">833 reviews</p>
           </div>
-          <div className="col-span-3 order-2 grid md:grid-cols-3 grid-cols-1 gap-8  md:gap-16 lg:gap-32">
+          <div className="col-span-3 order-2 grid md:grid-cols-3 grid-cols-1 space-x-8 space-y-12 mt-6 md:space-x-16 md:space-y-16 lg:space-x-32 lg:spce-y-32">
             {reviews.map((review) => (
               <div
                 key={review.name}
-                className="bg-accent py-16 px-8 rounded-2xl shadow-md  relative"
+                className="bg-accent py-16 px-8 rounded-2xl shadow-md relative"
               >
                 <img
                   src="/purfect/img9.avif"

@@ -1,7 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { ArrowRightIcon } from "lucide-react";
+import StarIcon from "../icons/star-icon";
+import StarThreeQuaterIcon from "../icons/star-three-quarter";
 
+export const StarRating = ({
+  className = "flex space-x-1",
+  iconSize = "size-5",
+}: {
+  className?: string;
+  iconSize?: string;
+}) => (
+  <span className={className}>
+    <StarIcon className={iconSize} />
+    <StarIcon className={iconSize} />
+    <StarIcon className={iconSize} />
+    <StarIcon className={iconSize} />
+    <StarThreeQuaterIcon className={iconSize} />
+  </span>
+);
 export default function SectionOne() {
   return (
     <div className="flex flex-col">
@@ -38,20 +55,8 @@ export default function SectionOne() {
                 </Button>
               </Link>
               <div className="flex flex-col  space-y-2">
-                <img
-                  width={100}
-                  height={100}
-                  className="hidden w-32 md:block"
-                  alt="stars.png_"
-                  src="https://cdn.shopify.com/s/files/1/0840/0158/7493/files/stars_139x.png?v=1712073082"
-                />
-                <img
-                  width={100}
-                  height={100}
-                  className="md:hidden w-28"
-                  alt="Rectangle 7-1.png__PID:d090d6a0-10ee-4d8c-85cd-b2f02d3b7299"
-                  src="https://cdn.shopify.com/s/files/1/0840/0158/7493/files/Rectangle_7-1_225x.png?v=1712073082"
-                />
+                <StarRating />
+
                 <h3>
                   4.9/5 out of 24,340 <u>Verified</u> Reviews
                 </h3>

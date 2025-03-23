@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 
 import React from "react";
 import StarIcon from "../icons/star-icon";
+import { StarRating } from "./section-one";
 const works = [
   {
     image: "/purfect/img8.avif",
@@ -86,13 +87,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         />
       </div>
       <div className="flex items-center space-x-2 justify-center">
-        <span className="text-primary text-lg flex space-x-1">
-          <StarIcon strokeWidth={1.25} className="size-4" />
-          <StarIcon strokeWidth={1.25} className="size-4" />
-          <StarIcon strokeWidth={1.25} className="size-4" />
-          <StarIcon strokeWidth={1.25} className="size-4" />
-          <StarIcon strokeWidth={1.25} className="size-4" />
-        </span>
+        <StarRating className="flex space-x-1 text-primary" iconSize="size-5" />
         <span>({rating})</span>
         <a href="#" className="text-accent-foreground underline">
           {reviews}
