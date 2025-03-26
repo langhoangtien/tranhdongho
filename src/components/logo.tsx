@@ -18,7 +18,7 @@ export const Logo2 = () => {
 
 export const Logo = () => {
   return (
-    <span className="w-24 h-12 justify-center flex items-center">
+    <span className="w-18 h-10 text-primary justify-center flex items-center">
       {" "}
       <svg
         xmlns="http://www.w3.org/2000/svg"

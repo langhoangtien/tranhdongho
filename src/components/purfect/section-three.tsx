@@ -11,7 +11,7 @@ const stats = [
     text: "Bottle with 20 supplements inside",
   },
   {
-    number: "23",
+    number: "23%",
     text: "Avg. increase in testosterone",
   },
   {

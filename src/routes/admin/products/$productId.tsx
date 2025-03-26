@@ -1,9 +1,12 @@
-import { createFileRoute } from '@tanstack/react-router'
+import ProductForm from "@/components/admin/product-form";
+import { createFileRoute, useParams } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/admin/products/$productId')({
+export const Route = createFileRoute("/admin/products/$productId")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <div>Hello "/admin/products/$productId"!</div>
+  const { productId } = useParams({ strict: false });
+
+  return <ProductForm id={productId ?? null} />;
 }

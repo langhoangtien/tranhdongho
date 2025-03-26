@@ -190,7 +190,7 @@ export default function SectionFour() {
                 className="rounded-full w-full aspect-square"
                 src={item.image}
               />
-              <p>Promotes overall wellness and vitality</p>
+              <p>{item.description}</p>
             </div>
           ))}
         </div>

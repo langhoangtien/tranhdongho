@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon, MinusIcon, PlusIcon } from "lucide-react";
 import "./accordion.css";
 
 import { cn } from "@/lib/utils";
@@ -48,7 +48,34 @@ function AccordionTrigger({
     </AccordionPrimitive.Header>
   );
 }
-
+function AccordionTriggerCustom({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+  return (
+    <AccordionPrimitive.Header className="flex">
+      <AccordionPrimitive.Trigger
+        data-slot="accordion-trigger"
+        className={cn(
+          "focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg.plus-icon]:hidden [&[data-state=closed]>svg.minus-icon]:hidden",
+          className
+        )}
+        {...props}
+      >
+        {children}
+        <MinusIcon
+          strokeWidth={1}
+          className="mr-2 h-5 w-5 minus-icon shrink-0 transition-transform duration-500"
+        />
+        <PlusIcon
+          strokeWidth={1}
+          className="mr-2 h-5 w-5 plus-icon  shrink-0 transition-transform duration-500"
+        />
+      </AccordionPrimitive.Trigger>
+    </AccordionPrimitive.Header>
+  );
+}
 function AccordionContent({
   className,
   children,
@@ -65,4 +92,10 @@ function AccordionContent({
   );
 }
 
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+  AccordionTriggerCustom,
+};

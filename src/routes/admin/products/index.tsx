@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -18,6 +18,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 // import SkeletonTable from "@/components/skeleton-table";
 import { API_URL } from "@/config";
 import { STORAGE_KEY } from "@/auth";
+import { LoadingTable } from "@/components/loading/table-loading";
 
 export const Route = createFileRoute("/admin/products/")({
   component: RouteComponent,
@@ -27,32 +28,33 @@ function RouteComponent() {
   return <ProductPage />;
 }
 
-export interface Variant {
+export interface IVariant {
+  title: string;
   price: number;
-  salePrice: number;
+  compareAtPrice: number;
   stock: number;
   attributes: { name: string; value: string }[];
   image: string;
   sku?: string;
-  _id?: string;
+  _id: string;
 }
-export interface Product {
+export interface IProduct {
   _id: string;
   name: string;
   slug: string;
   description: string;
   introduction?: string;
   minPrice?: number;
-  minSalePrice?: number;
+  minCompareAtPrice?: number;
   image: string;
   images: string[];
   variantOptions: { name: string; values: string[] }[];
   createdAt?: string;
-  variants: Variant[];
+  variants: IVariant[];
 }
 
 export default function ProductPage() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
@@ -65,6 +67,7 @@ export default function ProductPage() {
 
   useEffect(() => {
     fetchProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch, page]);
 
   const fetchProduct = async () => {
@@ -75,7 +78,7 @@ export default function ProductPage() {
       if (!token) throw new Error("Unauthorized: No token found");
 
       const res = await fetch(
-        `${API_URL}/products?page=${page}&limit=10&search=${search}`,
+        `${API_URL}/products?page=${page}&limit=10&search=${debouncedSearch}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -115,7 +118,11 @@ export default function ProductPage() {
       if (!res.ok) throw new Error("Failed to delete Product");
 
       setSelectedProducts([]);
-      fetchProduct();
+      if (page !== 1) {
+        setPage(1);
+      } else {
+        fetchProduct();
+      }
     } catch (err: unknown) {
       if (err instanceof Error) setError(err.message);
       else {
@@ -123,9 +130,13 @@ export default function ProductPage() {
       }
     }
   };
-
+  const allSelected = useMemo(
+    () => selectedProducts.length === products.length && products.length > 0,
+    [selectedProducts, products]
+  );
   return (
-    <div className="p-6">
+    <div className="p-6 relative space-y-4">
+      {loading && <LoadingTable />}
       <div className="flex h-10 py-3 justify-between space-x-1 items-center">
         <Input
           className="max-w-xs"
@@ -143,24 +154,24 @@ export default function ProductPage() {
           >
             <TrashIcon
               className={`${selectedProducts.length ? "text-destructive" : ""}`}
-              strokeWidth={1}
+              strokeWidth={1.25}
             />
           </Button>
           <Link to="/admin/products/create">
             <Button size="icon">
-              <PlusIcon />
+              <PlusIcon strokeWidth={1.25} />
             </Button>
           </Link>
         </span>
       </div>
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-destructive">{error}</p>}
 
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>
               <Checkbox
-                checked={selectedProducts.length === products.length}
+                checked={allSelected}
                 onCheckedChange={(checked) =>
                   setSelectedProducts(checked ? products.map((u) => u._id) : [])
                 }
@@ -173,44 +184,41 @@ export default function ProductPage() {
             <TableHead>Hành động</TableHead>
           </TableRow>
         </TableHeader>
-        {loading ? (
-          "loading"
-        ) : (
-          <TableBody>
-            {products.map((product) => (
-              <TableRow key={product._id}>
-                <TableCell>
-                  <Checkbox
-                    checked={selectedProducts.includes(product._id)}
-                    onCheckedChange={(checked) =>
-                      setSelectedProducts((prev) =>
-                        checked
-                          ? [...prev, product._id]
-                          : prev.filter((id) => id !== product._id)
-                      )
-                    }
-                  />
-                </TableCell>
-                <TableCell>{product.name}</TableCell>
-                <TableCell>{product.slug}</TableCell>
-                <TableCell>{product.minPrice}</TableCell>
-                <TableCell>
-                  {new Date(product.createdAt || "").toLocaleDateString()}
-                </TableCell>
-                <TableCell>
-                  <Link
-                    to="/admin/products/$productId"
-                    params={{ productId: product._id }}
-                  >
-                    <Button variant="outline" size="icon">
-                      <Edit strokeWidth={1} className="cursor-pointer" />
-                    </Button>
-                  </Link>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        )}
+
+        <TableBody>
+          {products.map((product) => (
+            <TableRow key={product._id}>
+              <TableCell>
+                <Checkbox
+                  checked={selectedProducts.includes(product._id)}
+                  onCheckedChange={(checked) =>
+                    setSelectedProducts((prev) =>
+                      checked
+                        ? [...prev, product._id]
+                        : prev.filter((id) => id !== product._id)
+                    )
+                  }
+                />
+              </TableCell>
+              <TableCell>{product.name}</TableCell>
+              <TableCell>{product.slug}</TableCell>
+              <TableCell>{product.minPrice}</TableCell>
+              <TableCell>
+                {new Date(product.createdAt || "").toLocaleDateString()}
+              </TableCell>
+              <TableCell>
+                <Link
+                  to="/admin/products/$productId"
+                  params={{ productId: product._id }}
+                >
+                  <Button variant="outline" size="icon">
+                    <Edit strokeWidth={1} className="cursor-pointer" />
+                  </Button>
+                </Link>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
       </Table>
       <div className="flex justify-between mt-4">
         <Button disabled={page === 1} onClick={() => setPage((p) => p - 1)}>

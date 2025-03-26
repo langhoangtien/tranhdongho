@@ -1,9 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router'
+import PufectPage from "@/components/purfect/purfect-fuel-blend";
+import { getProductByIdOrSlug } from "@/lib/api";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/products/purfect-fuel-blend')({
+export const Route = createFileRoute("/products/purfect-fuel-blend")({
   component: RouteComponent,
-})
+  loader: () => getProductByIdOrSlug("purfect-fuel-blend"),
+  pendingComponent: () => <div>Loading...</div>,
+  errorComponent: () => <div>Error!</div>,
+});
 
 function RouteComponent() {
-  return <div>Hello "/products/purfect-fuel-blend"!</div>
+  return <PufectPage />;
 }

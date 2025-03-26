@@ -1,13 +1,7 @@
 import * as React from "react";
 import { UKOSplashScreen } from "./components/loading/uko-loading";
 import { CONFIG } from "./config";
-
-type User = {
-  _id: string;
-  username: string;
-  email: string;
-  fullName: string;
-};
+import { User } from "./routes/admin/users";
 
 export interface ResponseLogin {
   token: string;
@@ -74,6 +68,7 @@ function setStoredUser(token: string | null) {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<User | null>(null);
   const [isLoading, setIsLoading] = React.useState(true); // <-- Thêm trạng thái loading
+  // const navigate = useNavigate();
   const isAuthenticated = !!user;
 
   React.useEffect(() => {
@@ -95,10 +90,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-      console.log(response);
 
       if (!response.ok) {
-        throw new Error("Login failed");
+        throw new Error("Invalid credentials");
       }
 
       const data: ResponseLogin = await response.json();
@@ -112,6 +106,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = React.useCallback(() => {
     setStoredUser(null);
     setUser(null);
+    // navigate({ to: "/login" });
   }, []);
 
   if (isLoading) return <UKOSplashScreen />;

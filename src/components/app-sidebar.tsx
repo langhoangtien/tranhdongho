@@ -24,6 +24,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { useAuth } from "@/auth";
 
 // This is sample data.
 const data = {
@@ -57,12 +58,12 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "Thêm mới",
-          url: "/admin/users/create",
-        },
-        {
           title: "Danh sách",
           url: "/admin/users",
+        },
+        {
+          title: "Thêm mới",
+          url: "/admin/users/create",
         },
       ],
     },
@@ -72,12 +73,12 @@ const data = {
       icon: ShirtIcon,
       items: [
         {
-          title: "Thêm mới",
-          url: "/admin/products/create",
-        },
-        {
           title: "Danh sách",
           url: "/admin/products",
+        },
+        {
+          title: "Thêm mới",
+          url: "/admin/products/create",
         },
       ],
     },
@@ -87,12 +88,12 @@ const data = {
       icon: BookOpen,
       items: [
         {
-          title: "Thêm mới",
-          url: "/admin/reviews/create",
-        },
-        {
           title: "Danh sách",
           url: "/admin/reviews",
+        },
+        {
+          title: "Thêm mới",
+          url: "/admin/reviews/create",
         },
       ],
     },
@@ -102,12 +103,12 @@ const data = {
       icon: ScrollText,
       items: [
         {
-          title: "Thêm mới",
-          url: "/admin/orders/create",
-        },
-        {
           title: "Danh sách",
           url: "/admin/orders",
+        },
+        {
+          title: "Thêm mới",
+          url: "/admin/orders/create",
         },
       ],
     },
@@ -155,6 +156,9 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const auth = useAuth();
+  if (!auth.isAuthenticated) return;
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -165,7 +169,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
