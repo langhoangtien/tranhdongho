@@ -15,8 +15,13 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { z } from "zod";
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
-import { BellRingIcon } from "lucide-react";
+import {
+  createFileRoute,
+  Link,
+  Outlet,
+  redirect,
+} from "@tanstack/react-router";
+import { BellRingIcon, HomeIcon } from "lucide-react";
 import { AuthContext } from "@/auth";
 
 export const Route = createFileRoute("/admin")({
@@ -66,6 +71,11 @@ function RouteComponent() {
         </div>
 
         <Outlet />
+        <Link className="fixed right-4 bottom-4 z-20" to="/">
+          <Button size="icon" variant="outline">
+            <HomeIcon strokeWidth={1.25} />
+          </Button>
+        </Link>
       </SidebarInset>
     </SidebarProvider>
   );

@@ -52,16 +52,19 @@ export default function PufectPage() {
     from: "/products/purfect-fuel-blend",
   });
 
+  const image = convertIDToURL(productData.image);
+  const images = productData.images.map((image: string) =>
+    convertIDToURL(image, 800)
+  );
+  const variantImage = image || images[0] || "";
   const product: IData = {
     ...productData,
-    image: convertIDToURL(productData.image),
-    images: productData.images.map((image: string) =>
-      convertIDToURL(image, 800)
-    ),
+    image: image,
+    images: images,
     variants: productData.variants.map((variant: IVariant) => ({
       ...variant,
       title: variant.attributes.map((i) => `${i.name}:${i.value}`).join(", "),
-      image: convertIDToURL(variant.image),
+      image: convertIDToURL(variant.image) || variantImage,
     })),
   };
 

@@ -47,7 +47,7 @@ export default function VariantOptionValuesInput({
         </button>
       ))}
       <input
-        placeholder="Gõ và nhân Enter để thêm giá trị"
+        placeholder="Gõ và nhân Enter để thêm giá trị VD: Xanh"
         className="border-none focus:outline-none flex-grow"
         value={inputValue}
         onChange={handleChangeValue}

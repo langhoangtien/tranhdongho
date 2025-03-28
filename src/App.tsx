@@ -28,7 +28,7 @@ function InnerApp() {
 function App() {
   return (
     <AuthProvider>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <CartProvider>
           <InnerApp />
         </CartProvider>

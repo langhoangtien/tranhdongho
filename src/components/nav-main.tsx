@@ -66,7 +66,6 @@ const NavItem = ({ item }: { item: NavItemProps }) => {
 
   const active = routerState.location.pathname.startsWith(item.url);
   const [openMenu, setOpenMenu] = useState(active);
-  // console.log("NavItem", item.url, active, openMenu);
 
   useEffect(() => {
     if (!active) {

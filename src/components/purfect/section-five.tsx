@@ -54,31 +54,23 @@ export default function SectionFive() {
         </div>
 
         {/* Phần nội dung chính */}
-        <div className="grid lg:grid-cols-4 grid-cols-1 md:grid-cols-2 p-4 gap-8 md:gap-16 lg:gap-32">
+        <div className="grid xl:grid-cols-4 grid-cols-1 md:grid-cols-2 p-4 gap-8 lg:gap-16 ">
           {/* Cột bên trái (thống kê) */}
-          <div className="py-8 order-3 md:order- px-4 rounded-2xl shadow-md h-full flex flex-col space-y-2 bg-primary text-white text-left  justify-center">
-            <h3 className="text-2xl font-bold ">
-              Don’t just take our word for it
-            </h3>
-            <p className=" text-base mb-4">Over 4,000 five star reviews</p>
-            <p className="text-base mb-2">4.9 Average</p>
-            <p className=" text-base">833 reviews</p>
-          </div>
-          <div className="col-span-3 order-2 grid md:grid-cols-3 grid-cols-1 space-x-8 space-y-12 mt-6 md:space-x-16 md:space-y-16 lg:space-x-32 lg:spce-y-32">
-            {reviews.map((review) => (
-              <div
-                key={review.name}
-                className="bg-accent py-16 px-8 rounded-2xl shadow-md relative"
-              >
+
+          {reviews.map((review) => (
+            <div key={review.name} className="pt-16">
+              <div className="bg-accent p-8 rounded-2xl space-y-2 shadow-md relative">
                 <img
                   src="/purfect/img9.avif"
                   className="w-20 h-20 object-contain rounded-full absolute -top-10 right-6"
                 ></img>
-
-                <img
-                  className="py-2"
-                  src="https://cdn.shopify.com/s/files/1/0840/0158/7493/files/All_Reviews_ae294cf4-c8c9-4bed-998f-bdd086f5fa7d_109x.png?v=1712097691"
-                />
+                <span className="flex items-center space-x-1 text-primary">
+                  <StarIcon className="size-5 " />
+                  <StarIcon className="size-5 " />
+                  <StarIcon className="size-5 " />
+                  <StarIcon className="size-5 " />
+                  <StarIcon className="size-5 " />
+                </span>
 
                 <p className="text-base font-semibold text-left  italic mb-4">
                   “{review.content}”
@@ -96,7 +88,17 @@ export default function SectionFive() {
                   </Link>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
+          <div className="pt-16 order-first md:order-last">
+            <div className="p-8  rounded-2xl shadow-md h-full flex flex-col space-y-2 bg-primary text-white text-left  justify-center">
+              <h3 className="text-2xl font-bold ">
+                Don’t just take our word for it
+              </h3>
+              <p className=" text-base mb-4">Over 4,000 five star reviews</p>
+              <p className="text-base mb-2">4.9 Average</p>
+              <p className=" text-base">833 reviews</p>
+            </div>
           </div>
         </div>
       </div>

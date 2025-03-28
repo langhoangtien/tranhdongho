@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -73,7 +73,7 @@ const productSchema = z.object({
   slug: z.string().max(100).optional(),
   categories: z.array(z.string()).optional().default([]),
   images: z.array(z.string().max(200)).optional().default([]),
-  description: z.string().max(200).optional(),
+  description: z.string().optional(),
 
   variantOptions: z
     .array(
@@ -112,10 +112,12 @@ const INIT_FORM_DATA = {
 };
 export default function ProductForm({ id }: { id?: string }) {
   const [formData, setFormData] = useState<Product>(INIT_FORM_DATA);
+
   const [variantOptions, setVariantOptions] = useState<VariantOption[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isUploading, setIsUploading] = useState(false);
   const [loading, setLoading] = useState(false);
+  const editorRef = useRef<{ getContent: () => string } | null>(null);
   const navigate = useNavigate();
   const validateForm = () => {
     const result = productSchema.safeParse(formData);
@@ -133,6 +135,13 @@ export default function ProductForm({ id }: { id?: string }) {
     return true;
   };
 
+  const handleGetContent = () => {
+    if (editorRef.current) {
+      const content = editorRef.current.getContent();
+      return content;
+    }
+    return "";
+  };
   const fetchData = async (id: string | null) => {
     if (!id) return;
     try {
@@ -186,8 +195,6 @@ export default function ProductForm({ id }: { id?: string }) {
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
   ) => {
-    console.log("uploading image");
-
     const imageUpload = await uploadImage(e);
     if (!imageUpload) return;
     setFormData((prev) => {
@@ -281,9 +288,19 @@ export default function ProductForm({ id }: { id?: string }) {
       const token = localStorage.getItem(STORAGE_KEY);
       if (!token) throw new Error("Unauthorized: No token found");
       const imgs = formData.images.map((img) => convertURLToID(img));
+      const variants = formData.variants.map((variant) => ({
+        ...variant,
+        image: convertURLToID(variant.image),
+      }));
       const slug = formData.slug || toSlug(formData.name);
-
-      const payload = { ...formData, images: imgs, slug };
+      const content = handleGetContent();
+      const payload = {
+        ...formData,
+        images: imgs,
+        slug,
+        description: content,
+        variants,
+      };
 
       const res = await fetch(`${API_URL}/products${id ? `/${id}` : ""}`, {
         method: id ? "PATCH" : "POST",
@@ -380,12 +397,7 @@ export default function ProductForm({ id }: { id?: string }) {
             <label className="block text-sm font-medium text-accent-foreground mb-1">
               Mô tả
             </label>
-            <Input
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-            />
-            <Editor />
+            <Editor ref={editorRef} initialContent={formData.description} />
           </div>
           <div className="col-span-full">
             <label
@@ -476,6 +488,7 @@ export default function ProductForm({ id }: { id?: string }) {
                 <TableRow key={index}>
                   <TableCell>
                     <Input
+                      placeholder="VD : Màu sắc"
                       value={option.name}
                       onChange={(e) => {
                         setVariantOptions((prev) => {

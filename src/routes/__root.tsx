@@ -10,10 +10,12 @@ import {
   Loader2,
 } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
+import ServerError from "@/components/server-error";
 
 export const Route = createRootRoute({
   component: RootComponent,
   notFoundComponent: () => <NotFound />,
+  errorComponent: () => <ServerError />,
 });
 
 function RootComponent() {

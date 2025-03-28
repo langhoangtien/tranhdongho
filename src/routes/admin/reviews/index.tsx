@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Edit, PlusIcon, TrashIcon } from "lucide-react";
+import { CheckIcon, Edit, PlusIcon, TrashIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useDebounce } from "@/hooks/use-debounce";
 import { API_URL } from "@/config";
@@ -33,6 +33,11 @@ export interface Review {
   body: string;
   createdAt: string;
   rating: number;
+  liked: number;
+  purchaseVerified: boolean;
+  images: string[];
+  videos: string[];
+  reply?: string;
 }
 
 export default function ReviewPage() {
@@ -157,6 +162,8 @@ export default function ReviewPage() {
             <TableHead>Khách hàng</TableHead>
             <TableHead>Tiêu đề</TableHead>
             <TableHead>Đánh giá</TableHead>
+            <TableHead>Lượt thích</TableHead>
+            <TableHead>Đã mua hàng</TableHead>
             <TableHead>Ngày tạo</TableHead>
             <TableHead>Hành động</TableHead>
           </TableRow>
@@ -179,6 +186,13 @@ export default function ReviewPage() {
               <TableCell>{review.customer}</TableCell>
               <TableCell>{review.title}</TableCell>
               <TableCell>{review.rating} ⭐</TableCell>
+
+              <TableCell>{review.liked} </TableCell>
+              <TableCell>
+                {!!review.purchaseVerified && (
+                  <CheckIcon className="text-primary" size={16} />
+                )}
+              </TableCell>
               <TableCell>
                 {new Date(review.createdAt).toLocaleDateString()}
               </TableCell>

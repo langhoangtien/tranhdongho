@@ -184,9 +184,9 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "absolute size-8 rounded-full hidden sm:flex",
         orientation === "horizontal"
-          ? "top-1/2 -left-12 -translate-y-1/2"
+          ? "top-1/2 -left-4 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
@@ -214,9 +214,9 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "absolute size-8 rounded-full hidden sm:flex",
         orientation === "horizontal"
-          ? "top-1/2 -right-12 -translate-y-1/2"
+          ? "top-1/2 -right-4 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
@@ -337,18 +337,17 @@ type ThumbPropType = {
 
 export const Thumb: React.FC<ThumbPropType> = (props) => {
   const { selected, onClick, image } = props;
-
   return (
     <div
-      className={" cursor-pointer p-1 flex-[0_0_22%] border rounded-sm".concat(
-        selected ? " border-primary" : ""
+      className={" cursor-pointer p-1 flex-[0_0_22%] border aspect-square rounded-sm ".concat(
+        selected ? "border-primary" : ""
       )}
     >
       <img
         alt="thumb"
         width={100}
         height={100}
-        className="object-cover size-25 1 aspect-square"
+        className="object-cover w-full aspect-square"
         src={image}
         onClick={onClick}
       />

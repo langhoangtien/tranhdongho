@@ -10,6 +10,7 @@ export type ConfigValue = {
 
 // ----------------------------------------------------------------------
 export const API_URL = import.meta.env.VITE_SERVER_URL ?? "";
+export const PAYPAL_CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID ?? "";
 export const CONFIG: ConfigValue = {
   appName: packageJson.name,
   appVersion: packageJson.version,

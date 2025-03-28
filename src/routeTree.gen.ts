@@ -11,12 +11,24 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TrackOrderImport } from './routes/track-order'
+import { Route as TermsOfServiceImport } from './routes/terms-of-service'
+import { Route as ShippingPolicyImport } from './routes/shipping-policy'
+import { Route as RefundAndCancellationPolicyImport } from './routes/refund-and-cancellation-policy'
+import { Route as PrivacyPolicyImport } from './routes/privacy-policy'
+import { Route as OrderCompleteImport } from './routes/order-complete'
 import { Route as LoginImport } from './routes/login'
+import { Route as FaqsImport } from './routes/faqs'
+import { Route as ErrorImport } from './routes/error'
+import { Route as DisclaimerImport } from './routes/disclaimer'
+import { Route as ContactUsImport } from './routes/contact-us'
+import { Route as CheckoutImport } from './routes/checkout'
+import { Route as BillingTermsAndConditionsImport } from './routes/billing-terms-and-conditions'
+import { Route as AboutUsImport } from './routes/about-us'
 import { Route as ProductsRouteImport } from './routes/products/route'
 import { Route as AdminRouteImport } from './routes/admin/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProductsPurfectFuelBlendImport } from './routes/products/purfect-fuel-blend'
-import { Route as ProductsOptilifeBlendImport } from './routes/products/optilife-blend'
 import { Route as ProductsProductIdImport } from './routes/products/$productId'
 import { Route as AdminUserImport } from './routes/admin/user'
 import { Route as AdminUsersIndexImport } from './routes/admin/users/index'
@@ -34,9 +46,88 @@ import { Route as AdminOrdersOrderIdImport } from './routes/admin/orders/$orderI
 
 // Create/Update Routes
 
+const TrackOrderRoute = TrackOrderImport.update({
+  id: '/track-order',
+  path: '/track-order',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TermsOfServiceRoute = TermsOfServiceImport.update({
+  id: '/terms-of-service',
+  path: '/terms-of-service',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ShippingPolicyRoute = ShippingPolicyImport.update({
+  id: '/shipping-policy',
+  path: '/shipping-policy',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const RefundAndCancellationPolicyRoute =
+  RefundAndCancellationPolicyImport.update({
+    id: '/refund-and-cancellation-policy',
+    path: '/refund-and-cancellation-policy',
+    getParentRoute: () => rootRoute,
+  } as any)
+
+const PrivacyPolicyRoute = PrivacyPolicyImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const OrderCompleteRoute = OrderCompleteImport.update({
+  id: '/order-complete',
+  path: '/order-complete',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const LoginRoute = LoginImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const FaqsRoute = FaqsImport.update({
+  id: '/faqs',
+  path: '/faqs',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ErrorRoute = ErrorImport.update({
+  id: '/error',
+  path: '/error',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DisclaimerRoute = DisclaimerImport.update({
+  id: '/disclaimer',
+  path: '/disclaimer',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ContactUsRoute = ContactUsImport.update({
+  id: '/contact-us',
+  path: '/contact-us',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CheckoutRoute = CheckoutImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BillingTermsAndConditionsRoute = BillingTermsAndConditionsImport.update({
+  id: '/billing-terms-and-conditions',
+  path: '/billing-terms-and-conditions',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AboutUsRoute = AboutUsImport.update({
+  id: '/about-us',
+  path: '/about-us',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -61,12 +152,6 @@ const IndexRoute = IndexImport.update({
 const ProductsPurfectFuelBlendRoute = ProductsPurfectFuelBlendImport.update({
   id: '/purfect-fuel-blend',
   path: '/purfect-fuel-blend',
-  getParentRoute: () => ProductsRouteRoute,
-} as any)
-
-const ProductsOptilifeBlendRoute = ProductsOptilifeBlendImport.update({
-  id: '/optilife-blend',
-  path: '/optilife-blend',
   getParentRoute: () => ProductsRouteRoute,
 } as any)
 
@@ -179,11 +264,102 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsRouteImport
       parentRoute: typeof rootRoute
     }
+    '/about-us': {
+      id: '/about-us'
+      path: '/about-us'
+      fullPath: '/about-us'
+      preLoaderRoute: typeof AboutUsImport
+      parentRoute: typeof rootRoute
+    }
+    '/billing-terms-and-conditions': {
+      id: '/billing-terms-and-conditions'
+      path: '/billing-terms-and-conditions'
+      fullPath: '/billing-terms-and-conditions'
+      preLoaderRoute: typeof BillingTermsAndConditionsImport
+      parentRoute: typeof rootRoute
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/contact-us': {
+      id: '/contact-us'
+      path: '/contact-us'
+      fullPath: '/contact-us'
+      preLoaderRoute: typeof ContactUsImport
+      parentRoute: typeof rootRoute
+    }
+    '/disclaimer': {
+      id: '/disclaimer'
+      path: '/disclaimer'
+      fullPath: '/disclaimer'
+      preLoaderRoute: typeof DisclaimerImport
+      parentRoute: typeof rootRoute
+    }
+    '/error': {
+      id: '/error'
+      path: '/error'
+      fullPath: '/error'
+      preLoaderRoute: typeof ErrorImport
+      parentRoute: typeof rootRoute
+    }
+    '/faqs': {
+      id: '/faqs'
+      path: '/faqs'
+      fullPath: '/faqs'
+      preLoaderRoute: typeof FaqsImport
+      parentRoute: typeof rootRoute
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/order-complete': {
+      id: '/order-complete'
+      path: '/order-complete'
+      fullPath: '/order-complete'
+      preLoaderRoute: typeof OrderCompleteImport
+      parentRoute: typeof rootRoute
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyImport
+      parentRoute: typeof rootRoute
+    }
+    '/refund-and-cancellation-policy': {
+      id: '/refund-and-cancellation-policy'
+      path: '/refund-and-cancellation-policy'
+      fullPath: '/refund-and-cancellation-policy'
+      preLoaderRoute: typeof RefundAndCancellationPolicyImport
+      parentRoute: typeof rootRoute
+    }
+    '/shipping-policy': {
+      id: '/shipping-policy'
+      path: '/shipping-policy'
+      fullPath: '/shipping-policy'
+      preLoaderRoute: typeof ShippingPolicyImport
+      parentRoute: typeof rootRoute
+    }
+    '/terms-of-service': {
+      id: '/terms-of-service'
+      path: '/terms-of-service'
+      fullPath: '/terms-of-service'
+      preLoaderRoute: typeof TermsOfServiceImport
+      parentRoute: typeof rootRoute
+    }
+    '/track-order': {
+      id: '/track-order'
+      path: '/track-order'
+      fullPath: '/track-order'
+      preLoaderRoute: typeof TrackOrderImport
       parentRoute: typeof rootRoute
     }
     '/admin/user': {
@@ -198,13 +374,6 @@ declare module '@tanstack/react-router' {
       path: '/$productId'
       fullPath: '/products/$productId'
       preLoaderRoute: typeof ProductsProductIdImport
-      parentRoute: typeof ProductsRouteImport
-    }
-    '/products/optilife-blend': {
-      id: '/products/optilife-blend'
-      path: '/optilife-blend'
-      fullPath: '/products/optilife-blend'
-      preLoaderRoute: typeof ProductsOptilifeBlendImport
       parentRoute: typeof ProductsRouteImport
     }
     '/products/purfect-fuel-blend': {
@@ -341,13 +510,11 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 
 interface ProductsRouteRouteChildren {
   ProductsProductIdRoute: typeof ProductsProductIdRoute
-  ProductsOptilifeBlendRoute: typeof ProductsOptilifeBlendRoute
   ProductsPurfectFuelBlendRoute: typeof ProductsPurfectFuelBlendRoute
 }
 
 const ProductsRouteRouteChildren: ProductsRouteRouteChildren = {
   ProductsProductIdRoute: ProductsProductIdRoute,
-  ProductsOptilifeBlendRoute: ProductsOptilifeBlendRoute,
   ProductsPurfectFuelBlendRoute: ProductsPurfectFuelBlendRoute,
 }
 
@@ -359,10 +526,22 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/products': typeof ProductsRouteRouteWithChildren
+  '/about-us': typeof AboutUsRoute
+  '/billing-terms-and-conditions': typeof BillingTermsAndConditionsRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact-us': typeof ContactUsRoute
+  '/disclaimer': typeof DisclaimerRoute
+  '/error': typeof ErrorRoute
+  '/faqs': typeof FaqsRoute
   '/login': typeof LoginRoute
+  '/order-complete': typeof OrderCompleteRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/refund-and-cancellation-policy': typeof RefundAndCancellationPolicyRoute
+  '/shipping-policy': typeof ShippingPolicyRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
+  '/track-order': typeof TrackOrderRoute
   '/admin/user': typeof AdminUserRoute
   '/products/$productId': typeof ProductsProductIdRoute
-  '/products/optilife-blend': typeof ProductsOptilifeBlendRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
   '/admin/orders/$orderId': typeof AdminOrdersOrderIdRoute
   '/admin/orders/create': typeof AdminOrdersCreateRoute
@@ -382,10 +561,22 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/products': typeof ProductsRouteRouteWithChildren
+  '/about-us': typeof AboutUsRoute
+  '/billing-terms-and-conditions': typeof BillingTermsAndConditionsRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact-us': typeof ContactUsRoute
+  '/disclaimer': typeof DisclaimerRoute
+  '/error': typeof ErrorRoute
+  '/faqs': typeof FaqsRoute
   '/login': typeof LoginRoute
+  '/order-complete': typeof OrderCompleteRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/refund-and-cancellation-policy': typeof RefundAndCancellationPolicyRoute
+  '/shipping-policy': typeof ShippingPolicyRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
+  '/track-order': typeof TrackOrderRoute
   '/admin/user': typeof AdminUserRoute
   '/products/$productId': typeof ProductsProductIdRoute
-  '/products/optilife-blend': typeof ProductsOptilifeBlendRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
   '/admin/orders/$orderId': typeof AdminOrdersOrderIdRoute
   '/admin/orders/create': typeof AdminOrdersCreateRoute
@@ -406,10 +597,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/products': typeof ProductsRouteRouteWithChildren
+  '/about-us': typeof AboutUsRoute
+  '/billing-terms-and-conditions': typeof BillingTermsAndConditionsRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact-us': typeof ContactUsRoute
+  '/disclaimer': typeof DisclaimerRoute
+  '/error': typeof ErrorRoute
+  '/faqs': typeof FaqsRoute
   '/login': typeof LoginRoute
+  '/order-complete': typeof OrderCompleteRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/refund-and-cancellation-policy': typeof RefundAndCancellationPolicyRoute
+  '/shipping-policy': typeof ShippingPolicyRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
+  '/track-order': typeof TrackOrderRoute
   '/admin/user': typeof AdminUserRoute
   '/products/$productId': typeof ProductsProductIdRoute
-  '/products/optilife-blend': typeof ProductsOptilifeBlendRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
   '/admin/orders/$orderId': typeof AdminOrdersOrderIdRoute
   '/admin/orders/create': typeof AdminOrdersCreateRoute
@@ -431,10 +634,22 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/products'
+    | '/about-us'
+    | '/billing-terms-and-conditions'
+    | '/checkout'
+    | '/contact-us'
+    | '/disclaimer'
+    | '/error'
+    | '/faqs'
     | '/login'
+    | '/order-complete'
+    | '/privacy-policy'
+    | '/refund-and-cancellation-policy'
+    | '/shipping-policy'
+    | '/terms-of-service'
+    | '/track-order'
     | '/admin/user'
     | '/products/$productId'
-    | '/products/optilife-blend'
     | '/products/purfect-fuel-blend'
     | '/admin/orders/$orderId'
     | '/admin/orders/create'
@@ -453,10 +668,22 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/products'
+    | '/about-us'
+    | '/billing-terms-and-conditions'
+    | '/checkout'
+    | '/contact-us'
+    | '/disclaimer'
+    | '/error'
+    | '/faqs'
     | '/login'
+    | '/order-complete'
+    | '/privacy-policy'
+    | '/refund-and-cancellation-policy'
+    | '/shipping-policy'
+    | '/terms-of-service'
+    | '/track-order'
     | '/admin/user'
     | '/products/$productId'
-    | '/products/optilife-blend'
     | '/products/purfect-fuel-blend'
     | '/admin/orders/$orderId'
     | '/admin/orders/create'
@@ -475,10 +702,22 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/products'
+    | '/about-us'
+    | '/billing-terms-and-conditions'
+    | '/checkout'
+    | '/contact-us'
+    | '/disclaimer'
+    | '/error'
+    | '/faqs'
     | '/login'
+    | '/order-complete'
+    | '/privacy-policy'
+    | '/refund-and-cancellation-policy'
+    | '/shipping-policy'
+    | '/terms-of-service'
+    | '/track-order'
     | '/admin/user'
     | '/products/$productId'
-    | '/products/optilife-blend'
     | '/products/purfect-fuel-blend'
     | '/admin/orders/$orderId'
     | '/admin/orders/create'
@@ -499,14 +738,40 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   ProductsRouteRoute: typeof ProductsRouteRouteWithChildren
+  AboutUsRoute: typeof AboutUsRoute
+  BillingTermsAndConditionsRoute: typeof BillingTermsAndConditionsRoute
+  CheckoutRoute: typeof CheckoutRoute
+  ContactUsRoute: typeof ContactUsRoute
+  DisclaimerRoute: typeof DisclaimerRoute
+  ErrorRoute: typeof ErrorRoute
+  FaqsRoute: typeof FaqsRoute
   LoginRoute: typeof LoginRoute
+  OrderCompleteRoute: typeof OrderCompleteRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  RefundAndCancellationPolicyRoute: typeof RefundAndCancellationPolicyRoute
+  ShippingPolicyRoute: typeof ShippingPolicyRoute
+  TermsOfServiceRoute: typeof TermsOfServiceRoute
+  TrackOrderRoute: typeof TrackOrderRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRouteRoute: AdminRouteRouteWithChildren,
   ProductsRouteRoute: ProductsRouteRouteWithChildren,
+  AboutUsRoute: AboutUsRoute,
+  BillingTermsAndConditionsRoute: BillingTermsAndConditionsRoute,
+  CheckoutRoute: CheckoutRoute,
+  ContactUsRoute: ContactUsRoute,
+  DisclaimerRoute: DisclaimerRoute,
+  ErrorRoute: ErrorRoute,
+  FaqsRoute: FaqsRoute,
   LoginRoute: LoginRoute,
+  OrderCompleteRoute: OrderCompleteRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
+  RefundAndCancellationPolicyRoute: RefundAndCancellationPolicyRoute,
+  ShippingPolicyRoute: ShippingPolicyRoute,
+  TermsOfServiceRoute: TermsOfServiceRoute,
+  TrackOrderRoute: TrackOrderRoute,
 }
 
 export const routeTree = rootRoute
@@ -522,7 +787,20 @@ export const routeTree = rootRoute
         "/",
         "/admin",
         "/products",
-        "/login"
+        "/about-us",
+        "/billing-terms-and-conditions",
+        "/checkout",
+        "/contact-us",
+        "/disclaimer",
+        "/error",
+        "/faqs",
+        "/login",
+        "/order-complete",
+        "/privacy-policy",
+        "/refund-and-cancellation-policy",
+        "/shipping-policy",
+        "/terms-of-service",
+        "/track-order"
       ]
     },
     "/": {
@@ -550,12 +828,50 @@ export const routeTree = rootRoute
       "filePath": "products/route.tsx",
       "children": [
         "/products/$productId",
-        "/products/optilife-blend",
         "/products/purfect-fuel-blend"
       ]
     },
+    "/about-us": {
+      "filePath": "about-us.tsx"
+    },
+    "/billing-terms-and-conditions": {
+      "filePath": "billing-terms-and-conditions.tsx"
+    },
+    "/checkout": {
+      "filePath": "checkout.tsx"
+    },
+    "/contact-us": {
+      "filePath": "contact-us.tsx"
+    },
+    "/disclaimer": {
+      "filePath": "disclaimer.tsx"
+    },
+    "/error": {
+      "filePath": "error.tsx"
+    },
+    "/faqs": {
+      "filePath": "faqs.tsx"
+    },
     "/login": {
       "filePath": "login.tsx"
+    },
+    "/order-complete": {
+      "filePath": "order-complete.tsx"
+    },
+    "/privacy-policy": {
+      "filePath": "privacy-policy.tsx"
+    },
+    "/refund-and-cancellation-policy": {
+      "filePath": "refund-and-cancellation-policy.tsx"
+    },
+    "/shipping-policy": {
+      "filePath": "shipping-policy.tsx"
+    },
+    "/terms-of-service": {
+      "filePath": "terms-of-service.tsx"
+    },
+    "/track-order": {
+      "filePath": "track-order.tsx"
     },
     "/admin/user": {
       "filePath": "admin/user.tsx",
@@ -563,10 +879,6 @@ export const routeTree = rootRoute
     },
     "/products/$productId": {
       "filePath": "products/$productId.tsx",
-      "parent": "/products"
-    },
-    "/products/optilife-blend": {
-      "filePath": "products/optilife-blend.tsx",
       "parent": "/products"
     },
     "/products/purfect-fuel-blend": {

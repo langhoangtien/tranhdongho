@@ -15,9 +15,9 @@ export default function ProductDetailCarousel({
 }: {
   slides: string[];
 }) {
-  if (!slides || !!slides.length) return <p>g</p>;
+  if (!slides || !slides.length) return null;
   return (
-    <div className="bg-transparent md:max-w-[475px] md:mr-8 ">
+    <div className="bg-transparent  md:mr-8 ">
       <Carousel>
         <div className="relative h-auto group shrink-0 md:max-w-[805px] md:basis-[805px]">
           <CaroselIndex />
@@ -25,7 +25,7 @@ export default function ProductDetailCarousel({
             {slides.map((image: string) => (
               <CarouselItem key={image}>
                 <div className="p-1">
-                  <CardContent className="flex md:w-[475px] aspect-[1/1] items-center justify-center rounded-xl p-0">
+                  <CardContent className="flex md:w-full aspect-[1/1] items-center justify-center rounded-xl p-0">
                     <img
                       alt="Product Image"
                       width={800}

@@ -1,9 +1,9 @@
 import { LogoWithLink } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Link, useMatchRoute } from "@tanstack/react-router";
-import { ShoppingCart, User2Icon } from "lucide-react";
+import { User2Icon } from "lucide-react";
 import SearchHeader from "./search";
-import { Badge } from "@/components/ui/badge";
+import CartHeader from "./cart-header";
 
 export const menu = [
   { name: "About Us", link: "/about-us" },
@@ -35,12 +35,7 @@ export default function NavDesktop() {
         </div>
         <span className="flex space-x-2 items-center ">
           <SearchHeader />
-          <Button className="relative" size="icon" variant="outline">
-            <Badge className="absolute -top-2.5 -right-2 min-w-[1.25rem] min-h-[1.25rem] flex items-center justify-center rounded-full text-xs shadow">
-              0
-            </Badge>
-            <ShoppingCart strokeWidth={1} className="text-accent-foreground" />
-          </Button>
+          <CartHeader />
           <Link to="/login">
             <Button size="icon" variant="outline">
               {" "}

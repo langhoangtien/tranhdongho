@@ -1,56 +1,22 @@
 "use client";
-const products = [
-  {
-    name: "Purfect Fuel Blend™️ Sea Moss & Shilajit Power Bundle",
-    price: 69.99,
-    image: "/purfect/slide1.webp",
-    title: "BUY 1 - $69.99",
-    quantity: 1,
-    id: "67cc656d7a9b26945e230d6a",
-    slug: "purfect-fuel-blend",
-    attributes: {
-      title: "combo 1",
-      price: 69.99,
-    },
-  },
-  {
-    name: "Purfect Fuel Blend™️ Sea Moss & Shilajit Power Bundle",
-    price: 119.99,
-    image: "/purfect/slide1.webp",
-    title: "BUY 2 - $119.99",
-    quantity: 1,
-    attributes: {
-      title: "combo 2",
-      price: 119.99,
-    },
-    id: "67cc656d7a9b26945e230d6c",
-    slug: "purfect-fuel-blend",
-  },
-  {
-    name: "Purfect Fuel Blend™️ Sea Moss & Shilajit Power Bundle",
-    price: 199.99,
-    image: "/purfect/slide1.webp",
-    title: "BUY 3 - $199.99 + 1 FREE",
-    quantity: 1,
-    attributes: {
-      title: "combo 3",
-      price: 199.99,
-    },
-    id: "67cc656d7a9b26945e230d6e",
-    slug: "purfect-fuel-blend",
-  },
-];
-import useCart from "@/context/cart/use-cart";
-import { Product } from "@/context/cart/cart-context";
+
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
-export default function AddToCart(product: Product) {
-  const { addToCart } = useCart();
+import { CartItem, useCart } from "@/cart";
+import { IProduct, IVariant } from "@/routes/admin/products";
+
+interface IvariantCart extends IVariant {
+  title: string;
+}
+interface IProductCart extends IProduct {
+  variants: IvariantCart[];
+}
+export default function AddToCart(product: CartItem) {
+  const { addItem } = useCart();
   const handleAddToCart = () => {
-    console.log("Add to cart", product);
-
-    addToCart(product);
+    addItem(product);
   };
   return (
     <Button
@@ -62,35 +28,136 @@ export default function AddToCart(product: Product) {
   );
 }
 
-export function AddToCartSection() {
-  const [product, setProduct] = useState(products[0]);
-  const handleProduct = (index: number) => {
-    setProduct(products[index]);
+export function AddToCartSection({ product }: { product: IProductCart }) {
+  const { addItem } = useCart();
+  const [variant, setVariant] = useState<{
+    id: string;
+    title: string;
+    price: number;
+    image?: string;
+    quantity: number;
+    name: string;
+  } | null>(null);
+  const [selectedOptions, setSelectedOptions] = useState<
+    Record<string, string>
+  >({});
+
+  const handleOptionChange = (name: string, value: string) => {
+    setSelectedOptions((prev: Record<string, string>) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
+
+  const handleAddToCart = () => {
+    if (!variant) {
+      toast.error("Please select a variant");
+      return;
+    }
+
+    const id = variant.id.split("/").pop();
+    if (!id) {
+      toast.error("Invalid variant id");
+      return;
+    }
+    addItem({
+      ...variant,
+      id,
+      image: variant.image || "",
+    });
+  };
+
+  const getSelectedVariant = () => {
+    const matchedVariant = product.variants.find((variant: IvariantCart) =>
+      variant.attributes.every(
+        (opt: { name: string; value: string }) =>
+          selectedOptions[opt.name] === opt.value
+      )
+    );
+    if (matchedVariant) {
+      setVariant({
+        id: matchedVariant._id,
+        title: matchedVariant.attributes
+          .map((i) => `${i.name}:${i.value}`)
+          .join(", "),
+        price: matchedVariant.price,
+        image: matchedVariant.image,
+        quantity: 1,
+        name: product.name,
+      });
+    }
+  };
+
+  // Chọn sẵn variant đầu tiên
+  useEffect(() => {
+    const firstVariant = product.variants[0];
+
+    if (firstVariant) {
+      const defaultOptions = firstVariant.attributes.reduce(
+        (
+          acc: Record<string, string>,
+          option: {
+            name: string;
+            value: string;
+          }
+        ) => {
+          acc[option.name] = option.value;
+          return acc;
+        },
+        {}
+      );
+
+      setSelectedOptions(defaultOptions);
+      setVariant({
+        id: firstVariant._id,
+        title: firstVariant.title,
+        price: firstVariant.price,
+        image: firstVariant.image,
+        quantity: 1,
+        name: product.name,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Khi user chọn option, tự động cập nhật lại variant
+  useEffect(() => {
+    getSelectedVariant();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOptions]);
   return (
-    <div className="mt-6 flex flex-col space-y-4">
-      {products.map((item, index) => (
-        <Button
-          className={`w-full rounded-full h-12 text-base font-normal ${
-            item.id === product.id
-              ? "border-2 border-gray-800"
-              : "border-gray-300"
-          }`}
-          onClick={() => handleProduct(index)}
-          key={item.price}
-          variant={"outline"}
-        >
-          {item.title}
-        </Button>
-      ))}
-      <AddToCart
-        name={product.name}
-        price={product.price}
-        image={product.image}
-        quantity={product.quantity}
-        id={product.id}
-        title={product.title}
-      />
+    <div className="space-y-4">
+      {product.variantOptions.map(
+        (option: { name: string; values: string[] }) => (
+          <div className="mt-6 flex flex-col space-y-4" key={option.name}>
+            <h4>{option.name}</h4>
+            <div className="flex flex-wrap gap-2">
+              {option.values.map((value: string) => (
+                <Button
+                  variant={"outline"}
+                  size="lg"
+                  key={value}
+                  onClick={() => handleOptionChange(option.name, value)}
+                  className={`${
+                    selectedOptions[option.name] === value
+                      ? "border-primary "
+                      : "border-border "
+                  }`}
+                >
+                  {value}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )
+      )}
+
+      <Button
+        onClick={handleAddToCart}
+        className="w-full rounded-full h-12 text-base font-semibold"
+      >
+        Add To Cart | 50% OFF ➜
+      </Button>
     </div>
   );
 }

@@ -27,7 +27,7 @@ export default function NotFound() {
             <PageNotFoundIllustration />
           </m.div>
 
-          <Link to={"."}>
+          <Link to="/">
             <Button variant="default">Go to home</Button>
           </Link>
         </MotionContainer>

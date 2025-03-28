@@ -13,6 +13,7 @@ import { DatePicker2 } from "@/components/ui/date-picker";
 import { API_URL } from "@/config";
 import { Select } from "../ui/select-custom";
 import { useNavigate } from "@tanstack/react-router";
+import { Checkbox } from "../ui/checkbox";
 
 // ✅ Định nghĩa schema validation bằng Zod
 const reviewSchema = z.object({
@@ -24,6 +25,8 @@ const reviewSchema = z.object({
   images: z.array(z.string().url("URL hình ảnh không hợp lệ")),
   videos: z.array(z.string().url("URL video không hợp lệ")),
   imageUploads: z.array(z.string()),
+  liked: z.number().optional(),
+  purchaseVerified: z.boolean().optional(),
   createdAt: z.string(),
 });
 
@@ -65,6 +68,8 @@ export default function ReviewForm({ id }: { id?: string }) {
     body: "",
     createdAt: new Date().toISOString(),
     rating: 5,
+    liked: 0,
+    purchaseVerified: false,
     images: [] as string[],
     videos: [] as string[],
     imageUploads: [] as string[],
@@ -221,12 +226,10 @@ export default function ReviewForm({ id }: { id?: string }) {
             <p className="text-destructive text-sm mt-0.5">{errors.customer}</p>
           )}
         </div>
-
-        {/* Product ID */}
         <div className="col-span-2 md:col-span-1">
           <label
             className="block text-sm font-medium text-accent-foreground mb-1"
-            htmlFor="productId"
+            htmlFor=""
           >
             Product ID
           </label>
@@ -242,6 +245,46 @@ export default function ReviewForm({ id }: { id?: string }) {
               {errors.productId}
             </p>
           )}
+        </div>
+        {/* Product ID */}
+        <div className="col-span-2 md:col-span-1  ">
+          <label
+            className="block text-sm font-medium text-accent-foreground mb-1"
+            htmlFor="liked"
+          >
+            Lượt thích
+          </label>
+          <div className="flex items-center space-x-4">
+            {" "}
+            <Input
+              aria-invalid={!!errors.liked}
+              name="liked"
+              value={formData.liked}
+              className="w-24"
+              type="number"
+              onChange={(e) =>
+                setFormData({ ...formData, liked: +e.target.value })
+              }
+              placeholder="Số lượt thích"
+            />
+            <div className="space-x-2 flex items-center shrink-0">
+              {" "}
+              <Checkbox
+                id="purchaseVerified"
+                name="purchaseVerified"
+                checked={formData.purchaseVerified}
+                onCheckedChange={(value) =>
+                  setFormData({ ...formData, purchaseVerified: !!value })
+                }
+              />
+              <label
+                htmlFor="purchaseVerified"
+                className="text-sm shrink-0 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Xác nhận mua hàng
+              </label>
+            </div>
+          </div>
         </div>
 
         {/* Title */}
@@ -383,7 +426,7 @@ export default function ReviewForm({ id }: { id?: string }) {
                   key={index}
                   src={img}
                   alt="Hình ảnh"
-                  className="w-16 h-16 object-cover rounded-md"
+                  className="size-16 md:size-20 object-cover rounded-md"
                 />
               </div>
             ))}
@@ -399,7 +442,7 @@ export default function ReviewForm({ id }: { id?: string }) {
                   key={index}
                   src={img}
                   alt="Hình ảnh"
-                  className="w-16 h-16 object-cover rounded-md"
+                  className="size-16 md:size-20 object-cover rounded-md"
                 />
               </div>
             ))}
@@ -435,7 +478,8 @@ export default function ReviewForm({ id }: { id?: string }) {
                   key={index}
                   src={vid}
                   controls
-                  className="w-32 h-20 rounded-md"
+                  preload="none"
+                  className="size-16 md:size-20 rounded-md"
                 />
               </div>
             ))}

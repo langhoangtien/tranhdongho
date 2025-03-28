@@ -48,7 +48,6 @@ async function getStoredUser(): Promise<User | null> {
     }
 
     const user = await response.json();
-    console.log("user", user);
 
     return user;
   } catch {

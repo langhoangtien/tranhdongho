@@ -1,6 +1,5 @@
 import { useLoaderData } from "@tanstack/react-router";
 import ProductDetailCarousel from "./views/product-carosel";
-import { AddToCartPurfectSection } from "./views/add-to-cart-purfect";
 
 import { Heart, TruckIcon, Undo2Icon } from "lucide-react";
 import {
@@ -11,8 +10,14 @@ import {
 } from "@/components/ui/accordion";
 import { convertIDToURL } from "@/lib/utils";
 import ListPaymentMethod from "../list-payment-method";
-import { IVariant } from "@/routes/admin/products";
+import { IProduct, IVariant } from "@/routes/admin/products";
 import StarIcon from "../icons/star-icon";
+import ReviewList from "../reviews";
+import { AddToCartSection } from "./views/add-to-cart";
+interface IData extends IProduct {
+  images: string[];
+  variants: IVariant[];
+}
 const data = [
   {
     title: "Description",
@@ -48,23 +53,28 @@ export default function ProductPage() {
     from: "/products/$productId",
   });
 
-  const product = {
+  const image = convertIDToURL(productData.image);
+  const images = productData.images.map((image: string) =>
+    convertIDToURL(image, 800)
+  );
+
+  const variantImage = image || images[0] || "";
+
+  const product: IData = {
     ...productData,
-    image: convertIDToURL(productData.image),
-    images: productData.images.map((image: string) =>
-      convertIDToURL(image, 800)
-    ),
+    image: image,
+    images: images,
     variants: productData.variants.map((variant: IVariant) => ({
       ...variant,
       title: variant.attributes.map((i) => `${i.name}:${i.value}`).join(", "),
-      image: convertIDToURL(variant.image),
+      image: convertIDToURL(variant.image) || variantImage,
     })),
   };
 
   return (
     <div className="p-4">
       <div className="max-w-7xl mx-auto p-4 rounded-lg">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Hình ảnh */}
           <div>
             <ProductDetailCarousel slides={product.images} />
@@ -91,19 +101,18 @@ export default function ProductPage() {
                 Today Only!
               </span>
             </h2>
-            <p className="p1">{product.description}</p>
 
             <div className="mt-4 rounded-lg">
               <p className="text-4xl flex space-x-2 ">
-                <span className="font-normal "> ${product.minSalePrice}</span>
+                <span className="font-normal "> ${product.minPrice}</span>
                 <span className="line-through  ">
-                  ${product.minPrice ?? ""}
+                  ${product.minCompareAtPrice ?? ""}
                 </span>{" "}
               </p>
             </div>
 
             <div className="mt-6">
-              <AddToCartPurfectSection product={product} />
+              <AddToCartSection product={product} />
             </div>
 
             <div className="mx-2 flex items-center space-x-4 md:space-x-8 text-gray-700  justify-around text-sm sm:text-base">
@@ -134,8 +143,15 @@ export default function ProductPage() {
               </Accordion>
             </div>
           </div>
+          <div
+            className="col-span-2 tiptap"
+            dangerouslySetInnerHTML={{ __html: productData.description }}
+          ></div>
+          <div className="col-span-2">
+            {" "}
+            <ReviewList />
+          </div>
         </div>
-        {/* <ProductReviews /> */}
       </div>
     </div>
   );

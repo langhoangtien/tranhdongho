@@ -16,8 +16,6 @@ interface IProductCart extends IProduct {
 export default function AddToCart(product: CartItem) {
   const { addItem } = useCart();
   const handleAddToCart = () => {
-    console.log("Add to cart", product);
-
     addItem(product);
   };
   return (

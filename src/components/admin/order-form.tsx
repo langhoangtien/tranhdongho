@@ -123,8 +123,6 @@ export default function OrderForm({ id }: { id?: string }) {
     }
   };
   useEffect(() => {
-    console.log("fetching data");
-
     if (id) {
       fetchOrder(id);
     } else {

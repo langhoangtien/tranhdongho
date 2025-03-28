@@ -6,7 +6,7 @@ import { Logo } from "../logo";
 export function SplashScreen() {
   return (
     <Portal.Root>
-      <div className="fixed bottom-0 left-0 right-0 top-0 z-[9999999] flex h-screen w-full flex-col items-center justify-center overflow-hidden">
+      <div className="fixed bottom-0 left-0 right-0 top-0 z-[9999999] bg-background/50 flex h-screen w-full flex-col items-center justify-center overflow-hidden">
         <div>
           <div className="relative inline-flex h-[120px] w-[120px] items-center justify-center">
             <div className="logo-animate inline-flex">
