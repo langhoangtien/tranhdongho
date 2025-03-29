@@ -16,6 +16,7 @@ import { Menu, ShoppingCart } from "lucide-react";
 import { menu } from "./nav-desktop";
 import { LogoWithLink } from "@/components/logo";
 import SearchHeader from "./search";
+import CartHeader from "./cart-header";
 
 export default function NavMobile() {
   return (
@@ -51,14 +52,7 @@ export default function NavMobile() {
       <LogoWithLink />
       <span className="flex space-x-2 items-center">
         <SearchHeader />
-        <Button size="icon" variant="outline">
-          {" "}
-          <ShoppingCart
-            strokeWidth={1}
-            className="text-accent-foreground"
-            size={24}
-          />
-        </Button>
+        <CartHeader />
       </span>
     </div>
   );
