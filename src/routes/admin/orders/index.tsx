@@ -180,9 +180,16 @@ export default function OrderPage() {
               <TableCell>{order.name}</TableCell>
               <TableCell>{order.status}</TableCell>
               <TableCell>{order.paymentMethod}</TableCell>
-              <TableCell>{order.total}</TableCell>
+              <TableCell>${order.total}</TableCell>
               <TableCell>
-                {new Date(order.createdAt).toLocaleDateString()}
+                {new Date(order.createdAt).toLocaleString("vi-VN", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                })}
               </TableCell>
               <TableCell>
                 <Link
