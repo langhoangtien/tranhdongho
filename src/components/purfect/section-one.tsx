@@ -45,7 +45,7 @@ export default function SectionOne() {
               & Shilajit bundle.{" "}
             </p>
             <div className="flex flex-col space-y-2  md:space-y-4 items-center md:items-start ">
-              <Link to={"/products/optilife-blend"}>
+              <Link to={"/products/purfect-fuel-blend"}>
                 <Button
                   size="lg"
                   className="rounded-full flex items-center justify-between"
