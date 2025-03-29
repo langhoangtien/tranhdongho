@@ -13,6 +13,7 @@ import { convertIDToURL } from "@/lib/utils";
 import ListPaymentMethod from "../list-payment-method";
 import { IProduct, IVariant } from "@/routes/admin/products";
 import StarIcon from "../icons/star-icon";
+import ReviewList from "../reviews";
 interface IData extends IProduct {
   images: string[];
   variants: IVariant[];
@@ -162,7 +163,10 @@ export default function PufectPage() {
             </div>
           </div>
         </div>
-        {/* <ProductReviews /> */}
+        <div className="col-span-2">
+          {" "}
+          <ReviewList />
+        </div>
       </div>
     </div>
   );
