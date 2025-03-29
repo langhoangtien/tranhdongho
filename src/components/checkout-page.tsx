@@ -73,23 +73,11 @@ const addressSchema = z.object({
   country: z.string(),
 });
 const checkoutSchema = z.object({
-  products: z.array(
-    z.object({
-      id: z.string(),
-      quantity: z.number(),
-    })
-  ),
   voucher: z.string().optional(),
   email: z.string().email(),
   shippingAddress: addressSchema,
 });
 const checkoutFullSchema = z.object({
-  products: z.array(
-    z.object({
-      id: z.string(),
-      quantity: z.number(),
-    })
-  ),
   voucher: z.string().optional(),
   email: z.string().email(),
   shippingAddress: addressSchema,
@@ -964,7 +952,7 @@ export function CheckoutPage() {
                     strokeWidth={1}
                     className="h-4 w-4 mr-2 flex-shrink-0"
                   />
-                  Your order qualifies for free shipping!
+                  Your order qualifies for free shipping!h
                 </p>
               </div>
             </div>

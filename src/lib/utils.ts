@@ -21,7 +21,7 @@ export const convertURLToID = (url: string): string | null => {
   const parts = url.split("/"); // Tách lấy phần cuối
   const fileName = parts.pop();
 
-  if (!fileName) return null;
+  if (!fileName) return "";
 
   return fileName.slice(0, -9);
 };
