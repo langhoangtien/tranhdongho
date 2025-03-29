@@ -50,10 +50,7 @@ export default function CartHeader() {
                 className="h-12 w-12 mx-auto text-gray-300 mb-4"
               />
               <p className="text-gray-500 mb-4">Your cart is empty</p>
-              <Button
-                onClick={() => setIsOpen(false)}
-                className="nordic-button"
-              >
+              <Button onClick={() => setIsOpen(false)}>
                 Continue Shopping
               </Button>
             </div>

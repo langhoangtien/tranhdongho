@@ -338,7 +338,7 @@ export function CheckoutPage() {
           Looks like you haven't added any products to your cart yet.
         </p>
         <Link to="/">
-          <Button className="nordic-button">Continue Shopping</Button>
+          <Button>Continue Shopping</Button>
         </Link>
       </div>
     );
@@ -747,11 +747,7 @@ export function CheckoutPage() {
                 <Link to="/cart">
                   <Button variant="outline">Back to Cart</Button>
                 </Link>
-                <Button
-                  onClick={handleShippingSubmit}
-                  type="submit"
-                  className="nordic-button"
-                >
+                <Button onClick={handleShippingSubmit} type="submit">
                   Continue to Payment
                 </Button>
               </div>

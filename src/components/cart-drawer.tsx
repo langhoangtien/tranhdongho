@@ -36,10 +36,7 @@ const CartDrawer = () => {
             <div className="text-center py-12">
               <ShoppingCart className="h-12 w-12 mx-auto text-gray-300 mb-4" />
               <p className="text-gray-500 mb-4">Your cart is empty</p>
-              <Button
-                onClick={() => setIsOpen(false)}
-                className="nordic-button"
-              >
+              <Button onClick={() => setIsOpen(false)}>
                 Continue Shopping
               </Button>
             </div>
@@ -111,9 +108,7 @@ const CartDrawer = () => {
               Shipping, taxes, and discounts calculated at checkout
             </p>
             <Link to="/checkout" onClick={() => setIsOpen(false)}>
-              <Button className="w-full nordic-button">
-                Proceed to Checkout
-              </Button>
+              <Button className="w-full">Proceed to Checkout</Button>
             </Link>
             <button
               onClick={() => setIsOpen(false)}
