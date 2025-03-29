@@ -7,10 +7,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Image, ChevronDown, ThumbsUp, ShieldCheckIcon } from "lucide-react";
+import {
+  Image,
+  ThumbsUp,
+  ShieldCheckIcon,
+  RotateCw,
+  ChevronsDown,
+} from "lucide-react";
 import Star from "./icons/star-icon";
 import StarIcon from "./icons/star-icon";
 import { API_URL } from "@/config";
+import StarThreeQuaterIcon from "./icons/star-three-quarter";
 
 interface Review {
   _id: number;
@@ -123,8 +130,31 @@ const ReviewList: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-4">
-      {/* Bộ lọc */}
+    <div className="w-full max-w-5xl mx-auto space-y-4">
+      <div className="flex flex-col md:flex-row gap-6 items-center md:items-center md:justify-between border-b border-border  mx-auto py-8">
+        {/* Left Section */}
+        <div className="flex flex-col space-y-3">
+          <p className="text-3xl">Product review</p>
+          <Button>Write a review</Button>
+        </div>
+
+        {/* Right Section */}
+        <div className="flex space-x-1 ">
+          <h3 className="text-6xl  mb-2">4.9</h3>
+          <div className="flex flex-col space-y-0.5 justify-center items-start">
+            <span className="flex  space-x-1">
+              <StarIcon className="text-yellow-400 size-4" />
+              <StarIcon className="text-yellow-400 size-4" />
+              <StarIcon className="text-yellow-400 size-4" />
+              <StarIcon className="text-yellow-400 size-4" />
+              <StarThreeQuaterIcon className="text-yellow-400 size-4" />
+            </span>
+            <span className="text-base text-left text-accent-foreground ">
+              17.3k REVIEWS
+            </span>
+          </div>
+        </div>
+      </div>
       <div className="flex justify-between  gap-4">
         <div className="flex items-center gap-2 flex-wrap">
           {[5, 4, 3, 2, 1].map((rating) => (
@@ -136,7 +166,7 @@ const ReviewList: React.FC = () => {
                   filters.rating === rating ? 0 : rating
                 )
               }
-              className={filters.rating === rating ? "border-primary" : ""}
+              className={filters.rating === rating ? "border-primary" : " "}
               variant="outline"
               size="sm"
             >
@@ -145,11 +175,11 @@ const ReviewList: React.FC = () => {
           ))}
           <Button
             onClick={() => handleFilterChange("hasMedia", !filters.hasMedia)}
-            className={filters.hasMedia ? "border-primary" : ""}
+            className={filters.hasMedia ? "border-primary" : " "}
             variant="outline"
             size="sm"
           >
-            <Image strokeWidth={1} />
+            <Image strokeWidth={1.25} />
             Photo
           </Button>
         </div>
@@ -158,10 +188,10 @@ const ReviewList: React.FC = () => {
           onValueChange={(value) => handleFilterChange("sort", value)}
           defaultValue="createdAt_desc"
         >
-          <SelectTrigger className="w-32">
+          <SelectTrigger className="w-32 rounded-xs">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="rounded-xs">
             <SelectItem value="createdAt_desc">Latest</SelectItem>
             <SelectItem value="createdAt_asc">Oldest</SelectItem>
             <SelectItem value="liked_desc">Liked</SelectItem>
@@ -169,7 +199,6 @@ const ReviewList: React.FC = () => {
         </Select>
       </div>
 
-      {/* Danh sách review */}
       <div className="space-y-4">
         {reviews.map((review) => (
           <div key={review._id} className="border-b border-gray-200 pb-6">
@@ -250,17 +279,22 @@ const ReviewList: React.FC = () => {
         ))}
       </div>
 
-      {/* Nút Load More */}
       <div className="text-center mt-4">
-        <Button
-          onClick={() => fetchReviews(page + 1)}
-          disabled={loading || page >= pagination.totalPages}
-          className="flex items-center gap-2"
-          variant="ghost"
-        >
-          <ChevronDown className="w-4 h-4" />{" "}
-          {loading ? "Loading..." : "See more reviews"}
-        </Button>
+        {page < pagination.totalPages && (
+          <Button
+            onClick={() => fetchReviews(page + 1)}
+            disabled={loading}
+            className="flex items-center gap-2"
+            variant="ghost"
+          >
+            {loading ? (
+              <RotateCw className="mr-1 animate-spin" />
+            ) : (
+              <ChevronsDown />
+            )}
+            {loading ? "Loading..." : "See more"}
+          </Button>
+        )}
       </div>
     </div>
   );

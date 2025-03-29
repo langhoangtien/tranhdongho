@@ -89,6 +89,7 @@ import { calculateTax } from "@/lib/common";
 
 import { LoadingTable } from "./loading/table-loading";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import Image from "./image";
 
 export function CheckoutPage() {
   const { items, getCartTotal, clearCart } = useCart();
@@ -888,7 +889,7 @@ export function CheckoutPage() {
               {items.map((item) => (
                 <div key={item.id} className="flex py-3 border-b">
                   <div className="w-16 h-16 relative flex-shrink-0 rounded overflow-hidden">
-                    <img
+                    <Image
                       src={item.image}
                       alt={item.name}
                       className="object-cover size-16"

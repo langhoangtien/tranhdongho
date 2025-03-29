@@ -15,13 +15,14 @@ import { Loader2, PlusIcon, Trash, Trash2Icon, X } from "lucide-react";
 
 import UploadIllustration from "@/assets/illustrations/upload-illustration";
 
-import { convertIDToURL, convertURLToID, toSlug } from "@/lib/utils";
+import { toSlug } from "@/lib/utils";
 import VariantOptionValuesInput from "./variant-option";
 import { API_URL } from "@/config";
 import { STORAGE_KEY } from "@/auth";
-import { uploadImage, uploadImages } from "@/lib/common";
+import { uploadImg, uploadImgs } from "@/lib/common";
 import { useNavigate } from "@tanstack/react-router";
 import Editor from "../editor";
+import Image from "../image";
 
 export interface Variant {
   price: number;
@@ -112,7 +113,6 @@ const INIT_FORM_DATA = {
 };
 export default function ProductForm({ id }: { id?: string }) {
   const [formData, setFormData] = useState<Product>(INIT_FORM_DATA);
-
   const [variantOptions, setVariantOptions] = useState<VariantOption[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isUploading, setIsUploading] = useState(false);
@@ -154,26 +154,15 @@ export default function ProductForm({ id }: { id?: string }) {
       });
       if (!res.ok) throw new Error("Có lỗi xảy ra khi lấy dữ liệu");
       const data = await res.json();
-      const dataClone = {
-        ...data,
-        image: convertIDToURL(data.image),
-        variants: data.variants.map((variant: Variant) => ({
-          ...variant,
-          image: convertIDToURL(variant.image),
-        })),
-        images: data.images.map((img: string) => convertIDToURL(img)),
-      };
-      setFormData(dataClone);
+
+      setFormData(data);
       setVariantOptions(data.variantOptions || []);
-      // setImages(data.images?.map((img: string) => convertIDToURL(img)) || []);
     } catch (error) {
       console.error(error);
       toast.error("Không thể lấy dữ liệu review, thử lại sau!");
     }
   };
   useEffect(() => {
-    console.log("fetching data");
-
     if (id) {
       fetchData(id);
     } else {
@@ -187,7 +176,7 @@ export default function ProductForm({ id }: { id?: string }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
   const handleChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const url = await uploadImage(e);
+    const url = await uploadImg(e);
     if (!url) return;
     setFormData((prev) => ({ ...prev, image: url }));
   };
@@ -195,7 +184,7 @@ export default function ProductForm({ id }: { id?: string }) {
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
   ) => {
-    const imageUpload = await uploadImage(e);
+    const imageUpload = await uploadImg(e);
     if (!imageUpload) return;
     setFormData((prev) => {
       const newVariants = [...prev.variants];
@@ -206,7 +195,7 @@ export default function ProductForm({ id }: { id?: string }) {
   const handleUploadImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsUploading(true); // Thêm trạng thái loading
 
-    const imagesUpload = await uploadImages(e);
+    const imagesUpload = await uploadImgs(e);
     if (!imagesUpload) {
       setIsUploading(false);
       return;
@@ -287,19 +276,14 @@ export default function ProductForm({ id }: { id?: string }) {
     try {
       const token = localStorage.getItem(STORAGE_KEY);
       if (!token) throw new Error("Unauthorized: No token found");
-      const imgs = formData.images.map((img) => convertURLToID(img));
-      const variants = formData.variants.map((variant) => ({
-        ...variant,
-        image: convertURLToID(variant.image),
-      }));
+
       const slug = formData.slug || toSlug(formData.name);
       const content = handleGetContent();
       const payload = {
         ...formData,
-        images: imgs,
+
         slug,
         description: content,
-        variants,
       };
 
       const res = await fetch(`${API_URL}/products${id ? `/${id}` : ""}`, {
@@ -334,8 +318,8 @@ export default function ProductForm({ id }: { id?: string }) {
               className="cursor-pointer border-dashed border-2 bg-gray-200 p-2 border-border rounded-full  "
               title="Chọn ảnh bìa"
             >
-              <img
-                src={formData.image || "/no-img.svg"}
+              <Image
+                src={formData.image}
                 alt="cover"
                 className="size-24  object-contain rounded-full"
               />
@@ -362,11 +346,7 @@ export default function ProductForm({ id }: { id?: string }) {
               Tên sản phẩm <span className="text-destructive">*</span>
             </label>
             <Input
-              className={`${
-                errors.name
-                  ? "border-destructive bg-destructive-foreground"
-                  : ""
-              }`}
+              aria-invalid={!!errors.name}
               name="name"
               placeholder="Name"
               value={formData.name}
@@ -382,7 +362,7 @@ export default function ProductForm({ id }: { id?: string }) {
               URL
             </label>
             <Input
-              className={`${errors.slug ? "border-destructive" : ""}`}
+              aria-invalid={!!errors.slug}
               name="slug"
               placeholder="Ví dụ: product-name"
               value={formData.slug}
@@ -438,7 +418,7 @@ export default function ProductForm({ id }: { id?: string }) {
                   key={index}
                 >
                   {" "}
-                  <img
+                  <Image
                     src={image}
                     alt="cover"
                     className="w-20 h-20 object-cover rounded-md"
@@ -563,10 +543,10 @@ export default function ProductForm({ id }: { id?: string }) {
                         htmlFor={`variant-image-${index}`}
                         className="cursor-pointer"
                       >
-                        <img
+                        <Image
                           width={48}
                           height={48}
-                          src={variant.image || "/no-img.svg"}
+                          src={variant.image}
                           alt="variant"
                           className="w-10 h-10 object-cover rounded-md"
                         />

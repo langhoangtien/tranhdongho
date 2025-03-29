@@ -7,13 +7,14 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Loader2, UploadCloud, XIcon } from "lucide-react";
 
-import { uploadImages } from "@/lib/common";
-import { convertIDToURL, convertURLToID } from "@/lib/utils";
+import { uploadImgs } from "@/lib/common";
+
 import { DatePicker2 } from "@/components/ui/date-picker";
 import { API_URL } from "@/config";
 import { Select } from "../ui/select-custom";
 import { useNavigate } from "@tanstack/react-router";
 import { Checkbox } from "../ui/checkbox";
+import Image from "../image";
 
 // ✅ Định nghĩa schema validation bằng Zod
 const reviewSchema = z.object({
@@ -44,10 +45,7 @@ export default function ReviewForm({ id }: { id?: string }) {
       if (!res.ok) throw new Error("Có lỗi xảy ra khi lấy dữ liệu");
       const data = await res.json();
 
-      const imageUploads = data.imageUploads?.map((img: string) =>
-        convertIDToURL(img)
-      );
-      const dataClone = { ...data, imageUploads };
+      const dataClone = { ...data };
       setFormData(dataClone);
       console.log("dsdsd", dataClone);
     } catch (error) {
@@ -88,9 +86,10 @@ export default function ReviewForm({ id }: { id?: string }) {
   };
 
   const handleUploadImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsUploading(true); // Thêm trạng thái loading
+    e.preventDefault();
+    setIsUploading(true);
 
-    const imagesUpload = await uploadImages(e);
+    const imagesUpload = await uploadImgs(e);
     if (!imagesUpload) {
       setIsUploading(false);
       return;
@@ -178,17 +177,14 @@ export default function ReviewForm({ id }: { id?: string }) {
       // Gửi dữ liệu lên API
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Unauthorized: No token found");
-      const dataClone = {
-        ...formData,
-        imageUploads: formData.imageUploads.map((img) => convertURLToID(img)),
-      };
+
       const res = await fetch(`${API_URL}/reviews${id ? `/${id}` : ""}`, {
         method: id ? "PATCH" : "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(dataClone),
+        body: JSON.stringify(formData),
       });
 
       if (!res.ok) throw new Error("Có lỗi xảy ra khi gửi dữ liệu");
@@ -398,17 +394,18 @@ export default function ReviewForm({ id }: { id?: string }) {
             <Button type="button" className="h-9" onClick={addImage}>
               Thêm
             </Button>
-            <label htmlFor="images-upload">
+            <label className="cursor-pointer" htmlFor="images-upload">
               <input
                 id="images-upload"
                 className="hidden"
                 type="file"
-                accept="image/*"
                 disabled={isUploading}
                 onChange={handleUploadImages}
+                name="images"
                 multiple
               />
-              <Button size={"icon"}>
+
+              <Button className="pointer-events-none" size={"icon"}>
                 <UploadCloud />
               </Button>
             </label>
@@ -438,7 +435,7 @@ export default function ReviewForm({ id }: { id?: string }) {
                 >
                   <XIcon size={16} />
                 </button>
-                <img
+                <Image
                   key={index}
                   src={img}
                   alt="Hình ảnh"

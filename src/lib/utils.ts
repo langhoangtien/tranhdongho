@@ -10,7 +10,7 @@ enum SIZE_ENUM {
   THUMBNAIL = 100,
   MEDIUM = 250,
   LARGE = 400,
-  ULTRA = 800,
+  EXTRA_LARGE = 800,
 }
 export const convertIDToURL = (id: string, size: SIZE_ENUM = 400) => {
   if (!id) return "";

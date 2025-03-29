@@ -9,12 +9,15 @@ import {
 } from "@/components/ui/carousel";
 
 import { CardContent } from "@/components/ui/card";
+import Image from "@/components/image";
 
 export default function ProductDetailCarousel({
   slides,
 }: {
   slides: string[];
 }) {
+  console.log("slides", slides);
+
   if (!slides || !slides.length) return null;
   return (
     <div className="bg-transparent  md:mr-8 ">
@@ -26,12 +29,13 @@ export default function ProductDetailCarousel({
               <CarouselItem key={image}>
                 <div className="p-1">
                   <CardContent className="flex md:w-full aspect-[1/1] items-center justify-center rounded-xl p-0">
-                    <img
+                    <Image
                       alt="Product Image"
                       width={800}
                       height={800}
                       src={image}
                       className="object-cover w-full h-full rounded-xl"
+                      dimension={800}
                     />
                   </CardContent>
                 </div>

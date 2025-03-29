@@ -115,8 +115,6 @@ export default function OrderForm({ id }: { id?: string }) {
       const { createdAt, updatedAt, ...dataClone } = data;
       dataClone.total = total;
       setFormData(dataClone);
-
-      // setImages(data.images?.map((img: string) => convertIDToURL(img)) || []);
     } catch (error) {
       console.error(error);
       toast.error("Không thể lấy dữ liệu review, thử lại sau!");

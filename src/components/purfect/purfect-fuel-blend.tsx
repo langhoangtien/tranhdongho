@@ -9,7 +9,7 @@ import {
   AccordionItem,
   AccordionTriggerCustom,
 } from "@/components/ui/accordion";
-import { convertIDToURL } from "@/lib/utils";
+
 import ListPaymentMethod from "../list-payment-method";
 import { IProduct, IVariant } from "@/routes/admin/products";
 import StarIcon from "../icons/star-icon";
@@ -53,22 +53,14 @@ export default function PufectPage() {
     from: "/products/purfect-fuel-blend",
   });
 
-  const image = convertIDToURL(productData.image);
-  const images = productData.images.map((image: string) =>
-    convertIDToURL(image, 800)
-  );
-  const variantImage = image || images[0] || "";
   const product: IData = {
     ...productData,
-    image: image,
-    images: images,
     variants: productData.variants.map((variant: IVariant) => ({
       ...variant,
       title: variant.attributes.map((i) => `${i.name}:${i.value}`).join(", "),
-      image: convertIDToURL(variant.image) || variantImage,
+      image: variant.image || productData.image || productData.images[0] || "",
     })),
   };
-
   return (
     <div className="p-4">
       <div className="max-w-7xl mx-auto p-4 rounded-lg">

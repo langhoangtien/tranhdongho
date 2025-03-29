@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { EmblaCarouselType } from "embla-carousel";
+import Image from "../image";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -343,7 +344,7 @@ export const Thumb: React.FC<ThumbPropType> = (props) => {
         selected ? "border-primary" : ""
       )}
     >
-      <img
+      <Image
         alt="thumb"
         width={100}
         height={100}

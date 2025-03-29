@@ -3,11 +3,12 @@ import { z } from "zod";
 import { Button } from "../ui/button";
 import { Loader2Icon, Trash2Icon, UserPenIcon } from "lucide-react";
 import { API_URL } from "@/config";
-import { convertIDToURL, convertURLToID } from "@/lib/utils";
+
 import { toast } from "sonner";
-import { uploadImage } from "@/lib/common";
+import { uploadImg } from "@/lib/common";
 import { Input } from "../ui/input";
 import { useNavigate } from "@tanstack/react-router";
+import Image from "../image";
 
 const userSchema = z.object({
   username: z
@@ -67,8 +68,7 @@ export default function UserForm({ id }: { id?: string }) {
       if (!res.ok) throw new Error("Có lỗi xảy ra khi lấy dữ liệu");
       const data = await res.json();
 
-      const image = data.image ? convertIDToURL(data.image) : "";
-      const dataClone = { ...data, image, password: undefined };
+      const dataClone = { ...data, password: undefined };
       setFormData(dataClone);
     } catch (error) {
       console.error(error);
@@ -94,7 +94,7 @@ export default function UserForm({ id }: { id?: string }) {
     }
   };
   const handleChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const url = await uploadImage(e);
+    const url = await uploadImg(e);
     if (!url) return;
     setFormData((prev) => ({ ...prev, image: url }));
   };
@@ -110,17 +110,14 @@ export default function UserForm({ id }: { id?: string }) {
       // Gửi dữ liệu lên API
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Unauthorized: No token found");
-      const dataClone = {
-        ...formData,
-        image: convertURLToID(formData.image) || "",
-      };
+
       const res = await fetch(`${API_URL}/users${id ? `/${id}` : ""}`, {
         method: id ? "PATCH" : "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(dataClone),
+        body: JSON.stringify(formData),
       });
 
       if (!res.ok) throw new Error("Có lỗi xảy ra khi gửi dữ liệu");
@@ -146,8 +143,8 @@ export default function UserForm({ id }: { id?: string }) {
             className="cursor-pointer border-dashed border-2 bg-gray-200 p-2 border-border rounded-full  "
             title="Chọn ảnh bìa"
           >
-            <img
-              src={formData.image || "/no-img.svg"}
+            <Image
+              src={formData.image}
               alt="cover"
               className="size-24  object-cover rounded-full"
             />

@@ -3,6 +3,7 @@ import {
   AudioWaveform,
   BookOpen,
   Command,
+  FilePenLine,
   Frame,
   GalleryVerticalEnd,
   Map,
@@ -109,6 +110,21 @@ const data = {
         {
           title: "Thêm mới",
           url: "/admin/orders/create",
+        },
+      ],
+    },
+    {
+      title: "Blog",
+      url: "/admin/blogs",
+      icon: FilePenLine,
+      items: [
+        {
+          title: "Danh sách",
+          url: "/admin/blogs",
+        },
+        {
+          title: "Thêm mới",
+          url: "/admin/blogs/create",
         },
       ],
     },

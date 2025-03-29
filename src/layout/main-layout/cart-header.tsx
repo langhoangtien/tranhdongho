@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/sheet";
 import { Link } from "@tanstack/react-router";
 import { formatCurrency } from "@/lib/utils";
+import Image from "@/components/image";
 export default function CartHeader() {
   const {
     items,
@@ -59,8 +60,8 @@ export default function CartHeader() {
               {items.map((item) => (
                 <li key={item.id} className="flex border-b pb-4">
                   <div className="size-20 md:size-24 xl:size-28 relative flex-shrink-0 gap-4 md:gap-8 rounded overflow-hidden">
-                    <img
-                      src={item.image || "/no-img.svg"}
+                    <Image
+                      src={item.image}
                       alt={item.name}
                       className="object-cover size-20 md:size-24 xl:size-28"
                     />
