@@ -10,6 +10,7 @@ import {
 import { Image, ChevronDown, ThumbsUp, ShieldCheckIcon } from "lucide-react";
 import Star from "./icons/star-icon";
 import StarIcon from "./icons/star-icon";
+import { API_URL } from "@/config";
 
 interface Review {
   _id: number;
@@ -97,9 +98,7 @@ const ReviewList: React.FC = () => {
     );
 
     try {
-      const res = await fetch(
-        `http://localhost:3000/reviews?${queryParams.toString()}`
-      );
+      const res = await fetch(`${API_URL}/reviews?${queryParams.toString()}`);
       const json: ResponseReviews = await res.json();
 
       setReviews((prev) => (reset ? json.data : [...prev, ...json.data]));
