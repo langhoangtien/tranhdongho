@@ -201,7 +201,7 @@ const ReviewList: React.FC = () => {
 
       <div className="space-y-4">
         {reviews.map((review) => (
-          <div key={review._id} className="border-b border-gray-200 pb-6">
+          <div key={review._id} className="border-b border-border pb-6">
             <div className="flex flex-col md:flex-row md:justify-between md:items-center">
               <div>
                 <p className="font-bold flex gap-2 items-center  text-lg">
@@ -219,7 +219,7 @@ const ReviewList: React.FC = () => {
                   ))}
                 </div>
               </div>
-              <span className="text-gray-800 text-sm mt-1 md:mt-0">
+              <span className="text-accent-foreground text-sm mt-1 md:mt-0">
                 {new Intl.DateTimeFormat("en-US", {
                   month: "short",
                   day: "2-digit",
@@ -229,7 +229,7 @@ const ReviewList: React.FC = () => {
             </div>
 
             <p className="font-bold mt-2 text-base">{review.title}</p>
-            <p className="text-gray-700">{review.body}</p>
+            <p className="text-accent-foreground">{review.body}</p>
 
             {/* Media */}
             {(!!review.images?.length || !!review.videos?.length) && (
@@ -266,10 +266,10 @@ const ReviewList: React.FC = () => {
                 {likedIds.includes(review._id) ? (
                   <ThumbsUp className="w-4 h-4 text-primary" />
                 ) : (
-                  <ThumbsUp className="w-4 h-4 text-gray-500" />
+                  <ThumbsUp className="w-4 h-4 text-gray-400" />
                 )}
               </button>
-              <span className="text-gray-500">
+              <span className="text-gray-400">
                 {likedIds.includes(review._id)
                   ? (review.liked || 0) + 1
                   : review.liked || "Helpful?"}

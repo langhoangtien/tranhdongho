@@ -201,6 +201,20 @@ function BlogPage() {
           ))}
         </TableBody>
       </Table>
+      <div className="flex justify-between mt-4">
+        <Button disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
+          Prev
+        </Button>
+        <span>
+          Page {page} of {totalPages}
+        </span>
+        <Button
+          disabled={page === totalPages}
+          onClick={() => setPage((p) => p + 1)}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 }

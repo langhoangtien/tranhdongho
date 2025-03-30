@@ -1,19 +1,25 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { useState } from "react";
 
 import { CartItem, useCart } from "@/cart";
 import { IProduct, IVariant } from "@/routes/admin/products";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface IvariantCart extends IVariant {
   title: string;
+  description?: string;
 }
 interface IProductCart extends IProduct {
   variants: IvariantCart[];
 }
 export default function AddToCart(product: CartItem) {
+  // const variantsMapped = product.variants.map((variant: IVariant) => ({
+  //   ...variant,
+  //   title: variant.attributes.map((i) => `${i.name}:${i.value}`).join(", "),
+  //   image: variant.image || product.image || product.images[0] || "",
+  // }));
   const { addItem } = useCart();
   const handleAddToCart = () => {
     addItem(product);
@@ -34,128 +40,57 @@ export function AddToCartPurfectSection({
   product: IProductCart;
 }) {
   const { addItem } = useCart();
-  const [variant, setVariant] = useState<{
-    id: string;
-    title: string;
-    price: number;
-    image?: string;
-    quantity: number;
-    name: string;
-  } | null>(null);
-  const [selectedOptions, setSelectedOptions] = useState<
-    Record<string, string>
-  >({});
 
-  const handleOptionChange = (name: string, value: string) => {
-    setSelectedOptions((prev: Record<string, string>) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const [radioValue, setRadioValue] = useState<number>(0);
 
   const handleAddToCart = () => {
-    if (!variant) {
-      toast.error("Please select a variant");
-      return;
-    }
+    const sleclectedVariant = product.variants[radioValue];
+    const id = sleclectedVariant._id;
 
-    const id = variant.id.split("/").pop();
-    if (!id) {
-      toast.error("Invalid variant id");
-      return;
-    }
     addItem({
-      ...variant,
       id,
-      image: variant.image || "",
+      image: sleclectedVariant.image,
+      title: sleclectedVariant.title,
+      name: product.name,
+      price: sleclectedVariant.price,
     });
   };
 
-  const getSelectedVariant = () => {
-    const matchedVariant = product.variants.find((variant: IvariantCart) =>
-      variant.attributes.every(
-        (opt: { name: string; value: string }) =>
-          selectedOptions[opt.name] === opt.value
-      )
-    );
-    if (matchedVariant) {
-      setVariant({
-        id: matchedVariant._id,
-        title: matchedVariant.attributes
-          .map((i) => `${i.name}:${i.value}`)
-          .join(", "),
-        price: matchedVariant.price,
-        image: matchedVariant.image,
-        quantity: 1,
-        name: product.name,
-      });
-    }
-  };
-
-  // Chọn sẵn variant đầu tiên
-  useEffect(() => {
-    const firstVariant = product.variants[0];
-
-    if (firstVariant) {
-      const defaultOptions = firstVariant.attributes.reduce(
-        (
-          acc: Record<string, string>,
-          option: {
-            name: string;
-            value: string;
-          }
-        ) => {
-          acc[option.name] = option.value;
-          return acc;
-        },
-        {}
-      );
-
-      setSelectedOptions(defaultOptions);
-      setVariant({
-        id: firstVariant._id,
-        title: firstVariant.title,
-        price: firstVariant.price,
-        image: firstVariant.image,
-        quantity: 1,
-        name: product.name,
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // Khi user chọn option, tự động cập nhật lại variant
-  useEffect(() => {
-    getSelectedVariant();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedOptions]);
+
   return (
     <div className="space-y-4">
-      {product.variantOptions.map(
-        (option: { name: string; values: string[] }) => (
-          <div className="mt-6 flex flex-col space-y-4" key={option.name}>
-            <h4>{option.name}</h4>
-            {option.values.map((value: string) => (
-              <Button
-                variant={"outline"}
-                key={value}
-                onClick={() => handleOptionChange(option.name, value)}
-                className={`w-full rounded-full h-12 text-base font-normal ${
-                  selectedOptions[option.name] === value
-                    ? "border-2 border-gray-800"
-                    : "border-gray-300"
-                }`}
-              >
-                {value}
-              </Button>
-            ))}
-          </div>
-        )
-      )}
-
+      <RadioGroup value={radioValue.toString()} defaultValue={"0"}>
+        <div className="flex flex-col space-y-2">
+          {product.variants.map((variant: IvariantCart, index: number) => (
+            <label
+              onClick={() => setRadioValue(index)}
+              className={`flex  justify-between cursor-pointer items-center duration-300 transition-all rounded-md border h-16 p-6 border-border ${radioValue == index ? "bg-accent " : ""}`}
+              htmlFor={variant._id}
+              key={variant._id}
+            >
+              <div className="flex items-center relative space-x-4">
+                <RadioGroupItem id={variant._id} value={index.toString()} />
+                <div className="space-y-0.5">
+                  {" "}
+                  <p>{variant.title}</p>
+                  <p className="text-sm">{variant.description}</p>
+                </div>
+              </div>
+              <div>
+                {" "}
+                <p>${variant.price}</p>
+                <p className="line-through text-xs">
+                  ${variant.compareAtPrice}
+                </p>
+              </div>
+            </label>
+          ))}
+        </div>
+      </RadioGroup>
       <Button
         onClick={handleAddToCart}
-        className="w-full rounded-full h-12 text-base font-semibold"
+        className="w-full  h-12 text-base font-semibold"
       >
         Add To Cart | 50% OFF ➜
       </Button>

@@ -55,10 +55,11 @@ export default function PufectPage() {
 
   const product: IData = {
     ...productData,
-    variants: productData.variants.map((variant: IVariant) => ({
+    variants: productData.variants.map((variant: IVariant, i: number) => ({
       ...variant,
-      title: variant.attributes.map((i) => `${i.name}:${i.value}`).join(", "),
+      title: variant.attributes.map((i) => i.value).join(", "),
       image: variant.image || productData.image || productData.images[0] || "",
+      description: `${(i + 1) * 2} bottle`,
     })),
   };
   return (
