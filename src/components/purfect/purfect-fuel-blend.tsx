@@ -14,7 +14,6 @@ import ListPaymentMethod from "../list-payment-method";
 import { IProduct, IVariant } from "@/routes/admin/products";
 import StarIcon from "../icons/star-icon";
 import ReviewList from "../reviews";
-import { PRODUCT_NAME } from "@/config";
 interface IData extends IProduct {
   images: string[];
   variants: IVariant[];
