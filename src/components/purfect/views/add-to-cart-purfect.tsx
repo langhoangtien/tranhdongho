@@ -65,21 +65,25 @@ export function AddToCartPurfectSection({
           {product.variants.map((variant: IvariantCart, index: number) => (
             <label
               onClick={() => setRadioValue(index)}
-              className={`flex  justify-between cursor-pointer items-center duration-300 transition-all rounded-md border h-16 p-6 border-border ${radioValue == index ? "bg-accent " : ""}`}
+              className={`flex  justify-between cursor-pointer items-center duration-300 transition-all rounded-md border h-18 py-6 px-2 border-border ${radioValue == index ? "bg-accent " : ""}`}
               htmlFor={variant._id}
               key={variant._id}
             >
               <div className="flex items-center relative space-x-4">
-                <RadioGroupItem id={variant._id} value={index.toString()} />
+                <RadioGroupItem
+                  className="size-5"
+                  id={variant._id}
+                  value={index.toString()}
+                />
                 <div className="space-y-0.5">
                   {" "}
-                  <p>{variant.title}</p>
+                  <p className="text-xl font-semibold">{variant.title}</p>
                   <p className="text-sm">{variant.description}</p>
                 </div>
               </div>
               <div>
                 {" "}
-                <p>${variant.price}</p>
+                <p className="font-semibold tex-xl">${variant.price}</p>
                 <p className="line-through text-xs">
                   ${variant.compareAtPrice}
                 </p>

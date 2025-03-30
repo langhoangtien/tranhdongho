@@ -14,6 +14,7 @@ import ListPaymentMethod from "../list-payment-method";
 import { IProduct, IVariant } from "@/routes/admin/products";
 import StarIcon from "../icons/star-icon";
 import ReviewList from "../reviews";
+import { PRODUCT_NAME } from "@/config";
 interface IData extends IProduct {
   images: string[];
   variants: IVariant[];
@@ -63,104 +64,101 @@ export default function PufectPage() {
     })),
   };
   return (
-    <div className="p-4">
-      <div className="max-w-7xl mx-auto p-4 rounded-lg">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Hình ảnh */}
-          <div>
-            <ProductDetailCarousel slides={product.images} />
-          </div>
+    <div className="max-w-7xl mx-auto p-4 rounded-lg">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Hình ảnh */}
+        <div>
+          <ProductDetailCarousel slides={product.images} />
+        </div>
 
-          {/* Nội dung */}
-          <div className="flex flex-col space-y-4">
-            <div className="flex items-center justify-start space-x-2 text-gray-600  text-lg">
-              <span className="text-primary flex space-x-1 text-lg mr-2">
-                <StarIcon className="size-4 text-primary" />
-                <StarIcon className="size-4 text-primary" />
-                <StarIcon className="size-4 text-primary" />
-                <StarIcon className="size-4 text-primary" />
-                <StarIcon className="size-4 text-primary" />
+        {/* Nội dung */}
+        <div className="flex flex-col space-y-4">
+          <div className="flex items-center justify-start space-x-2 text-gray-600  text-lg">
+            <span className="text-primary flex space-x-1 text-lg mr-2">
+              <StarIcon className="size-4 text-primary" />
+              <StarIcon className="size-4 text-primary" />
+              <StarIcon className="size-4 text-primary" />
+              <StarIcon className="size-4 text-primary" />
+              <StarIcon className="size-4 text-primary" />
+            </span>
+            <span>
+              4.9 stars <strong className="text-green-700">100,000+</strong>{" "}
+              members
+            </span>
+          </div>
+          <h2 className="text-2xl md:text-3xl  font-bold text-gray-800">
+            <span className="text-primary">QuitMood</span> Blend®
+            <span className="bg-destructive rounded-md text-white text-sm mx-2 p-1 align-top font-semibold">
+              Today Only!
+            </span>
+          </h2>
+          <p className="p1">
+            <span>Discover the power of </span>
+            <strong>
+              <span style={{ color: "rgb(0, 80, 39)" }}>
+                Sea Moss and Shilajit
               </span>
-              <span>
-                4.9 stars <strong className="text-green-700">100,000+</strong>{" "}
-                members
-              </span>
-            </div>
-            <h2 className="text-2xl md:text-3xl  font-bold text-gray-800">
-              <span className="text-primary">OptiLife</span> Blend®
-              <span className="bg-destructive rounded-md text-white text-sm mx-2 p-1 align-top font-semibold">
-                Today Only!
-              </span>
-            </h2>
-            <p className="p1">
-              <span>Discover the power of </span>
-              <strong>
-                <span style={{ color: "rgb(0, 80, 39)" }}>
-                  Sea Moss and Shilajit
-                </span>
-              </strong>
-              <span> in convenient potent </span>
-              supplement
-              <span> – your </span>
-              <strong>
-                <span style={{ color: "rgb(0, 80, 39)" }}>all-in-one</span>
-              </strong>
-              <span> wellness solution.</span>
+            </strong>
+            <span> in convenient potent </span>
+            supplement
+            <span> – your </span>
+            <strong>
+              <span style={{ color: "rgb(0, 80, 39)" }}>all-in-one</span>
+            </strong>
+            <span> wellness solution.</span>
+          </p>
+
+          <div className="mt-4 rounded-lg">
+            <p className="text-4xl flex space-x-2 ">
+              <span className="font-normal "> ${product.minPrice}</span>
+              <span className="line-through  ">
+                ${product.minCompareAtPrice ?? ""}
+              </span>{" "}
             </p>
+          </div>
 
-            <div className="mt-4 rounded-lg">
-              <p className="text-4xl flex space-x-2 ">
-                <span className="font-normal "> ${product.minPrice}</span>
-                <span className="line-through  ">
-                  ${product.minCompareAtPrice ?? ""}
-                </span>{" "}
-              </p>
-            </div>
+          <div className="flex flex-col space-y-2">
+            <p> 🔥 24-In-1 Supplement Superblend</p>
 
-            <div className="flex flex-col space-y-2">
-              🔥 24-In-1 Supplement Superblend
-              <p>✅ Boosts energy</p>
-              <p>✅ Enhances focus</p>
-              <p>✅ 2024 best seller</p>
-              <p>✅ Natural ingredients</p>
-            </div>
-            <div className="mt-6">
-              <AddToCartPurfectSection product={product} />
-            </div>
+            <p>✅ Boosts energy</p>
+            <p>✅ Enhances focus</p>
+            <p>✅ 2024 best seller</p>
+            <p>✅ Natural ingredients</p>
+          </div>
+          <div className="mt-6">
+            <AddToCartPurfectSection product={product} />
+          </div>
 
-            <div className="mx-2 flex items-center space-x-4 md:space-x-8 text-accent-foreground font-semibold    justify-around sm:text-sm">
-              <span className="flex items-center space-y-2 flex-col  justify-center text-center">
-                <Heart strokeWidth={1.5} size={30} />
-                <span>Customer Favorite</span>
-              </span>
-              <span className="flex items-center space-y-2 flex-col justify-center text-center">
-                <Undo2Icon strokeWidth={1.5} size={30} />
-                <span>Money-back Guarantee</span>
-              </span>
-              <span className="flex items-center space-y-2 flex-col  justify-center text-center">
-                <TruckIcon strokeWidth={1.5} size={30} />
-                <span>Fast Shipping</span>
-              </span>
-            </div>
-            <ListPaymentMethod />
-            <div>
-              <Accordion type="single" collapsible className="w-full">
-                {data.map((item, index) => (
-                  <AccordionItem key={item.title} value={`item-${index}`}>
-                    <AccordionTriggerCustom>
-                      {item.title}
-                    </AccordionTriggerCustom>
-                    <AccordionContent>{item.content}</AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
+          <div className="mx-2 flex items-center space-x-4 md:space-x-8 text-accent-foreground font-semibold    justify-around sm:text-sm">
+            <span className="flex items-center space-y-2 flex-col  justify-center text-center">
+              <Heart strokeWidth={1.5} size={30} />
+              <span>Customer Favorite</span>
+            </span>
+            <span className="flex items-center space-y-2 flex-col justify-center text-center">
+              <Undo2Icon strokeWidth={1.5} size={30} />
+              <span>Money-back Guarantee</span>
+            </span>
+            <span className="flex items-center space-y-2 flex-col  justify-center text-center">
+              <TruckIcon strokeWidth={1.5} size={30} />
+              <span>Fast Shipping</span>
+            </span>
+          </div>
+          <ListPaymentMethod />
+          <div>
+            <Accordion type="single" collapsible className="w-full">
+              {data.map((item, index) => (
+                <AccordionItem key={item.title} value={`item-${index}`}>
+                  <AccordionTriggerCustom>{item.title}</AccordionTriggerCustom>
+                  <AccordionContent>{item.content}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
-        <div className="col-span-2">
-          {" "}
-          <ReviewList />
-        </div>
+      </div>
+      <div className="col-span-2">
+        {" "}
+        <ReviewList />
       </div>
     </div>
   );
