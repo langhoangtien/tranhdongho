@@ -14,10 +14,21 @@ import {
   RotateCw,
   ChevronsDown,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import Star from "./icons/star-icon";
 import StarIcon from "./icons/star-icon";
 import { API_URL } from "@/config";
 import StarThreeQuaterIcon from "./icons/star-three-quarter";
+import { z } from "zod";
+import { Input } from "./ui/custom-ui";
+import { Textarea } from "./ui/textarea";
+import { toast } from "sonner";
 
 interface Review {
   _id: number;
@@ -47,16 +58,59 @@ interface ResponseReviews {
   };
 }
 
+const reviewSchema = z.object({
+  customer: z.string().min(1, "Name is required").max(50, "Name is too long"),
+  rating: z
+    .number()
+    .min(1, "Rating is required")
+    .max(5, "Rating must be between 1 and 5"),
+  email: z.string().email("Invalid email address"),
+  title: z.string().min(5, "Tiltle is required").max(100, "Title is too long"),
+  body: z
+    .string()
+    .min(10, "Content is too short")
+    .max(1000, "Content is too long"),
+});
+
 const ReviewList: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const [pagination, setPagination] = useState({ total: 0, totalPages: 0 });
+  const [formData, setFormData] = useState({
+    customer: "",
+    email: "",
+    rating: 5,
+    title: "",
+    body: "",
+  });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const validateForm = () => {
+    const result = reviewSchema.safeParse(formData);
+    if (!result.success) {
+      const fieldErrors: { [key: string]: string } = {};
+      result.error.errors.forEach((error) => {
+        fieldErrors[error.path[0]] = error.message;
+      });
+      setErrors(fieldErrors);
+      return false;
+    }
+    setErrors({});
+    return true;
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const [filters, setFilters] = useState({
-    rating: 0,
+    rating: 5,
     purchaseVerified: false,
     hasMedia: false,
-    sort: "createdAt_desc",
+    sort: "liked_desc",
   });
 
   const [likedIds, setLikedIds] = useState<number[]>([]);
@@ -129,13 +183,32 @@ const ReviewList: React.FC = () => {
     setPage(1);
   };
 
+  const handleSubmit = () => {
+    if (validateForm()) {
+      // Submit the form data to the server or perform any other action
+      console.log("Form submitted:", formData);
+      // Close the dialog after submission
+      setOpen(false);
+      toast.success("Review submitted successfully!");
+      // Reset the form data after submission
+      setFormData({
+        customer: "",
+        email: "",
+        rating: 5,
+        title: "",
+        body: "",
+      });
+    }
+  };
   return (
     <div className="w-full max-w-5xl mx-auto space-y-4">
       <div className="flex flex-col md:flex-row gap-6 items-center md:items-center md:justify-between border-b border-border  mx-auto py-8">
         {/* Left Section */}
         <div className="flex flex-col space-y-3">
           <p className="text-3xl">Product review</p>
-          <Button>Write a review</Button>
+          <Button onClick={() => setOpen(true)} className="w-full">
+            Write a review
+          </Button>
         </div>
 
         {/* Right Section */}
@@ -193,7 +266,7 @@ const ReviewList: React.FC = () => {
           <SelectContent className="rounded-xs">
             <SelectItem value="createdAt_desc">Latest</SelectItem>
             <SelectItem value="createdAt_asc">Oldest</SelectItem>
-            <SelectItem value="liked_desc">Liked</SelectItem>
+            <SelectItem value="liked_desc">Helpful</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -295,6 +368,96 @@ const ReviewList: React.FC = () => {
           </Button>
         )}
       </div>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <div className="space-y-6">
+            <DialogHeader>
+              <DialogTitle className="text-center text-3xl my-4">
+                Write Review
+              </DialogTitle>
+              <DialogDescription>
+                Share your thoughts about the product. Your review will help
+                other customers make better choices.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="flex flex-col space-y-3">
+              <div className="flex space-x-0.5">
+                {[1, 2, 3, 4, 5].map((i) => {
+                  return (
+                    <StarIcon
+                      key={i}
+                      onClick={() => setFormData({ ...formData, rating: i })}
+                      className={`${
+                        formData.rating >= i
+                          ? "text-yellow-400"
+                          : "text-gray-400"
+                      } cursor-pointer size-5`}
+                    />
+                  );
+                })}
+              </div>
+              <div>
+                <Input
+                  type="text"
+                  id="customer"
+                  name="customer"
+                  onChange={handleChange}
+                  value={formData.customer}
+                  aria-invalid={!!errors.customer}
+                  placeholder="Name*"
+                />
+                {errors.customer && (
+                  <p className="text-destructive text-sm">{errors.customer}</p>
+                )}
+              </div>
+              <div>
+                <Input
+                  type="text"
+                  name="email"
+                  id="email"
+                  aria-invalid={!!errors.email}
+                  onChange={handleChange}
+                  value={formData.email}
+                  placeholder="Email*"
+                />
+                {errors.email && (
+                  <p className="text-destructive text-sm">{errors.email}</p>
+                )}
+              </div>
+              <div>
+                <Input
+                  type="text"
+                  name="title"
+                  id="title"
+                  aria-invalid={!!errors.title}
+                  onChange={handleChange}
+                  value={formData.title}
+                  placeholder="Title*"
+                />
+                {errors.title && (
+                  <p className="text-destructive text-sm">{errors.title}</p>
+                )}
+              </div>
+              <div>
+                <Textarea
+                  name="body"
+                  id="body"
+                  aria-invalid={!!errors.body}
+                  onChange={handleChange}
+                  value={formData.body}
+                  placeholder="Content*"
+                />
+                {errors.body && (
+                  <p className="text-destructive text-sm">{errors.body}</p>
+                )}
+              </div>
+              <div className="flex justify-end">
+                <Button onClick={handleSubmit}>Submit</Button>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

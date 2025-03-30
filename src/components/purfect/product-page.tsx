@@ -63,87 +63,84 @@ export default function ProductPage() {
   };
 
   return (
-    <div className="p-4">
-      <div className="max-w-7xl mx-auto p-4 rounded-lg">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Hình ảnh */}
+    <div className="max-w-7xl mx-auto p-4 rounded-lg">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Hình ảnh */}
+        <div>
+          <ProductDetailCarousel slides={product.images} />
+        </div>
+
+        {/* Nội dung */}
+        <div className="flex flex-col space-y-4">
+          <h2 className="text-2xl md:text-3xl  font-bold text-accent-foreground">
+            {product.name}
+            <span className="bg-destructive rounded-md text-white text-sm mx-2 p-1 align-top font-semibold">
+              Today Only!
+            </span>
+          </h2>
+          <div className="flex items-center justify-start space-x-2 text-gray-600  text-lg">
+            <span className="flex space-x-1 text-yellow-400 text-lg mr-2">
+              <StarIcon className="size-4" />
+              <StarIcon className="size-4" />
+              <StarIcon className="size-4" />
+              <StarIcon className="size-4" />
+              <StarIcon className="size-4" />
+            </span>
+            <span className="text-accent-foreground text-sm font-semibold">
+              4.9 <span className="text-gray-500">(12k)</span>
+            </span>
+          </div>
+          <div className="space-y-2 rounded-lg">
+            <p className="text-4xl flex space-x-2 ">
+              <span className="font-normal "> ${product.minPrice}</span>
+              <span className="line-through  ">
+                ${product.minCompareAtPrice ?? ""}
+              </span>{" "}
+            </p>
+            <p className="text-gray-500 text-sm">
+              Inclusive of all taxes. Shipping calculated at checkout.
+            </p>
+          </div>
+          <div className="flex flex-col space-y-2">
+            <p className="line-clamp-3">{product.introduction}</p>
+          </div>
+          <div className="mt-6">
+            <AddToCartSection product={product} />
+          </div>
+
+          <div className="mx-2 flex items-center space-x-4 md:space-x-8 text-accent-foreground font-semibold    justify-around sm:text-sm">
+            <span className="flex items-center space-y-2 flex-col  justify-center text-center">
+              <Heart strokeWidth={1.5} size={30} />
+              <span>Customer Favorite</span>
+            </span>
+            <span className="flex items-center space-y-2 flex-col justify-center text-center">
+              <Undo2Icon strokeWidth={1.5} size={30} />
+              <span>Money-back Guarantee</span>
+            </span>
+            <span className="flex items-center space-y-2 flex-col  justify-center text-center">
+              <TruckIcon strokeWidth={1.5} size={30} />
+              <span>Fast Shipping</span>
+            </span>
+          </div>
+          <ListPaymentMethod />
           <div>
-            <ProductDetailCarousel slides={product.images} />
+            <Accordion type="single" collapsible className="w-full">
+              {data.map((item, index) => (
+                <AccordionItem key={item.title} value={`item-${index}`}>
+                  <AccordionTriggerCustom>{item.title}</AccordionTriggerCustom>
+                  <AccordionContent>{item.content}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
-
-          {/* Nội dung */}
-          <div className="flex flex-col space-y-4">
-            <div className="flex items-center justify-start space-x-2 text-gray-600  text-lg">
-              <span className="text-primary flex space-x-1 text-lg mr-2">
-                <StarIcon className="size-4 text-primary" />
-                <StarIcon className="size-4 text-primary" />
-                <StarIcon className="size-4 text-primary" />
-                <StarIcon className="size-4 text-primary" />
-                <StarIcon className="size-4 text-primary" />
-              </span>
-              <span>
-                4.9 stars <strong className="text-primary">100,000+</strong>{" "}
-                members
-              </span>
-            </div>
-            <h2 className="text-2xl md:text-3xl  font-bold text-accent-foreground">
-              {product.name}
-              <span className="bg-destructive rounded-md text-white text-sm mx-2 p-1 align-top font-semibold">
-                Today Only!
-              </span>
-            </h2>
-
-            <div className="mt-4 rounded-lg">
-              <p className="text-4xl flex space-x-2 ">
-                <span className="font-normal "> ${product.minPrice}</span>
-                <span className="line-through  ">
-                  ${product.minCompareAtPrice ?? ""}
-                </span>{" "}
-              </p>
-            </div>
-            <div className="flex flex-col space-y-2">
-              <p className="line-clamp-3">{product.introduction}</p>
-            </div>
-            <div className="mt-6">
-              <AddToCartSection product={product} />
-            </div>
-
-            <div className="mx-2 flex items-center space-x-4 md:space-x-8 text-accent-foreground font-semibold    justify-around sm:text-sm">
-              <span className="flex items-center space-y-2 flex-col  justify-center text-center">
-                <Heart strokeWidth={1.5} size={30} />
-                <span>Customer Favorite</span>
-              </span>
-              <span className="flex items-center space-y-2 flex-col justify-center text-center">
-                <Undo2Icon strokeWidth={1.5} size={30} />
-                <span>Money-back Guarantee</span>
-              </span>
-              <span className="flex items-center space-y-2 flex-col  justify-center text-center">
-                <TruckIcon strokeWidth={1.5} size={30} />
-                <span>Fast Shipping</span>
-              </span>
-            </div>
-            <ListPaymentMethod />
-            <div>
-              <Accordion type="single" collapsible className="w-full">
-                {data.map((item, index) => (
-                  <AccordionItem key={item.title} value={`item-${index}`}>
-                    <AccordionTriggerCustom>
-                      {item.title}
-                    </AccordionTriggerCustom>
-                    <AccordionContent>{item.content}</AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          </div>
-          <div
-            className="col-span-2 tiptap"
-            dangerouslySetInnerHTML={{ __html: productData.description }}
-          ></div>
-          <div className="col-span-2">
-            {" "}
-            <ReviewList />
-          </div>
+        </div>
+        <div
+          className="col-span-2 tiptap"
+          dangerouslySetInnerHTML={{ __html: productData.description }}
+        ></div>
+        <div className="col-span-2">
+          {" "}
+          <ReviewList />
         </div>
       </div>
     </div>

@@ -64,12 +64,27 @@ export type OnApproveData = {
 
 const addressSchema = z.object({
   firstName: z.string(),
-  lastName: z.string().max(50),
+  lastName: z
+    .string()
+    .min(1, {
+      message: "City is required",
+    })
+    .max(50),
   phone: z.string().min(7).max(15),
   address: z.string().min(1).max(200),
-  city: z.string().min(1).max(100),
+  city: z
+    .string()
+    .min(1, {
+      message: "City is required",
+    })
+    .max(100),
   state: z.string().min(1, { message: "State is required" }).max(200),
-  postalCode: z.string().max(20),
+  postalCode: z
+    .string()
+    .min(1, {
+      message: "City is required",
+    })
+    .max(20),
   country: z.string(),
 });
 const checkoutSchema = z.object({

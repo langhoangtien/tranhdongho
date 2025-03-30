@@ -173,61 +173,57 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
 
 function CarouselPrevious({
   className,
-  variant = "outline",
-  size = "icon",
+
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
   return (
-    <Button
+    <button
       data-slot="carousel-previous"
-      variant={variant}
-      size={size}
       className={cn(
-        "absolute size-8 rounded-full hidden sm:flex",
+        "absolute size-10 rounded-full text-gray-800 bg-gray-200 flex items-center justify-center cursor-pointer  z-[9] ",
+        canScrollPrev ? "" : "!hidden",
         orientation === "horizontal"
-          ? "top-1/2 -left-4 -translate-y-1/2"
-          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+          ? "left-6 top-1/2 -translate-y-1/2"
+          : "top-6 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeft />
+      <ArrowLeft strokeWidth={1.25} size={20} />
       <span className="sr-only">Previous slide</span>
-    </Button>
+    </button>
   );
 }
 
 function CarouselNext({
   className,
-  variant = "outline",
-  size = "icon",
+
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { orientation, scrollNext, canScrollNext } = useCarousel();
 
   return (
-    <Button
+    <button
       data-slot="carousel-next"
-      variant={variant}
-      size={size}
       className={cn(
-        "absolute size-8 rounded-full hidden sm:flex",
+        "absolute size-10 rounded-full text-gray-800 bg-gray-200 flex items-center justify-center cursor-pointer  z-[9] ",
+        canScrollNext ? "" : "!hidden",
         orientation === "horizontal"
-          ? "top-1/2 -right-4 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+          ? "right-6 top-1/2 -translate-y-1/2"
+          : "bottom-6 left-1/2 -translate-x-1/2 ",
         className
       )}
       disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRight />
+      <ArrowRight strokeWidth={1.25} size={20} />
       <span className="sr-only">Next slide</span>
-    </Button>
+    </button>
   );
 }
 
@@ -236,7 +232,7 @@ const CaroselIndex = () => {
   const { selectedIndex, scrollSnaps } = useDotButton(api);
   if (!scrollSnaps.length) return null;
   return (
-    <span className="border border-gray-300 rounded-full text-xs text-gray-700 py-1 px-3 bg-white absolute bottom-5 left-5 z-[30] ">
+    <span className="border border-gray-300 rounded-md text-xs text-gray-700 py-1 px-3 bg-white absolute bottom-5 left-5 z-[30] ">
       {selectedIndex + 1}/{scrollSnaps.length}
     </span>
   );
