@@ -732,10 +732,7 @@ export function CheckoutPage() {
                   </div>
                 </div>
               </div>
-              <div className="flex px-6 py-4 justify-between">
-                <Link to="/cart">
-                  <Button variant="outline">Back to Cart</Button>
-                </Link>
+              <div className="flex px-6 py-4 justify-end">
                 <Button onClick={handleShippingSubmit} type="submit">
                   Continue to Payment
                 </Button>
