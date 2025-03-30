@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRightIcon } from "lucide-react";
 import StarIcon from "../icons/star-icon";
 import StarThreeQuaterIcon from "../icons/star-three-quarter";
+import { PRODUCT_NAME } from "@/config";
 
 export const StarRating = ({
   className = "flex space-x-1",
@@ -38,7 +39,7 @@ export default function SectionOne() {
             </p>
             <p className="hidden md:block">
               Unlock 50+ essential minerals & optimize vitality with our Seamoss
-              & Shilajit bundle. Start your OptiLife ™ Today
+              & Shilajit bundle. Start your {PRODUCT_NAME} ™ Today
             </p>
             <p className="md:hidden">
               Unlock 50+ essential minerals & optimize vitality with our Seamoss
@@ -50,7 +51,7 @@ export default function SectionOne() {
                   size="lg"
                   className="h-14 flex items-center justify-between"
                 >
-                  <span> Start your OptiLife ™ Today</span>
+                  <span> Start your {PRODUCT_NAME} ™ Today</span>
                   <ArrowRightIcon size={24} />
                 </Button>
               </Link>

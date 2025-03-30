@@ -14,6 +14,7 @@ import ListPaymentMethod from "../list-payment-method";
 import { IProduct, IVariant } from "@/routes/admin/products";
 import StarIcon from "../icons/star-icon";
 import ReviewList from "../reviews";
+import { Badge } from "../ui/badge";
 interface IData extends IProduct {
   images: string[];
   variants: IVariant[];
@@ -108,11 +109,15 @@ export default function PufectPage() {
           </p>
 
           <div className="mt-4 rounded-lg">
-            <p className="text-4xl flex space-x-2 ">
-              <span className="font-normal "> ${product.minPrice}</span>
-              <span className="line-through  ">
+            <p className=" flex space-x-3 items-center ">
+              <span className="line-through text-xl  ">
                 ${product.minCompareAtPrice ?? ""}
               </span>{" "}
+              <span className="font-normal text-4xl text-accent-foreground ">
+                {" "}
+                ${product.minPrice}
+              </span>
+              <Badge>Sale</Badge>
             </p>
           </div>
 
