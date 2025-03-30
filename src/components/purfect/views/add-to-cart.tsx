@@ -21,7 +21,7 @@ export default function AddToCart(product: CartItem) {
   return (
     <Button
       onClick={handleAddToCart}
-      className="w-full rounded-full h-12 text-base font-semibold"
+      className="w-full  h-12 text-base font-semibold"
     >
       Add To Cart | 50% OFF ➜
     </Button>
@@ -154,7 +154,7 @@ export function AddToCartSection({ product }: { product: IProductCart }) {
 
       <Button
         onClick={handleAddToCart}
-        className="w-full rounded-full h-12 text-base font-semibold"
+        className="w-full  h-12 text-base font-semibold"
       >
         Add To Cart | 50% OFF ➜
       </Button>

@@ -48,7 +48,7 @@ export default function SectionOne() {
               <Link to={"/products/purfect-fuel-blend"}>
                 <Button
                   size="lg"
-                  className="rounded-full flex items-center justify-between"
+                  className="h-14 flex items-center justify-between"
                 >
                   <span> Start your OptiLife ™ Today</span>
                   <ArrowRightIcon size={24} />

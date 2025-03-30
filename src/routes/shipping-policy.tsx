@@ -1,3 +1,4 @@
+import { COMPANY_NAME } from "@/config";
 import MainLayout from "@/layout/main-layout";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -431,7 +432,7 @@ function ShippingPolicy() {
           }}
         >
           <strong style={{ fontWeight: "bold" }}>
-            **&nbsp;OptiLife&nbsp;<span style={{}}>is&nbsp;</span>not
+            **&nbsp;{COMPANY_NAME}&nbsp;<span style={{}}>is&nbsp;</span>not
             <span style={{}}>&nbsp;</span>
             <span style={{}}>responsible for&nbsp;</span>
             <span style={{}}>

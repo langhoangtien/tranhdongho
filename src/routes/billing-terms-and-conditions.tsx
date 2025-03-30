@@ -1,3 +1,4 @@
+import { COMPANY_NAME, CONTACT_EMAIL } from "@/config";
 import MainLayout from "@/layout/main-layout";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -20,8 +21,8 @@ export default function BillingTermsAndConditions() {
       </h2>
       <div className="space-y-2" data-text-editor-id="content">
         <p>
-          Thank you for shopping at <strong>OptiLife</strong>! We strive to
-          provide you with a seamless and secure shopping experience. Please
+          Thank you for shopping at <strong>{COMPANY_NAME}</strong>! We strive
+          to provide you with a seamless and secure shopping experience. Please
           review our payment policy below:
         </p>
         <p className="p1">
@@ -61,9 +62,9 @@ export default function BillingTermsAndConditions() {
           </li>
         </ul>
         <p>
-          <strong>Currency:</strong> All transactions on OptiLife are processed
-          in United States Dollar (USD). Prices displayed on the website are in
-          USD by default.
+          <strong>Currency:</strong> All transactions on {COMPANY_NAME} are
+          processed in United States Dollar (USD). Prices displayed on the
+          website are in USD by default.
         </p>
         <p>
           <strong>Tax Policy:</strong> Tax will be calculated during checkout if
@@ -130,9 +131,9 @@ export default function BillingTermsAndConditions() {
                 rel="noopener noreferrer nofollow"
                 title=""
                 role="url"
-                href="mailto:info@optilifecompany.com"
+                href={`mailto:${CONTACT_EMAIL}`}
               >
-                info@optilifecompany.com
+                {CONTACT_EMAIL}
               </a>{" "}
               for assistance.
             </p>
@@ -187,19 +188,20 @@ export default function BillingTermsAndConditions() {
             rel="noopener noreferrer nofollow"
             title=""
             role="url"
-            href="mailto:contact@optilifecompany.com"
+            href={`mailto:${CONTACT_EMAIL}`}
           >
-            contact@optilifecompany.com
+            {CONTACT_EMAIL}
           </a>
         </p>
         <p>
-          <strong>Policy Revision:</strong> OptiLife reserves the right to
+          <strong>Policy Revision:</strong> {COMPANY_NAME} reserves the right to
           update or modify this payment policy at any time without prior notice.
           Please review this policy periodically for any changes.
         </p>
         <p>
-          By shopping with OptiLife, you agree to abide by the terms outlined in
-          this payment policy. Thank you for choosing OptiLife for your needs!
+          By shopping with {COMPANY_NAME}, you agree to abide by the terms
+          outlined in this payment policy. Thank you for choosing {COMPANY_NAME}{" "}
+          for your needs!
         </p>
       </div>
     </div>

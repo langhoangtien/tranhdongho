@@ -1,12 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import StarIcon from "../icons/star-icon";
+import { PRODUCT_NAME } from "@/config";
 
 const reviews = [
   {
     name: "Matt J. ",
     time: "20 in 1 Bundle",
-    content:
-      "PurfectFuel ™ truly lives up to its name! Since starting the Dynamic Vitality Bundle, I've noticed a significant boost in my energy levels and overall vitality. Highly recommended!",
+    content: `${PRODUCT_NAME}truly lives up to its name! Since starting the Dynamic Vitality Bundle, I've noticed a significant boost in my energy levels and overall vitality. Highly recommended!`,
   },
   {
     name: "David S. ",
@@ -17,8 +17,7 @@ const reviews = [
   {
     name: "Michael B. ",
     time: "20 in 1 Bundle",
-    content:
-      "I've struggled with fatigue and low energy for years, but Sea moss has been a game-changer for me. I feel more energized and focused than ever before. Thank you, Hercules!",
+    content: `I've struggled with fatigue and low energy for years, but Sea moss has been a game-changer for me. I feel more energized and focused than ever before. Thank you, ${PRODUCT_NAME}!`,
   },
 ];
 export default function SectionFive() {
@@ -48,8 +47,8 @@ export default function SectionFive() {
             The best supplement ever; according to 114k+ 5 star reviews
           </h2>
           <p className="text-lg font-semibold  mt-2">
-            People love PurfectFuel — read why 98% of PurfectFuel customers
-            would shop with us again.
+            People love {PRODUCT_NAME} — read why 98% of {PRODUCT_NAME}{" "}
+            customers would shop with us again.
           </p>
         </div>
 

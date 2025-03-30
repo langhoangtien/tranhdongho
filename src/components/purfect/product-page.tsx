@@ -86,7 +86,7 @@ export default function ProductPage() {
                 members
               </span>
             </div>
-            <h2 className="text-2xl md:text-3xl  font-bold text-gray-800">
+            <h2 className="text-2xl md:text-3xl  font-bold text-accent-foreground">
               {product.name}
               <span className="bg-destructive rounded-md text-white text-sm mx-2 p-1 align-top font-semibold">
                 Today Only!
@@ -101,21 +101,23 @@ export default function ProductPage() {
                 </span>{" "}
               </p>
             </div>
-
+            <div className="flex flex-col space-y-2">
+              <p className="line-clamp-3">{product.introduction}</p>
+            </div>
             <div className="mt-6">
               <AddToCartSection product={product} />
             </div>
 
-            <div className="mx-2 flex items-center space-x-4 md:space-x-8 text-gray-700  justify-around text-sm sm:text-base">
-              <span className="flex items-center space-y-2 flex-col uppercase font-semibold justify-center text-center">
+            <div className="mx-2 flex items-center space-x-4 md:space-x-8 text-accent-foreground font-semibold    justify-around sm:text-sm">
+              <span className="flex items-center space-y-2 flex-col  justify-center text-center">
                 <Heart strokeWidth={1.5} size={30} />
                 <span>Customer Favorite</span>
               </span>
-              <span className="flex items-center space-y-2 flex-col uppercase font-semibold justify-center text-center">
+              <span className="flex items-center space-y-2 flex-col justify-center text-center">
                 <Undo2Icon strokeWidth={1.5} size={30} />
                 <span>Money-back Guarantee</span>
               </span>
-              <span className="flex items-center space-y-2 flex-col uppercase font-semibold justify-center text-center">
+              <span className="flex items-center space-y-2 flex-col  justify-center text-center">
                 <TruckIcon strokeWidth={1.5} size={30} />
                 <span>Fast Shipping</span>
               </span>

@@ -744,13 +744,13 @@ export function CheckoutPage() {
 
             <TabsContent
               value={CheckoutStep.PAYMENT}
-              className="bg-white p-6 rounded-lg shadow-sm"
+              className="bg-background p-6 rounded-lg shadow-sm"
             >
               <div>
                 <h2 className="text-xl font-bold mb-4">Shipping Information</h2>
 
                 <div className="space-y-6 mb-8">
-                  <div className="bg-gray-50 p-4 rounded text-sm">
+                  <div className="bg-accent p-4 rounded text-sm">
                     <p>
                       {formData.shippingAddress.firstName}{" "}
                       {formData.shippingAddress.lastName}

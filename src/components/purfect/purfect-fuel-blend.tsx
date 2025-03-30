@@ -118,25 +118,26 @@ export default function PufectPage() {
             </div>
 
             <div className="flex flex-col space-y-2">
-              <p>24-In-1 Supplement Blend</p>
-              <p>🙌 2024 Best-Seller </p>
-              <p>💪 Tested & Certified</p>
-              <p>🌟 60 Day Returns</p>
+              🔥 24-In-1 Supplement Superblend
+              <p>✅ Boosts energy</p>
+              <p>✅ Enhances focus</p>
+              <p>✅ 2024 best seller</p>
+              <p>✅ Natural ingredients</p>
             </div>
             <div className="mt-6">
               <AddToCartPurfectSection product={product} />
             </div>
 
-            <div className="mx-2 flex items-center space-x-4 md:space-x-8 text-gray-700  justify-around text-sm sm:text-base">
-              <span className="flex items-center space-y-2 flex-col uppercase font-semibold justify-center text-center">
+            <div className="mx-2 flex items-center space-x-4 md:space-x-8 text-accent-foreground font-semibold    justify-around sm:text-sm">
+              <span className="flex items-center space-y-2 flex-col  justify-center text-center">
                 <Heart strokeWidth={1.5} size={30} />
                 <span>Customer Favorite</span>
               </span>
-              <span className="flex items-center space-y-2 flex-col uppercase font-semibold justify-center text-center">
+              <span className="flex items-center space-y-2 flex-col justify-center text-center">
                 <Undo2Icon strokeWidth={1.5} size={30} />
                 <span>Money-back Guarantee</span>
               </span>
-              <span className="flex items-center space-y-2 flex-col uppercase font-semibold justify-center text-center">
+              <span className="flex items-center space-y-2 flex-col  justify-center text-center">
                 <TruckIcon strokeWidth={1.5} size={30} />
                 <span>Fast Shipping</span>
               </span>

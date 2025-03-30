@@ -6,6 +6,7 @@ import {
   MoveRightIcon,
   ShieldCheck,
 } from "lucide-react";
+import { PRODUCT_NAME } from "@/config";
 
 const effects = [
   {
@@ -91,8 +92,8 @@ export default function SectionSix() {
           <div className="mt-8 space-y-4">
             <Link to="/products/purfect-fuel-blend">
               {" "}
-              <Button size="lg" className="rounded-full">
-                Start your PurfectFuel™ Today <MoveRightIcon />
+              <Button size="lg" className="h-14">
+                Start your {PRODUCT_NAME} Today <MoveRightIcon />
               </Button>
             </Link>
             <p className="mt-4 text-base font-semibold">

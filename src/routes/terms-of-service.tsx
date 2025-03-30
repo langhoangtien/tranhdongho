@@ -1,3 +1,4 @@
+import { COMPANY_NAME, CONTACT_EMAIL } from "@/config";
 import MainLayout from "@/layout/main-layout";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -21,8 +22,9 @@ function TermsOfService() {
       <div className="space-y-4">
         <h4>OVERVIEW</h4>
         <p>
-          This website is operated by OptiLife Supplements. Throughout the site,
-          the terms “we”, “us” and “our” refer to OptiLife Supplements. OptiLife
+          This website is operated by {COMPANY_NAME} Supplements. Throughout the
+          site, the terms “we”, “us” and “our” refer to {COMPANY_NAME}{" "}
+          Supplements. {COMPANY_NAME}
           Supplements offers this website, including all information, tools and
           services available from this site to you, the user, conditioned upon
           your acceptance of all terms, conditions, policies and notices stated
@@ -332,7 +334,7 @@ function TermsOfService() {
           particular purpose, durability, title, and non-infringement.
         </p>
         <p>
-          In no case shall OptiLife Supplements, our directors, officers,
+          In no case shall {COMPANY_NAME} Supplements, our directors, officers,
           employees, affiliates, agents, contractors, interns, suppliers,
           service providers or licensors be liable for any injury, loss, claim,
           or any direct, indirect, incidental, punitive, special, or
@@ -353,13 +355,13 @@ function TermsOfService() {
         </p>
         <h4>SECTION 14 - INDEMNIFICATION</h4>
         <p>
-          You agree to indemnify, defend and hold harmless OptiLife Supplements
-          and our parent, subsidiaries, affiliates, partners, officers,
-          directors, agents, contractors, licensors, service providers,
-          subcontractors, suppliers, interns and employees, harmless from any
-          claim or demand, including reasonable attorneys’ fees, made by any
-          third-party due to or arising out of your breach of these Terms of
-          Service or the documents they incorporate by reference, or your
+          You agree to indemnify, defend and hold harmless {COMPANY_NAME}{" "}
+          Supplements and our parent, subsidiaries, affiliates, partners,
+          officers, directors, agents, contractors, licensors, service
+          providers, subcontractors, suppliers, interns and employees, harmless
+          from any claim or demand, including reasonable attorneys’ fees, made
+          by any third-party due to or arising out of your breach of these Terms
+          of Service or the documents they incorporate by reference, or your
           violation of any law or the rights of a third-party.
         </p>
         <h4>SECTION 15 - SEVERABILITY</h4>
@@ -432,8 +434,8 @@ function TermsOfService() {
         </p>
         <h4>SECTION 20 - CONTACT INFORMATION</h4>
         <p>
-          Questions about the Terms of Service should be sent to us at
-          contact@optilifecompany.com.
+          Questions about the Terms of Service should be sent to us at{" "}
+          {CONTACT_EMAIL}.
         </p>
       </div>
     </div>

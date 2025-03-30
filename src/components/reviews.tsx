@@ -166,8 +166,7 @@ const ReviewList: React.FC = () => {
                   filters.rating === rating ? 0 : rating
                 )
               }
-              className={filters.rating === rating ? "border-primary" : " "}
-              variant="outline"
+              variant={filters.rating === rating ? "secondary" : "outline"}
               size="sm"
             >
               {rating} <StarIcon className="text-yellow-400" />

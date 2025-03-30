@@ -97,7 +97,10 @@ export default function CardPayment() {
     <>
       <div className="space-y-2 mt-4 bg-accent px-6 py-4 rounded-md">
         <div>
-          <label className="block mb-1 text-gray-700" htmlFor="card-number">
+          <label
+            className="block mb-1 text-accent-foreground"
+            htmlFor="card-number"
+          >
             Card Number
             <span style={INVALID_COLOR}>*</span>
           </label>
@@ -117,7 +120,7 @@ export default function CardPayment() {
           </div>
         </div>
         <div>
-          <label className="block mb-1 text-gray-700" htmlFor="cvv">
+          <label className="block mb-1 text-accent-foreground" htmlFor="cvv">
             CVV<span style={INVALID_COLOR}>*</span>
           </label>
 
@@ -138,7 +141,10 @@ export default function CardPayment() {
           </div>
         </div>
         <div>
-          <label className="block mb-1 text-gray-700" htmlFor="expiration-date">
+          <label
+            className="block mb-1 text-accent-foreground"
+            htmlFor="expiration-date"
+          >
             Expiration Date
             <span style={INVALID_COLOR}>*</span>
           </label>
@@ -156,7 +162,7 @@ export default function CardPayment() {
         </div>
         <div>
           <label
-            className="block mb-1 text-gray-700"
+            className="block mb-1 text-accent-foreground"
             htmlFor="card-holder"
             title="This represents the full name as shown in the card"
           >

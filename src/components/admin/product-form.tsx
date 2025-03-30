@@ -23,6 +23,7 @@ import { uploadImg, uploadImgs } from "@/lib/common";
 import { useNavigate } from "@tanstack/react-router";
 import Editor from "../editor";
 import Image from "../image";
+import { Textarea } from "../ui/textarea";
 
 export interface Variant {
   price: number;
@@ -370,6 +371,27 @@ export default function ProductForm({ id }: { id?: string }) {
             />
             {errors.slug && (
               <p className="text-destructive text-sm">{errors.slug}</p>
+            )}
+          </div>
+          <div>
+            {" "}
+            <label className="block text-sm font-medium text-accent-foreground mb-1">
+              Giới thiệu ngắn
+            </label>
+            <Textarea
+              aria-invalid={!!errors.introduction}
+              name="introduction"
+              placeholder=" "
+              value={formData.introduction}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  introduction: e.target.value,
+                }))
+              }
+            />
+            {errors.slug && (
+              <p className="text-destructive text-sm">{errors.introduction}</p>
             )}
           </div>
           <div>

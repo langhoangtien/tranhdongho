@@ -1,3 +1,9 @@
+import {
+  COMPANY_NAME,
+  CONTACT_ADDRESS,
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+} from "@/config";
 import MainLayout from "@/layout/main-layout";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -19,19 +25,20 @@ export default function AboutUs() {
       <h2 className="text-center text-3xl font-semibold my-8">About Us</h2>
       <div>
         <p>
-          Welcome to <strong>OptiLife</strong>, where we harness the power of
-          nature to boost your wellness. Our journey is inspired by the belief
-          that nature holds the key to optimal health, and we are committed to
-          bringing you its most potent gifts through our premium supplements.
+          Welcome to <strong>{COMPANY_NAME}</strong>, where we harness the power
+          of nature to boost your wellness. Our journey is inspired by the
+          belief that nature holds the key to optimal health, and we are
+          committed to bringing you its most potent gifts through our premium
+          supplements.
         </p>
         <h3 className="text-2xl font-semibold">
           <strong>Our Mission</strong>
         </h3>
         <p>
-          Our mission at <strong>OptiLife</strong> is to empower your wellness
-          journey with high-quality, natural supplements. We are dedicated to
-          enhancing your health and vitality by providing products that support
-          balance, healing, and strength from within.
+          Our mission at <strong>{COMPANY_NAME}</strong> is to empower your
+          wellness journey with high-quality, natural supplements. We are
+          dedicated to enhancing your health and vitality by providing products
+          that support balance, healing, and strength from within.
         </p>
         <h3 className="text-2xl font-semibold">
           <strong>Our Products</strong>
@@ -94,32 +101,30 @@ export default function AboutUs() {
           <strong>Our Promise</strong>
         </h3>
         <p>
-          At <strong>OptiLife</strong>, we ensure that each product is crafted
-          with the highest standards of purity and potency. We are committed to
-          sustainability and ethical sourcing, ensuring that our supplements are
-          free from harmful additives and are environmentally friendly.
+          At <strong>{COMPANY_NAME}</strong>, we ensure that each product is
+          crafted with the highest standards of purity and potency. We are
+          committed to sustainability and ethical sourcing, ensuring that our
+          supplements are free from harmful additives and are environmentally
+          friendly.
         </p>
         <h3 className="text-2xl font-semibold">
           <strong>Join Our Community</strong>
         </h3>
         <p>
-          Join the <strong>OptiLife</strong> family and connect with a community
-          of wellness enthusiasts. We offer educational resources, interactive
-          workshops, and a supportive online community to enhance your holistic
-          health journey.
+          Join the <strong>{COMPANY_NAME}</strong> family and connect with a
+          community of wellness enthusiasts. We offer educational resources,
+          interactive workshops, and a supportive online community to enhance
+          your holistic health journey.
         </p>
         <p>
-          Discover the power of nature with OptiLife.{" "}
-          <strong>Awaken your inner OptiLife and thrive!</strong>
+          Discover the power of nature with {COMPANY_NAME}.{" "}
+          <strong>Awaken your inner {COMPANY_NAME} and thrive!</strong>
         </p>
         <p>
-          <strong>OptiLife LLC</strong>
+          <strong>{COMPANY_NAME} LLC</strong>
         </p>
         <p>
-          <strong>
-            Address:&nbsp;+1111B S Governors Ave STE 28573 Dover Delaware 19904,
-            United States
-          </strong>
+          <strong>Address:&nbsp;{CONTACT_ADDRESS}, United States</strong>
         </p>
         <p>
           <strong>Email:&nbsp;</strong>
@@ -128,13 +133,13 @@ export default function AboutUs() {
             rel="noopener noreferrer nofollow"
             title=""
             role="url"
-            href="mailto:contact@optilifecompany.com"
+            href={`mailto:${CONTACT_EMAIL}`}
           >
-            <strong>contact@optilifecompany.com</strong>
+            <strong>{CONTACT_EMAIL}</strong>
           </a>
         </p>
         <p>
-          <strong>Phone:&nbsp;+1302 590 6135</strong>
+          <strong>Phone:&nbsp;{CONTACT_PHONE}</strong>
         </p>
       </div>
     </div>

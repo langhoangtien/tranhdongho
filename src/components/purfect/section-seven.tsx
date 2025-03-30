@@ -6,17 +6,17 @@ import {
 } from "@/components/ui/accordion";
 const data = [
   {
-    title: "How do I use PurfectFuel ™ products?",
+    title: "How do I use QuitMood ™ products?",
     content:
       "For best results, take the recommended dosage daily with water or food as directed on the product label.",
   },
   {
-    title: "What are the effects of PurfectFuel ™ supplements?",
+    title: "What are the effects of QuitMood ™ supplements?",
     content:
       "Our supplements are designed to support overall health, vitality, and well-being. They may help boost energy levels, promote immune function, enhance skin health, and support hormonal balance.",
   },
   {
-    title: "How does PurfectFuel ™ work?",
+    title: "How does QuitMood ™ work?",
     content:
       "Our supplements harnesses the power of natural ingredients like sea moss, shilajit, and ashwagandha to provide essential nutrients, support hormone regulation, and promote overall wellness.",
   },
@@ -26,7 +26,7 @@ const data = [
       "Our supplements are formulated with natural ingredients and are generally safe for most individuals. However, it's always recommended to consult with a healthcare professional before starting any new supplement regimen, especially if you have any pre-existing health conditions or are taking medication.",
   },
   {
-    title: "Is PurfectFuel ™ suitable for vegetarians/vegans?",
+    title: "Is QuitMood ™ suitable for vegetarians/vegans?",
     content:
       "YOur supplements are formulated with natural ingredients and are generally safe for most individuals. However, it's always recommended to consult with a healthcare professional before starting any new supplement regimen, especially if you have any pre-existing health conditions or are taking medication.",
   },

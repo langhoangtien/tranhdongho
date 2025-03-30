@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import MainLayout from "@/layout/main-layout";
 import { Input, Select } from "@/components/ui/custom-ui";
 import { CheckCheck } from "lucide-react";
+import { CONTACT_ADDRESS, CONTACT_EMAIL } from "@/config";
 
 export const Route = createFileRoute("/contact-us")({
   component: RouteComponent,
@@ -228,8 +229,7 @@ function ContactForm() {
           information you need.{" "}
         </p>
         <p>
-          <strong>Headquarters</strong>: 1111B S Governors Ave STE 28573 Dover
-          Daleware 19904
+          <strong>Headquarters</strong>: {CONTACT_ADDRESS}
           <br />
           <strong>Email</strong>:{" "}
           <a
@@ -237,9 +237,9 @@ function ContactForm() {
             rel="noopener noreferrer nofollow"
             title=""
             role="url"
-            href="mailto:contact@optilifecompany.com"
+            href={`mailto:${CONTACT_EMAIL}`}
           >
-            contact@optilifecompany.com
+            {CONTACT_EMAIL}
           </a>
           <br />
           <strong>Phone</strong>: +1 302 590 6135

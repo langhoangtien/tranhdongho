@@ -4,6 +4,8 @@ import { Check } from "lucide-react";
 import React from "react";
 import StarIcon from "../icons/star-icon";
 import { StarRating } from "./section-one";
+import { Button } from "../ui/button";
+import { PRODUCT_NAME } from "@/config";
 const works = [
   {
     image: "/purfect/img8.avif",
@@ -62,7 +64,15 @@ interface ProductCardProps {
   title: string;
   description: string;
   benefits: string[];
-  buttonColor: string;
+  variant:
+    | "default"
+    | "link"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | null
+    | undefined;
   checkColor: string;
 }
 
@@ -73,7 +83,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   title,
   description,
   benefits,
-  buttonColor,
+  variant,
   checkColor,
 }) => {
   return (
@@ -106,11 +116,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         ))}
       </ul>
       <div className="flex justify-between items-center mt-4">
-        <Link
-          to="/products/purfect-fuel-blend"
-          className={`md:px-16 px-6 py-4 ${buttonColor} text-white rounded-full text-lg font-medium hover:opacity-90 transition`}
-        >
-          Try Now
+        <Link to="/products/purfect-fuel-blend">
+          <Button variant={variant} className="h-14 w-32">
+            {" "}
+            Try Now
+          </Button>
         </Link>
         <Link
           to="/products/purfect-fuel-blend"
@@ -138,7 +148,7 @@ export default function SectionFour() {
             "Enhances energy levels",
             "Boosts immune system",
           ]}
-          buttonColor="bg-primary"
+          variant="default"
           checkColor="text-primary"
         />
         <ProductCard
@@ -152,7 +162,7 @@ export default function SectionFour() {
             "Supports healthy glowing skin",
             "Supports Healthy Testosterone",
           ]}
-          buttonColor="bg-black"
+          variant="secondary"
           checkColor="text-accent-foreground"
         />
       </div>
@@ -179,7 +189,7 @@ export default function SectionFour() {
         </div>
       </div>
       <div className="w-full max-w-6xl flex flex-col space-y-8 mx-auto">
-        <p className="text-5xl text-left">Here's how PurfectFuel ™ works</p>
+        <p className="text-5xl text-left">Here's how {PRODUCT_NAME} works</p>
         <div className="grid sm:grid-cols-2 grid-cols-1 md:grid-cols-4 gap-8">
           {works.map((item) => (
             <div

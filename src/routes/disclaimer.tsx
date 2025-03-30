@@ -1,3 +1,4 @@
+import { COMPANY_NAME, CONTACT_EMAIL, CONTACT_WEBSITE } from "@/config";
 import MainLayout from "@/layout/main-layout";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -24,9 +25,9 @@ function Disclaimer() {
         </p>
         <p />
         <p>
-          The information provided by OptiLife LLC. (&quot;we,&quot;
-          &quot;us,&quot; or &quot;our&quot;) on https://www.optilifecompany.com
-          (the &quot;Site&quot;) is for general informational purposes only. All
+          The information provided by {COMPANY_NAME} LLC. (&quot;we,&quot;
+          &quot;us,&quot; or &quot;our&quot;) on {CONTACT_WEBSITE} (the
+          &quot;Site&quot;) is for general informational purposes only. All
           information on the Site is provided in good faith, however, we make no
           representation or warranty of any kind, express or implied, regarding
           the accuracy, adequacy, validity, reliability, availability, or
@@ -111,9 +112,9 @@ function Disclaimer() {
             rel="noopener noreferrer nofollow"
             title=""
             role="url"
-            href="mailto:contact@gudmuscle.com"
+            href={`mailto:${CONTACT_EMAIL}`}
           >
-            contact@optilifecompany.com
+            {CONTACT_EMAIL}
           </a>
           .
         </p>

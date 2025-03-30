@@ -1,3 +1,4 @@
+import { COMPANY_NAME, CONTACT_EMAIL } from "@/config";
 import MainLayout from "@/layout/main-layout";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -22,7 +23,7 @@ function PrivacyPoliCy() {
         <p>
           This Privacy Policy describes how your personal information is
           collected, used, and shared when you visit or make a purchase from
-          Purfect Fuel Supplements (the “Site”).
+          {COMPANY_NAME} Supplements (the “Site”).
         </p>
         <h4>PERSONAL INFORMATION WE COLLECT</h4>
         <p>
@@ -183,7 +184,7 @@ function PrivacyPoliCy() {
         <p>
           For more information about our privacy practices, if you have
           questions, or if you would like to make a complaint, please contact us
-          by e‑mail at contact@purfectfuel.com Purfect Fuel Supplements
+          by e‑mail at {CONTACT_EMAIL} {COMPANY_NAME} Supplements
         </p>
         <p>[Re: Privacy Compliance Officer]</p>
       </div>

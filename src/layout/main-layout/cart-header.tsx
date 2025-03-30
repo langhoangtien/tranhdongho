@@ -139,10 +139,7 @@ export default function CartHeader() {
               </div>
 
               <Link to="/checkout" onClick={() => setIsOpen(false)}>
-                <Button
-                  size="lg"
-                  className="w-full bg-[#ffcb05] border-none hover:text-white text-primary"
-                >
+                <Button size="lg" className="w-full">
                   Checkout
                 </Button>
               </Link>
