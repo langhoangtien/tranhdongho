@@ -15,6 +15,7 @@ import { IProduct, IVariant } from "@/routes/admin/products";
 import StarIcon from "../icons/star-icon";
 import ReviewList from "../reviews";
 import { Badge } from "../ui/badge";
+import { COMPANY_NAME } from "@/config";
 interface IData extends IProduct {
   images: string[];
   variants: IVariant[];
@@ -87,7 +88,7 @@ export default function PufectPage() {
             </span>
           </div>
           <h2 className="text-2xl md:text-3xl  font-bold text-gray-800">
-            <span className="text-primary">QuitMood</span> Blend®
+            <span className="text-primary">{COMPANY_NAME}</span> Blend®
             <span className="bg-destructive rounded-md text-white text-sm mx-2 p-1 align-top font-semibold">
               Today Only!
             </span>
