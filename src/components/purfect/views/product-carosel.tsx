@@ -16,8 +16,6 @@ export default function ProductDetailCarousel({
 }: {
   slides: string[];
 }) {
-  console.log("slides", slides);
-
   if (!slides || !slides.length) return null;
   return (
     <div className="bg-transparent  md:mr-8 ">

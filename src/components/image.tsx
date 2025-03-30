@@ -7,7 +7,6 @@ export default function Image({
   ...props
 }: ImgHTMLAttributes<HTMLImageElement> & { dimension?: number }) {
   const srcConvert = convertIDToURL(src || "", dimension) || "/no-img.svg";
-  console.log("Image srcConvert", srcConvert);
 
   return <img src={srcConvert} {...props} />;
 }
