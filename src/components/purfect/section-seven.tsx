@@ -53,7 +53,7 @@ export default function SectionSeven() {
         <div className="w-full aspect-square ">
           <img
             className="w-full object-contain rounded-md"
-            src="/purfect/slide4.webp"
+            src="/purfect/img4.avif"
           />
         </div>
       </div>

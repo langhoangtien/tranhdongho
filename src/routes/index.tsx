@@ -10,6 +10,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
+  // Removed meta property as it is not recognized
 });
 
 function RouteComponent() {

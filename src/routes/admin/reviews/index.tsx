@@ -10,7 +10,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CheckIcon, Edit, PlusIcon, TrashIcon } from "lucide-react";
+import {
+  CheckIcon,
+  ChevronDown,
+  Edit,
+  PlusIcon,
+  TrashIcon,
+} from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useDebounce } from "@/hooks/use-debounce";
 import { API_URL } from "@/config";
@@ -22,6 +28,42 @@ export const Route = createFileRoute("/admin/reviews/")({
   component: RouteComponent,
 });
 
+interface SortableHeaderProps {
+  field: string;
+  label: string;
+  sortField: string;
+  sortOrder: "asc" | "desc";
+  onSort: (field: string) => void;
+}
+
+const SortableHeader: React.FC<SortableHeaderProps> = ({
+  field,
+  label,
+  sortField,
+  sortOrder,
+  onSort,
+}) => {
+  const isActive = sortField === field;
+
+  return (
+    <TableHead onClick={() => onSort(field)}>
+      <span className="w-full flex items-center justify-start cursor-pointer space-x-2">
+        <span>{label}</span>
+        <span
+          className={`transition-transform duration-200 ${
+            isActive
+              ? sortOrder === "asc"
+                ? "rotate-180"
+                : "rotate-0"
+              : "opacity-50"
+          }`}
+        >
+          <ChevronDown size={16} className="text-primary" />
+        </span>
+      </span>
+    </TableHead>
+  );
+};
 function RouteComponent() {
   return <ReviewPage />;
 }
@@ -49,13 +91,18 @@ export default function ReviewPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sortField, setSortField] = useState<string>("createdAt");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const debouncedSearch = useDebounce(search);
 
   useEffect(() => {
-    fetchReviews();
-  }, [debouncedSearch, page]);
+    setPage(1); // Reset trang về 1 khi search thay đổi
+  }, [debouncedSearch]);
 
+  useEffect(() => {
+    fetchReviews();
+  }, [debouncedSearch, page, sortField, sortOrder]);
   const fetchReviews = async () => {
     setLoading(true);
     setError(null);
@@ -64,7 +111,7 @@ export default function ReviewPage() {
       if (!token) throw new Error("Unauthorized: No token found");
 
       const res = await fetch(
-        `${API_URL}/reviews?page=${page}&limit=10&search=${debouncedSearch}`,
+        `${API_URL}/reviews?page=${page}&limit=10&search=${debouncedSearch}&sortBy=${sortField}&sortOrder=${sortOrder}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -74,16 +121,17 @@ export default function ReviewPage() {
 
       const data = await res.json();
       setReviews(data.data);
-      setTotalPages(data.pagination.totalPages);
+      setTotalPages(data.pagination?.totalPages ?? 1);
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Unknown error");
-      }
+      setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSort = (field: string) => {
+    setSortField(field);
+    setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
   };
 
   const handleDelete = async () => {
@@ -131,7 +179,7 @@ export default function ReviewPage() {
         <div className="flex h-10 py-3 justify-between space-x-1 items-center">
           <Input
             className="max-w-xs"
-            placeholder="Tìm theo tiêu đề hoặc nội dung"
+            placeholder="Tìm theo tiêu đề hoặc tên khách hàng"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -167,12 +215,43 @@ export default function ReviewPage() {
                   }
                 />
               </TableHead>
-              <TableHead>Khách hàng</TableHead>
-              <TableHead>Tiêu đề</TableHead>
-              <TableHead>Đánh giá</TableHead>
-              <TableHead>Lượt thích</TableHead>
-              <TableHead>Đã mua hàng</TableHead>
-              <TableHead>Ngày tạo</TableHead>
+              <SortableHeader
+                field="customer"
+                label="Khách hàng"
+                sortField={sortField}
+                sortOrder={sortOrder}
+                onSort={handleSort}
+              />
+              <SortableHeader
+                field="title"
+                label="Tiêu đề"
+                sortField={sortField}
+                sortOrder={sortOrder}
+                onSort={handleSort}
+              />
+              <SortableHeader
+                field="rating"
+                label="Đánh giá"
+                sortField={sortField}
+                sortOrder={sortOrder}
+                onSort={handleSort}
+              />
+              <SortableHeader
+                field="liked"
+                label="Lượt thích"
+                sortField={sortField}
+                sortOrder={sortOrder}
+                onSort={handleSort}
+              />
+              <TableHead>Đã mua</TableHead>
+              <SortableHeader
+                field="createdAt"
+                label="Ngày tạo"
+                sortField={sortField}
+                sortOrder={sortOrder}
+                onSort={handleSort}
+              />
+
               <TableHead>Hành động</TableHead>
             </TableRow>
           </TableHeader>

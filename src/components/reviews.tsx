@@ -78,12 +78,14 @@ const ReviewList: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [pagination, setPagination] = useState({ total: 0, totalPages: 0 });
+  const [numberReview, setNumberReview] = useState<number>(0);
   const [formData, setFormData] = useState({
     customer: "",
     email: "",
     rating: 5,
     title: "",
     body: "",
+    productId: "purfect-fuel-blend",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -110,13 +112,16 @@ const ReviewList: React.FC = () => {
     rating: 5,
     purchaseVerified: false,
     hasMedia: false,
-    sort: "liked_desc",
+    sortBy: "createdAt",
+    sortOrder: "desc",
   });
 
   const [likedIds, setLikedIds] = useState<number[]>([]);
 
   useEffect(() => {
     const likedIds = JSON.parse(localStorage.getItem("likedIds") || "[]");
+    const numberReview = localStorage.getItem("numberReview") || "0";
+    setNumberReview(Number(numberReview));
     setLikedIds(likedIds);
   }, []);
 
@@ -137,28 +142,19 @@ const ReviewList: React.FC = () => {
 
   const fetchReviews = async (page: number, reset: boolean = false) => {
     setLoading(true);
-    const queryParams = new URLSearchParams(
-      Object.entries({
-        page: page.toString(),
-        limit: "5",
-        ...(filters.rating && { rating: filters.rating.toString() }),
-        ...(filters.purchaseVerified && { purchaseVerified: "true" }),
-        ...(filters.hasMedia && { hasMedia: "true" }),
-        ...(filters.sort === "liked_desc"
-          ? { sortLiked: "desc" }
-          : filters.sort === "createdAt_asc"
-            ? { sortCreatedAt: "asc" }
-            : { sortCreatedAt: "desc" }),
-      }).reduce(
-        (acc, [key, value]) => {
-          if (value !== undefined) acc[key] = value;
-          return acc;
-        },
-        {} as Record<string, string>
-      )
-    );
 
     try {
+      const queryParams = new URLSearchParams({
+        page: String(page),
+        limit: "10",
+        sortBy: filters.sortBy,
+        sortOrder: filters.sortOrder,
+        ...(filters.rating && { rating: String(filters.rating) }),
+        ...(filters.hasMedia && { hasMedia: String(filters.hasMedia) }),
+        ...(filters.purchaseVerified && {
+          purchaseVerified: String(filters.purchaseVerified),
+        }),
+      });
       const res = await fetch(`${API_URL}/reviews?${queryParams.toString()}`);
       const json: ResponseReviews = await res.json();
 
@@ -183,22 +179,45 @@ const ReviewList: React.FC = () => {
     setPage(1);
   };
 
-  const handleSubmit = () => {
-    if (validateForm()) {
-      // Submit the form data to the server or perform any other action
-      console.log("Form submitted:", formData);
-      // Close the dialog after submission
-      setOpen(false);
-      toast.success("Review submitted successfully!");
-      // Reset the form data after submission
-      setFormData({
-        customer: "",
-        email: "",
-        rating: 5,
-        title: "",
-        body: "",
-      });
+  const handleSubmit = async () => {
+    if (numberReview >= 5) {
+      toast.error("You have reached the maximum number of reviews allowed.");
+      return;
     }
+    if (!validateForm()) return;
+    // Submit the form data to the server or perform any other action
+    try {
+      const response = await fetch(`${API_URL}/reviews/client-review`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      await response.json();
+      if (response.ok) {
+        setOpen(false);
+        setFormData({
+          customer: "",
+          email: "",
+          rating: 5,
+          title: "",
+          body: "",
+          productId: "purfect-fuel-blend",
+        });
+        toast.success("Review submitted successfully!");
+
+        localStorage.setItem("numberReview", String(numberReview + 1));
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      toast.error("Failed to submit review. Please try again later.");
+    }
+  };
+  const handleChangeSort = (value: string) => {
+    const [sortBy, sortOrder] = value.split("_");
+    setFilters((prev) => ({ ...prev, sortBy, sortOrder }));
+    setPage(1);
   };
   return (
     <div className="w-full max-w-5xl mx-auto space-y-4">
@@ -239,10 +258,15 @@ const ReviewList: React.FC = () => {
                   filters.rating === rating ? 0 : rating
                 )
               }
-              variant={filters.rating === rating ? "secondary" : "outline"}
+              variant="outline"
+              className={
+                filters.rating === rating ? "border-primary" : "border-border"
+              }
               size="sm"
             >
-              {rating} <StarIcon className="text-yellow-400" />
+              <span className="flex items-center gap-0.5">
+                {rating} <StarIcon className="text-yellow-400" />
+              </span>
             </Button>
           ))}
           <Button
@@ -251,15 +275,12 @@ const ReviewList: React.FC = () => {
             variant="outline"
             size="sm"
           >
-            <Image strokeWidth={1.25} />
+            <Image strokeWidth={1.5} />
             Photo
           </Button>
         </div>
 
-        <Select
-          onValueChange={(value) => handleFilterChange("sort", value)}
-          defaultValue="createdAt_desc"
-        >
+        <Select onValueChange={handleChangeSort} defaultValue="createdAt_desc">
           <SelectTrigger className="w-32 rounded-xs">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
@@ -326,7 +347,6 @@ const ReviewList: React.FC = () => {
                     preload="none"
                   >
                     <source src={url} type="video/mp4" />
-                    Trình duyệt của bạn không hỗ trợ video.
                   </video>
                 ))}
               </div>
@@ -351,13 +371,13 @@ const ReviewList: React.FC = () => {
         ))}
       </div>
 
-      <div className="text-center mt-4">
+      <div className="text-center flex justify-center mt-4 w-full">
         {page < pagination.totalPages && (
           <Button
             onClick={() => fetchReviews(page + 1)}
             disabled={loading}
             className="flex items-center gap-2"
-            variant="ghost"
+            variant="default"
           >
             {loading ? (
               <RotateCw className="mr-1 animate-spin" />
