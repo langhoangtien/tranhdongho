@@ -12,6 +12,7 @@ import { Textarea } from "../ui/textarea";
 import Editor from "../editor";
 import { STORAGE_KEY } from "@/auth";
 import Image from "../image";
+import Breadcrumbs from "../ui/breadcrumbs";
 
 const blogSchema = z.object({
   title: z.string().min(3, "Tiêu đề phải có ít nhất 3 ký tự").max(255),
@@ -159,101 +160,113 @@ export default function BlogForm({ id }: { id?: string }) {
   };
 
   return (
-    <div className="max-w-7xl w-full mx-auto p-6 bg-background rounded-lg">
-      <h2 className="text-xl font-semibold mb-4">
-        {id ? "Chỉnh sửa Blog" : "Thêm Blog Mới"}
-      </h2>
-      <fieldset disabled={loading} className="grid w-full grid-cols-2 gap-6">
-        <div className="col-span-2">
-          <label className="block text-sm font-medium mt-1">Tiêu đề*</label>
-          <Input
-            aria-invalid={!!errors.title}
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-          />
-          {errors.title && (
-            <p className="text-destructive text-sm mb-0.5">{errors.title}</p>
-          )}
-        </div>
-        <div className="col-span-2">
-          <label className="block text-sm font-medium mt-1">Slug</label>
-          <Input
-            aria-invalid={!!errors.slug}
-            name="slug"
-            value={formData.slug}
-            onChange={handleChange}
-          />
-          {errors.slug && (
-            <p className="text-destructive text-sm mb-0.5">{errors.slug}</p>
-          )}
-        </div>
-        <div className="col-span-2">
-          <label className="block text-sm font-medium mt-1">Tags</label>
-          <div className="flex flex-grow flex-wrap gap-2 min-h-10 border bg-background border-border p-2 rounded-md">
-            {formData.collections.map((value, index) => (
-              <button
-                key={index}
-                className="bg-gray-200 text-sm px-2 py-0.5 mr-2 rounded inline-flex items-center justify-center"
-              >
-                {value}
-                <X
-                  strokeWidth={1}
-                  size={16}
-                  className="ml-2 cursor-pointer"
-                  onClick={() =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      collections: prev.collections.filter(
-                        (_, i) => i !== index
-                      ),
-                    }))
-                  }
-                />
-              </button>
-            ))}
-            <input
-              placeholder="Gõ và nhân Enter để thêm giá trị VD: Techonogy"
-              className="border-none focus:outline-none flex-grow"
-              value={value}
-              onChange={handleChangeValue}
-              onKeyDown={handleKeyDown}
+    <div>
+      <Breadcrumbs
+        items={[
+          { label: "App", href: "/admin" },
+          { label: "Danh sách", href: "/admin/blogs" },
+          { label: "Bài viết", isCurrent: true }, // Trang hiện tại không có href
+        ]}
+      />
+
+      <div className="max-w-7xl w-full mx-auto p-6 bg-background rounded-lg">
+        <h2 className="text-xl font-semibold mb-4">
+          {id ? "Chỉnh sửa Blog" : "Thêm Blog Mới"}
+        </h2>
+        <fieldset disabled={loading} className="grid w-full grid-cols-2 gap-6">
+          <div className="col-span-2">
+            <label className="block text-sm font-medium mt-1">Tiêu đề*</label>
+            <Input
+              aria-invalid={!!errors.title}
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+            />
+            {errors.title && (
+              <p className="text-destructive text-sm mb-0.5">{errors.title}</p>
+            )}
+          </div>
+          <div className="col-span-2">
+            <label className="block text-sm font-medium mt-1">Slug</label>
+            <Input
+              aria-invalid={!!errors.slug}
+              name="slug"
+              value={formData.slug}
+              onChange={handleChange}
+            />
+            {errors.slug && (
+              <p className="text-destructive text-sm mb-0.5">{errors.slug}</p>
+            )}
+          </div>
+          <div className="col-span-2">
+            <label className="block text-sm font-medium mt-1">Tags</label>
+            <div className="flex flex-grow flex-wrap gap-2 min-h-10 border bg-background border-border p-2 rounded-md">
+              {formData.collections.map((value, index) => (
+                <button
+                  key={index}
+                  className="bg-gray-200 text-sm px-2 py-0.5 mr-2 rounded inline-flex items-center justify-center"
+                >
+                  {value}
+                  <X
+                    strokeWidth={1}
+                    size={16}
+                    className="ml-2 cursor-pointer"
+                    onClick={() =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        collections: prev.collections.filter(
+                          (_, i) => i !== index
+                        ),
+                      }))
+                    }
+                  />
+                </button>
+              ))}
+              <input
+                placeholder="Gõ và nhân Enter để thêm giá trị VD: Techonogy"
+                className="border-none focus:outline-none flex-grow"
+                value={value}
+                onChange={handleChangeValue}
+                onKeyDown={handleKeyDown}
+              />
+            </div>
+          </div>
+          <div className="col-span-2">
+            <label className="block text-sm font-medium mt-1">Mô tả</label>
+            <Textarea
+              aria-invalid={!!errors.description}
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              rows={4}
             />
           </div>
+          <div className="col-span-2">
+            <label className="block text-sm font-medium mt-1">Nội dung</label>
+            <Editor ref={editorRef} initialContent={formData.content} />
+            {errors.content && (
+              <p className="text-destructive text-sm mb-0.5">
+                {errors.content}
+              </p>
+            )}
+          </div>
+          <div>
+            <label className="block text-sm font-medium mt-1">Ảnh bìa</label>
+            <input type="file" onChange={handleChangeImage} />
+            {formData.image && (
+              <Image
+                src={formData.image}
+                alt="cover"
+                className="mt-2 size-32 object-cover"
+              />
+            )}
+          </div>
+        </fieldset>
+        <div className="flex justify-end mt-6">
+          <Button onClick={onSubmit} disabled={loading}>
+            {loading && <Loader2Icon className="animate-spin" />} Lưu lại
+          </Button>
         </div>
-        <div className="col-span-2">
-          <label className="block text-sm font-medium mt-1">Mô tả</label>
-          <Textarea
-            aria-invalid={!!errors.description}
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            rows={4}
-          />
-        </div>
-        <div className="col-span-2">
-          <label className="block text-sm font-medium mt-1">Nội dung</label>
-          <Editor ref={editorRef} initialContent={formData.content} />
-          {errors.content && (
-            <p className="text-destructive text-sm mb-0.5">{errors.content}</p>
-          )}
-        </div>
-        <div>
-          <label className="block text-sm font-medium mt-1">Ảnh bìa</label>
-          <input type="file" onChange={handleChangeImage} />
-          {formData.image && (
-            <Image
-              src={formData.image}
-              alt="cover"
-              className="mt-2 size-32 object-cover"
-            />
-          )}
-        </div>
-      </fieldset>
-      <div className="flex justify-end mt-6">
-        <Button onClick={onSubmit} disabled={loading}>
-          {loading && <Loader2Icon className="animate-spin" />} Lưu lại
-        </Button>
       </div>
     </div>
   );

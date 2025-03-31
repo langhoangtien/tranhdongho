@@ -16,6 +16,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 import { API_URL } from "@/config";
 import { STORAGE_KEY } from "@/auth";
 import { LoadingTable } from "@/components/loading/table-loading";
+import Breadcrumbs from "@/components/ui/breadcrumbs";
 
 export const Route = createFileRoute("/admin/orders/")({
   component: RouteComponent,
@@ -110,114 +111,123 @@ export default function OrderPage() {
   );
 
   return (
-    <div className="p-6 relative space-y-4">
-      {loading && <LoadingTable />}
-      <div className="flex h-10 py-3 justify-between space-x-1 items-center">
-        <Input
-          className="max-w-xs"
-          placeholder="Tìm email hoặc tên khách hàng"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <span className="flex space-x-2">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={handleDelete}
-            disabled={!selectedOrders.length}
-          >
-            <TrashIcon
-              className={`${selectedOrders.length ? "text-destructive" : ""}`}
-              strokeWidth={1}
-            />
-          </Button>
-          <Link to="/admin/orders/create">
-            <Button size="icon">
-              <PlusIcon />
-            </Button>
-          </Link>
-        </span>
-      </div>
-      {error && <p className="text-red-500">{error}</p>}
-
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>
-              <Checkbox
-                checked={allSelected}
-                onCheckedChange={(checked) =>
-                  setSelectedOrders(checked ? orders.map((o) => o._id) : [])
-                }
+    <div>
+      {" "}
+      <Breadcrumbs
+        items={[
+          { label: "App", href: "/admin" },
+          { label: "Danh sách", isCurrent: true },
+        ]}
+      />
+      <div className="p-6 relative space-y-4">
+        {loading && <LoadingTable />}
+        <div className="flex h-10 py-3 justify-between space-x-1 items-center">
+          <Input
+            className="max-w-xs"
+            placeholder="Tìm email hoặc tên khách hàng"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <span className="flex space-x-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={handleDelete}
+              disabled={!selectedOrders.length}
+            >
+              <TrashIcon
+                className={`${selectedOrders.length ? "text-destructive" : ""}`}
+                strokeWidth={1}
               />
-            </TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Tên khách hàng</TableHead>
-            <TableHead>Trạng thái</TableHead>
-            <TableHead>Phương thức thanh toán</TableHead>
-            <TableHead>Tổng tiền</TableHead>
-            <TableHead>Ngày tạo</TableHead>
-            <TableHead>Hành động</TableHead>
-          </TableRow>
-        </TableHeader>
+            </Button>
+            <Link to="/admin/orders/create">
+              <Button size="icon">
+                <PlusIcon />
+              </Button>
+            </Link>
+          </span>
+        </div>
+        {error && <p className="text-red-500">{error}</p>}
 
-        <TableBody>
-          {orders.map((order) => (
-            <TableRow key={order._id}>
-              <TableCell>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>
                 <Checkbox
-                  checked={selectedOrders.includes(order._id)}
+                  checked={allSelected}
                   onCheckedChange={(checked) =>
-                    setSelectedOrders((prev) =>
-                      checked
-                        ? [...prev, order._id]
-                        : prev.filter((id) => id !== order._id)
-                    )
+                    setSelectedOrders(checked ? orders.map((o) => o._id) : [])
                   }
                 />
-              </TableCell>
-              <TableCell>{order.email}</TableCell>
-              <TableCell>{order.name}</TableCell>
-              <TableCell>{order.status}</TableCell>
-              <TableCell>{order.paymentMethod}</TableCell>
-              <TableCell>${order.total}</TableCell>
-              <TableCell>
-                {new Date(order.createdAt).toLocaleString("vi-VN", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  second: "2-digit",
-                })}
-              </TableCell>
-              <TableCell>
-                <Link
-                  to="/admin/orders/$orderId"
-                  params={{ orderId: order._id }}
-                >
-                  <Button variant="outline" size="icon">
-                    <Edit strokeWidth={1} className="cursor-pointer" />
-                  </Button>
-                </Link>
-              </TableCell>
+              </TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Tên khách hàng</TableHead>
+              <TableHead>Trạng thái</TableHead>
+              <TableHead>Phương thức thanh toán</TableHead>
+              <TableHead>Tổng tiền</TableHead>
+              <TableHead>Ngày tạo</TableHead>
+              <TableHead>Hành động</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <div className="flex justify-between mt-4">
-        <Button disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
-          Prev
-        </Button>
-        <span>
-          Page {page} of {totalPages}
-        </span>
-        <Button
-          disabled={page === totalPages}
-          onClick={() => setPage((p) => p + 1)}
-        >
-          Next
-        </Button>
+          </TableHeader>
+
+          <TableBody>
+            {orders.map((order) => (
+              <TableRow key={order._id}>
+                <TableCell>
+                  <Checkbox
+                    checked={selectedOrders.includes(order._id)}
+                    onCheckedChange={(checked) =>
+                      setSelectedOrders((prev) =>
+                        checked
+                          ? [...prev, order._id]
+                          : prev.filter((id) => id !== order._id)
+                      )
+                    }
+                  />
+                </TableCell>
+                <TableCell>{order.email}</TableCell>
+                <TableCell>{order.name}</TableCell>
+                <TableCell>{order.status}</TableCell>
+                <TableCell>{order.paymentMethod}</TableCell>
+                <TableCell>${order.total}</TableCell>
+                <TableCell>
+                  {new Date(order.createdAt).toLocaleString("vi-VN", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                  })}
+                </TableCell>
+                <TableCell>
+                  <Link
+                    to="/admin/orders/$orderId"
+                    params={{ orderId: order._id }}
+                  >
+                    <Button variant="outline" size="icon">
+                      <Edit strokeWidth={1} className="cursor-pointer" />
+                    </Button>
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <div className="flex justify-between mt-4">
+          <Button disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
+            Prev
+          </Button>
+          <span>
+            Page {page} of {totalPages}
+          </span>
+          <Button
+            disabled={page === totalPages}
+            onClick={() => setPage((p) => p + 1)}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );

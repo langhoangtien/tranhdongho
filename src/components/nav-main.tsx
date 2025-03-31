@@ -65,6 +65,7 @@ const NavItem = ({ item }: { item: NavItemProps }) => {
   const routerState = useRouterState();
 
   const active = routerState.location.pathname.startsWith(item.url);
+  const activeExact = routerState.location.pathname === item.url;
   const [openMenu, setOpenMenu] = useState(active);
 
   useEffect(() => {
@@ -80,19 +81,19 @@ const NavItem = ({ item }: { item: NavItemProps }) => {
 
   if (!item.items)
     return (
-      <SidebarMenuItem>
-        <SidebarMenuButton
-          size="lg"
-          className="data-[active=true]:text-primary"
-          isActive={active}
-          tooltip={item.title}
-        >
-          <Link to={item.url}>
+      <Link to={item.url}>
+        <SidebarMenuItem>
+          <SidebarMenuButton
+            size="lg"
+            className="data-[active=true]:text-primary"
+            isActive={activeExact}
+            tooltip={item.title}
+          >
             {item.icon && <item.icon />}
             <span>{item.title}</span>
-          </Link>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </Link>
     );
   return (
     <Collapsible

@@ -39,7 +39,7 @@ export default function SectionOne() {
             </p>
             <p className="hidden md:block">
               Unlock 50+ essential minerals & optimize vitality with our Seamoss
-              & Shilajit bundle. Start your {PRODUCT_NAME} ™ Today
+              & Shilajit bundle. Start your {PRODUCT_NAME} Today
             </p>
             <p className="md:hidden">
               Unlock 50+ essential minerals & optimize vitality with our Seamoss
@@ -51,7 +51,7 @@ export default function SectionOne() {
                   size="lg"
                   className="h-14 flex items-center justify-between"
                 >
-                  <span> Start your {PRODUCT_NAME} ™ Today</span>
+                  <span> Start your {PRODUCT_NAME} Today</span>
                   <ArrowRightIcon size={24} />
                 </Button>
               </Link>

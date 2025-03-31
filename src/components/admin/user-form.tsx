@@ -9,6 +9,7 @@ import { uploadImg } from "@/lib/common";
 import { Input } from "../ui/input";
 import { useNavigate } from "@tanstack/react-router";
 import Image from "../image";
+import Breadcrumbs from "../ui/breadcrumbs";
 
 const userSchema = z.object({
   username: z
@@ -134,140 +135,150 @@ export default function UserForm({ id }: { id?: string }) {
   };
 
   return (
-    <div className="max-w-7xl w-full mx-auto p-6 bg-background rounded-lg">
-      <h2 className="text-xl font-semibold mb-4">Thêm Người dùng mới</h2>
-      <fieldset disabled={loading} className="grid w-full grid-cols-3 gap-8 ">
-        <div className="col-span-3 md:col-span-1 flex items-center flex-col space-y-4 p-4 justify-center shadow-md rounded-md">
-          <label
-            htmlFor="image"
-            className="cursor-pointer border-dashed border-2 bg-gray-200 p-2 border-border rounded-full  "
-            title="Chọn ảnh bìa"
-          >
-            <Image
-              src={formData.image}
-              alt="cover"
-              className="size-24  object-cover rounded-full"
-            />
-            <input
-              onChange={handleChangeImage}
-              id="image"
-              name="images"
-              type="file"
-              className="hidden"
-            />
-          </label>
-          <Button
-            disabled={!formData.image}
-            onClick={() => setFormData((prev) => ({ ...prev, image: "" }))}
-            variant={"outline"}
-            size="icon"
-          >
-            <Trash2Icon strokeWidth={1} />
-          </Button>
-          <p className="text-sm text-accent-foreground">
-            Allowed *.jpeg, *.jpg, *.png, *.webp max size of 2 Mb
-          </p>
-        </div>
-        <div className="col-span-3 md:col-span-2 ">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2 md:col-span-1">
-              <label className="block text-sm font-medium text-accent-foreground mb-1">
-                Username
-              </label>
-              <Input
-                type="text"
-                name="username"
-                aria-invalid={!!errors.username}
-                value={formData.username}
-                onChange={handleChange}
-                className="w-full border p-2 rounded"
+    <div>
+      {" "}
+      <Breadcrumbs
+        items={[
+          { label: "App", href: "/admin" },
+          { label: "Danh sách", href: "/admin/users" },
+          { label: "Người dùng", isCurrent: true }, // Trang hiện tại không có href
+        ]}
+      />
+      <div className="max-w-7xl w-full mx-auto p-6 bg-background rounded-lg">
+        <h2 className="text-xl font-semibold mb-4">Thêm Người dùng mới</h2>
+        <fieldset disabled={loading} className="grid w-full grid-cols-3 gap-8 ">
+          <div className="col-span-3 md:col-span-1 flex items-center flex-col space-y-4 p-4 justify-center shadow-md rounded-md">
+            <label
+              htmlFor="image"
+              className="cursor-pointer border-dashed border-2 bg-gray-200 p-2 border-border rounded-full  "
+              title="Chọn ảnh bìa"
+            >
+              <Image
+                src={formData.image}
+                alt="cover"
+                className="size-24  object-cover rounded-full"
               />
-              {errors.username && (
-                <p className="text-destructive text-sm mt-0.5">
-                  {errors.username}
-                </p>
-              )}
-            </div>
-            <div className="col-span-2 md:col-span-1">
-              <label className="block text-sm font-medium text-accent-foreground mb-1">
-                Họ và tên
-              </label>
-              <Input
-                type="text"
-                aria-invalid={!!errors.fullName}
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                className="w-full border p-2 rounded"
+              <input
+                onChange={handleChangeImage}
+                id="image"
+                name="images"
+                type="file"
+                className="hidden"
               />
-              {errors.fullName && (
-                <p className="text-destructive text-sm mt-0.5">
-                  {errors.fullName}
-                </p>
-              )}
-            </div>
-            <div className="col-span-2 md:col-span-1">
-              <label className="block text-sm font-medium text-accent-foreground mb-1">
-                Email
-              </label>
-              <Input
-                aria-invalid={!!errors.email}
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full border p-2 rounded"
-              />
-              {errors.email && (
-                <p className="text-destructive text-sm mt-0.5">
-                  {errors.email}
-                </p>
-              )}
-            </div>
-            <div className="col-span-2 md:col-span-1 ">
-              <label className="block text-sm font-medium text-accent-foreground mb-1">
-                Mật khẩu
-              </label>
-              <div className="relative">
+            </label>
+            <Button
+              disabled={!formData.image}
+              onClick={() => setFormData((prev) => ({ ...prev, image: "" }))}
+              variant={"outline"}
+              size="icon"
+            >
+              <Trash2Icon strokeWidth={1} />
+            </Button>
+            <p className="text-sm text-accent-foreground">
+              Allowed *.jpeg, *.jpg, *.png, *.webp max size of 2 Mb
+            </p>
+          </div>
+          <div className="col-span-3 md:col-span-2 ">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="col-span-2 md:col-span-1">
+                <label className="block text-sm font-medium text-accent-foreground mb-1">
+                  Username
+                </label>
                 <Input
-                  disabled={!editPassword}
-                  aria-invalid={!!errors.password}
-                  type="password"
-                  placeholder="Password"
-                  autoComplete="current-password"
-                  name="password"
-                  value={formData.password || ""}
+                  type="text"
+                  name="username"
+                  aria-invalid={!!errors.username}
+                  value={formData.username}
                   onChange={handleChange}
+                  className="w-full border p-2 rounded"
                 />
-                <Button
-                  type="button"
-                  size="icon"
-                  variant="ghost"
-                  onClick={handleSetEditPassword}
-                  className="absolute inset-y-0  right-0 flex items-center"
-                >
-                  <UserPenIcon
-                    strokeWidth={1}
-                    className={editPassword ? "text-primary" : ""}
-                  />
-                </Button>
+                {errors.username && (
+                  <p className="text-destructive text-sm mt-0.5">
+                    {errors.username}
+                  </p>
+                )}
               </div>
-              {errors.email && (
-                <p className="text-destructive text-sm mt-0.5">
-                  {errors.email}
-                </p>
-              )}
+              <div className="col-span-2 md:col-span-1">
+                <label className="block text-sm font-medium text-accent-foreground mb-1">
+                  Họ và tên
+                </label>
+                <Input
+                  type="text"
+                  aria-invalid={!!errors.fullName}
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded"
+                />
+                {errors.fullName && (
+                  <p className="text-destructive text-sm mt-0.5">
+                    {errors.fullName}
+                  </p>
+                )}
+              </div>
+              <div className="col-span-2 md:col-span-1">
+                <label className="block text-sm font-medium text-accent-foreground mb-1">
+                  Email
+                </label>
+                <Input
+                  aria-invalid={!!errors.email}
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded"
+                />
+                {errors.email && (
+                  <p className="text-destructive text-sm mt-0.5">
+                    {errors.email}
+                  </p>
+                )}
+              </div>
+              <div className="col-span-2 md:col-span-1 ">
+                <label className="block text-sm font-medium text-accent-foreground mb-1">
+                  Mật khẩu
+                </label>
+                <div className="relative">
+                  <Input
+                    disabled={!editPassword}
+                    aria-invalid={!!errors.password}
+                    type="password"
+                    placeholder="Password"
+                    autoComplete="current-password"
+                    name="password"
+                    value={formData.password || ""}
+                    onChange={handleChange}
+                  />
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    onClick={handleSetEditPassword}
+                    className="absolute inset-y-0  right-0 flex items-center"
+                  >
+                    <UserPenIcon
+                      strokeWidth={1}
+                      className={editPassword ? "text-primary" : ""}
+                    />
+                  </Button>
+                </div>
+                {errors.email && (
+                  <p className="text-destructive text-sm mt-0.5">
+                    {errors.email}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
+        </fieldset>
+        <div className="flex justify-end mt-8">
+          <Button onClick={onSubmit} disabled={loading} type="submit">
+            {loading && (
+              <Loader2Icon strokeWidth={1.25} className="animate-spin" />
+            )}{" "}
+            Lưu lại
+          </Button>
         </div>
-      </fieldset>
-      <div className="flex justify-end mt-8">
-        <Button onClick={onSubmit} disabled={loading} type="submit">
-          {loading && (
-            <Loader2Icon strokeWidth={1.25} className="animate-spin" />
-          )}{" "}
-          Lưu lại
-        </Button>
       </div>
     </div>
   );

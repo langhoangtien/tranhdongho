@@ -24,6 +24,7 @@ import { useNavigate } from "@tanstack/react-router";
 import Editor from "../editor";
 import Image from "../image";
 import { Textarea } from "../ui/textarea";
+import Breadcrumbs from "../ui/breadcrumbs";
 
 export interface Variant {
   price: number;
@@ -309,347 +310,362 @@ export default function ProductForm({ id }: { id?: string }) {
   };
 
   return (
-    <div className="max-w-7xl w-full mx-auto p-6 bg-background rounded-lg">
-      <fieldset disabled={loading} className="grid w-full grid-cols-2 gap-8 ">
-        <div className="space-y-4 col-span-2 md:col-span-1 ">
-          <h3 className="font-bold text-xl">Thông tin</h3>
-          <div className="flex justify-center flex-col items-center space-y-2">
-            <label
-              htmlFor="image"
-              className="cursor-pointer border-dashed border-2 bg-gray-200 p-2 border-border rounded-full  "
-              title="Chọn ảnh bìa"
-            >
-              <Image
-                src={formData.image}
-                alt="cover"
-                className="size-24  object-contain rounded-full"
-              />
-              <input
-                onChange={handleChangeImage}
-                id="image"
-                name="images"
-                type="file"
-                className="hidden"
-              />
-            </label>
+    <div>
+      <Breadcrumbs
+        items={[
+          { label: "App", href: "/admin" },
+          { label: "Danh sách", href: "/admin/products" },
+          { label: "Sản phẩm", isCurrent: true }, // Trang hiện tại không có href
+        ]}
+      />
 
-            <Button
-              disabled={!formData.image}
-              onClick={() => setFormData((prev) => ({ ...prev, image: "" }))}
-              variant={"outline"}
-              size="icon"
-            >
-              <Trash2Icon strokeWidth={1} />
-            </Button>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-accent-foreground mb-1">
-              Tên sản phẩm <span className="text-destructive">*</span>
-            </label>
-            <Input
-              aria-invalid={!!errors.name}
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleChange}
-            />
-            {errors.name && (
-              <p className="text-destructive text-sm">{errors.name}</p>
-            )}
-          </div>
-          <div>
-            {" "}
-            <label className="block text-sm font-medium text-accent-foreground mb-1">
-              URL
-            </label>
-            <Input
-              aria-invalid={!!errors.slug}
-              name="slug"
-              placeholder="Ví dụ: product-name"
-              value={formData.slug}
-              onChange={handleChange}
-            />
-            {errors.slug && (
-              <p className="text-destructive text-sm">{errors.slug}</p>
-            )}
-          </div>
-          <div>
-            {" "}
-            <label className="block text-sm font-medium text-accent-foreground mb-1">
-              Giới thiệu ngắn
-            </label>
-            <Textarea
-              aria-invalid={!!errors.introduction}
-              name="introduction"
-              placeholder=" "
-              value={formData.introduction}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  introduction: e.target.value,
-                }))
-              }
-            />
-            {errors.slug && (
-              <p className="text-destructive text-sm">{errors.introduction}</p>
-            )}
-          </div>
-          <div>
-            {" "}
-            <label className="block text-sm font-medium text-accent-foreground mb-1">
-              Mô tả
-            </label>
-            <Editor ref={editorRef} initialContent={formData.description} />
-          </div>
-          <div className="col-span-full">
-            <label
-              htmlFor="cover-photo"
-              className="block text-sm/6 font-medium text-gray-900"
-            >
-              Cover photo
-            </label>
+      <div className="max-w-7xl w-full mx-auto p-6 bg-background rounded-lg">
+        <fieldset disabled={loading} className="grid w-full grid-cols-2 gap-8 ">
+          <div className="space-y-4 col-span-2 md:col-span-1 ">
+            <h3 className="font-bold text-xl">Thông tin</h3>
+            <div className="flex justify-center flex-col items-center space-y-2">
+              <label
+                htmlFor="image"
+                className="cursor-pointer border-dashed border-2 bg-gray-200 p-2 border-border rounded-full  "
+                title="Chọn ảnh bìa"
+              >
+                <Image
+                  src={formData.image}
+                  alt="cover"
+                  className="size-24  object-contain rounded-full"
+                />
+                <input
+                  onChange={handleChangeImage}
+                  id="image"
+                  name="images"
+                  type="file"
+                  className="hidden"
+                />
+              </label>
 
-            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-border px-6 py-4 ">
-              <div className="flex text-sm/6 ">
-                <label
-                  htmlFor="files-upload"
-                  className="relative cursor-pointer rounded-md font-semibold space-y-2  flex flex-col items-center justify-center"
-                >
-                  <UploadIllustration hideBackground className="w-48" />
-
-                  <p className="text-xs/5 ">
-                    Định dạng PNG, JPG, JPEG, WEBP tối đa 2MB mỗi ảnh
-                  </p>
-                  <input
-                    disabled={isUploading}
-                    onChange={handleUploadImages}
-                    id="files-upload"
-                    name="images"
-                    multiple
-                    type="file"
-                    className="sr-only"
-                  />
-                </label>
-              </div>
+              <Button
+                disabled={!formData.image}
+                onClick={() => setFormData((prev) => ({ ...prev, image: "" }))}
+                variant={"outline"}
+                size="icon"
+              >
+                <Trash2Icon strokeWidth={1} />
+              </Button>
             </div>
+            <div>
+              <label className="block text-sm font-medium text-accent-foreground mb-1">
+                Tên sản phẩm <span className="text-destructive">*</span>
+              </label>
+              <Input
+                aria-invalid={!!errors.name}
+                name="name"
+                placeholder="Name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+              {errors.name && (
+                <p className="text-destructive text-sm">{errors.name}</p>
+              )}
+            </div>
+            <div>
+              {" "}
+              <label className="block text-sm font-medium text-accent-foreground mb-1">
+                URL
+              </label>
+              <Input
+                aria-invalid={!!errors.slug}
+                name="slug"
+                placeholder="Ví dụ: product-name"
+                value={formData.slug}
+                onChange={handleChange}
+              />
+              {errors.slug && (
+                <p className="text-destructive text-sm">{errors.slug}</p>
+              )}
+            </div>
+            <div>
+              {" "}
+              <label className="block text-sm font-medium text-accent-foreground mb-1">
+                Giới thiệu ngắn
+              </label>
+              <Textarea
+                aria-invalid={!!errors.introduction}
+                name="introduction"
+                placeholder=" "
+                value={formData.introduction}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    introduction: e.target.value,
+                  }))
+                }
+              />
+              {errors.slug && (
+                <p className="text-destructive text-sm">
+                  {errors.introduction}
+                </p>
+              )}
+            </div>
+            <div>
+              {" "}
+              <label className="block text-sm font-medium text-accent-foreground mb-1">
+                Mô tả
+              </label>
+              <Editor ref={editorRef} initialContent={formData.description} />
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="cover-photo"
+                className="block text-sm/6 font-medium text-gray-900"
+              >
+                Cover photo
+              </label>
 
-            <div className="flex flex-wrap gap-4 py-2 my-4 ">
-              {formData.images?.map((image, index) => (
-                <div
-                  className="size-20 relative border border-border rounded-md"
-                  key={index}
-                >
-                  {" "}
-                  <Image
-                    src={image}
-                    alt="cover"
-                    className="w-20 h-20 object-cover rounded-md"
-                  />
-                  <span
-                    onClick={() => {
-                      setFormData((prev) => {
-                        const newImages = prev.images.filter(
-                          (_, i) => i !== index
-                        );
-                        return { ...prev, images: newImages };
-                      });
-                    }}
-                    className="cursor-pointer size-5 flex justify-center items-center absolute top-1 right-1 rounded-full bg-accent"
+              <div className="mt-2 flex justify-center rounded-lg border border-dashed border-border px-6 py-4 ">
+                <div className="flex text-sm/6 ">
+                  <label
+                    htmlFor="files-upload"
+                    className="relative cursor-pointer rounded-md font-semibold space-y-2  flex flex-col items-center justify-center"
+                  >
+                    <UploadIllustration hideBackground className="w-48" />
+
+                    <p className="text-xs/5 ">
+                      Định dạng PNG, JPG, JPEG, WEBP tối đa 2MB mỗi ảnh
+                    </p>
+                    <input
+                      disabled={isUploading}
+                      onChange={handleUploadImages}
+                      id="files-upload"
+                      name="images"
+                      multiple
+                      type="file"
+                      className="sr-only"
+                    />
+                  </label>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-4 py-2 my-4 ">
+                {formData.images?.map((image, index) => (
+                  <div
+                    className="size-20 relative border border-border rounded-md"
+                    key={index}
                   >
                     {" "}
-                    <X strokeWidth={1} size={16} />
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="space-y-4 col-span-2 md:col-span-1">
-          <h3 className="font-bold text-xl">Thuộc tính biến thể</h3>
-          <div className="flex justify-end">
-            <Button
-              size="sm"
-              type="button"
-              onClick={() =>
-                setVariantOptions((prev) => [...prev, { name: "", values: [] }])
-              }
-            >
-              <PlusIcon strokeWidth={1} className="mr-2" />
-              Thêm thuộc tính
-            </Button>
-          </div>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-32">Thuộc tính</TableHead>
-                <TableHead>Giá trị</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {variantOptions.map((option, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    <Input
-                      placeholder="VD : Màu sắc"
-                      value={option.name}
-                      onChange={(e) => {
-                        setVariantOptions((prev) => {
-                          const newVariantOptions = [...prev];
-                          newVariantOptions[index] = {
-                            ...newVariantOptions[index],
-                            name: e.target.value,
-                          };
-                          return newVariantOptions;
+                    <Image
+                      src={image}
+                      alt="cover"
+                      className="w-20 h-20 object-cover rounded-md"
+                    />
+                    <span
+                      onClick={() => {
+                        setFormData((prev) => {
+                          const newImages = prev.images.filter(
+                            (_, i) => i !== index
+                          );
+                          return { ...prev, images: newImages };
                         });
                       }}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center space-x-2">
-                      <VariantOptionValuesInput
-                        handleChangeVariantOptionValues={(values) => {
+                      className="cursor-pointer size-5 flex justify-center items-center absolute top-1 right-1 rounded-full bg-accent"
+                    >
+                      {" "}
+                      <X strokeWidth={1} size={16} />
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="space-y-4 col-span-2 md:col-span-1">
+            <h3 className="font-bold text-xl">Thuộc tính biến thể</h3>
+            <div className="flex justify-end">
+              <Button
+                size="sm"
+                type="button"
+                onClick={() =>
+                  setVariantOptions((prev) => [
+                    ...prev,
+                    { name: "", values: [] },
+                  ])
+                }
+              >
+                <PlusIcon strokeWidth={1} className="mr-2" />
+                Thêm thuộc tính
+              </Button>
+            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-32">Thuộc tính</TableHead>
+                  <TableHead>Giá trị</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {variantOptions.map((option, index) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      <Input
+                        placeholder="VD : Màu sắc"
+                        value={option.name}
+                        onChange={(e) => {
                           setVariantOptions((prev) => {
                             const newVariantOptions = [...prev];
                             newVariantOptions[index] = {
                               ...newVariantOptions[index],
-                              values,
+                              name: e.target.value,
                             };
                             return newVariantOptions;
                           });
                         }}
-                        values={option.values}
-                      ></VariantOptionValuesInput>
-                      <Button
-                        className="shrink-0"
-                        onClick={() =>
-                          setVariantOptions((prev) =>
-                            prev.filter((_, i) => i !== index)
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center space-x-2">
+                        <VariantOptionValuesInput
+                          handleChangeVariantOptionValues={(values) => {
+                            setVariantOptions((prev) => {
+                              const newVariantOptions = [...prev];
+                              newVariantOptions[index] = {
+                                ...newVariantOptions[index],
+                                values,
+                              };
+                              return newVariantOptions;
+                            });
+                          }}
+                          values={option.values}
+                        ></VariantOptionValuesInput>
+                        <Button
+                          className="shrink-0"
+                          onClick={() =>
+                            setVariantOptions((prev) =>
+                              prev.filter((_, i) => i !== index)
+                            )
+                          }
+                          size="icon"
+                        >
+                          <Trash />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <div className="flex justify-end">
+              {variantOptions.length > 0 && (
+                <Button onClick={generateVariants}>Tạo biến thể </Button>
+              )}
+            </div>
+          </div>
+          <div className="col-span-2 space-y-2">
+            {" "}
+            <label>Variants</label>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Hình ảnh</TableHead>
+                  <TableHead>Thuộc tính</TableHead>
+                  <TableHead>Giá</TableHead>
+                  <TableHead>Giá so sánh</TableHead>
+                  <TableHead>Kho hàng</TableHead>
+                  <TableHead>SKU</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {formData.variants.map((variant, index) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      <div>
+                        <label
+                          htmlFor={`variant-image-${index}`}
+                          className="cursor-pointer"
+                        >
+                          <Image
+                            width={48}
+                            height={48}
+                            src={variant.image}
+                            alt="variant"
+                            className="w-10 h-10 object-cover rounded-md"
+                          />
+                          <input
+                            onChange={(e) => handleUploadImage(e, index)}
+                            className="hidden"
+                            id={`variant-image-${index}`}
+                            type="file"
+                          />
+                        </label>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      {variant.attributes?.map((attr) => (
+                        <span key={attr.name} className="mr-2">
+                          <strong>{attr.name}:</strong> {attr.value}
+                        </span>
+                      ))}
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        type="number"
+                        value={variant.price}
+                        onChange={(e) =>
+                          handleVariantChange(
+                            index,
+                            "price",
+                            Number(e.target.value)
                           )
                         }
-                        size="icon"
-                      >
-                        <Trash />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <div className="flex justify-end">
-            {variantOptions.length > 0 && (
-              <Button onClick={generateVariants}>Tạo biến thể </Button>
-            )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        type="number"
+                        value={variant.compareAtPrice}
+                        onChange={(e) =>
+                          handleVariantChange(
+                            index,
+                            "compareAtPrice",
+                            Number(e.target.value)
+                          )
+                        }
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        type="number"
+                        value={variant.stock}
+                        onChange={(e) =>
+                          handleVariantChange(
+                            index,
+                            "stock",
+                            Number(e.target.value)
+                          )
+                        }
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        value={variant.sku}
+                        onChange={(e) =>
+                          handleVariantChange(
+                            index,
+                            "sku",
+                            Number(e.target.value)
+                          )
+                        }
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
+        </fieldset>
+        <div className="flex justify-end">
+          <Button onClick={onSubmit} disabled={loading} type="submit">
+            {loading && <Loader2 strokeWidth={1.25} className="animate-spin" />}{" "}
+            Lưu lại
+          </Button>
         </div>
-        <div className="col-span-2 space-y-2">
-          {" "}
-          <label>Variants</label>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Hình ảnh</TableHead>
-                <TableHead>Thuộc tính</TableHead>
-                <TableHead>Giá</TableHead>
-                <TableHead>Giá so sánh</TableHead>
-                <TableHead>Kho hàng</TableHead>
-                <TableHead>SKU</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {formData.variants.map((variant, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    <div>
-                      <label
-                        htmlFor={`variant-image-${index}`}
-                        className="cursor-pointer"
-                      >
-                        <Image
-                          width={48}
-                          height={48}
-                          src={variant.image}
-                          alt="variant"
-                          className="w-10 h-10 object-cover rounded-md"
-                        />
-                        <input
-                          onChange={(e) => handleUploadImage(e, index)}
-                          className="hidden"
-                          id={`variant-image-${index}`}
-                          type="file"
-                        />
-                      </label>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    {variant.attributes?.map((attr) => (
-                      <span key={attr.name} className="mr-2">
-                        <strong>{attr.name}:</strong> {attr.value}
-                      </span>
-                    ))}
-                  </TableCell>
-                  <TableCell>
-                    <Input
-                      type="number"
-                      value={variant.price}
-                      onChange={(e) =>
-                        handleVariantChange(
-                          index,
-                          "price",
-                          Number(e.target.value)
-                        )
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Input
-                      type="number"
-                      value={variant.compareAtPrice}
-                      onChange={(e) =>
-                        handleVariantChange(
-                          index,
-                          "compareAtPrice",
-                          Number(e.target.value)
-                        )
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Input
-                      type="number"
-                      value={variant.stock}
-                      onChange={(e) =>
-                        handleVariantChange(
-                          index,
-                          "stock",
-                          Number(e.target.value)
-                        )
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Input
-                      value={variant.sku}
-                      onChange={(e) =>
-                        handleVariantChange(
-                          index,
-                          "sku",
-                          Number(e.target.value)
-                        )
-                      }
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      </fieldset>
-      <div className="flex justify-end">
-        <Button onClick={onSubmit} disabled={loading} type="submit">
-          {loading && <Loader2 strokeWidth={1.25} className="animate-spin" />}{" "}
-          Lưu lại
-        </Button>
       </div>
     </div>
   );

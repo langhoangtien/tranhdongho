@@ -30,10 +30,12 @@ import { Route as BlogsRouteImport } from './routes/blogs/route'
 import { Route as AdminRouteImport } from './routes/admin/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as BlogsIndexImport } from './routes/blogs/index'
+import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as ProductsPurfectFuelBlendImport } from './routes/products/purfect-fuel-blend'
 import { Route as ProductsProductIdImport } from './routes/products/$productId'
 import { Route as BlogsBlogSlugImport } from './routes/blogs/$blogSlug'
 import { Route as AdminUserImport } from './routes/admin/user'
+import { Route as AdminSettingsImport } from './routes/admin/settings'
 import { Route as AdminUsersIndexImport } from './routes/admin/users/index'
 import { Route as AdminReviewsIndexImport } from './routes/admin/reviews/index'
 import { Route as AdminProductsIndexImport } from './routes/admin/products/index'
@@ -41,6 +43,7 @@ import { Route as AdminOrdersIndexImport } from './routes/admin/orders/index'
 import { Route as AdminBlogsIndexImport } from './routes/admin/blogs/index'
 import { Route as AdminUsersCreateImport } from './routes/admin/users/create'
 import { Route as AdminUsersUserIdImport } from './routes/admin/users/$userId'
+import { Route as AdminReviewsImportImport } from './routes/admin/reviews/import'
 import { Route as AdminReviewsCreateImport } from './routes/admin/reviews/create'
 import { Route as AdminReviewsReviewIdImport } from './routes/admin/reviews/$reviewId'
 import { Route as AdminProductsCreateImport } from './routes/admin/products/create'
@@ -167,6 +170,12 @@ const BlogsIndexRoute = BlogsIndexImport.update({
   getParentRoute: () => BlogsRouteRoute,
 } as any)
 
+const AdminIndexRoute = AdminIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
 const ProductsPurfectFuelBlendRoute = ProductsPurfectFuelBlendImport.update({
   id: '/purfect-fuel-blend',
   path: '/purfect-fuel-blend',
@@ -188,6 +197,12 @@ const BlogsBlogSlugRoute = BlogsBlogSlugImport.update({
 const AdminUserRoute = AdminUserImport.update({
   id: '/user',
   path: '/user',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminSettingsRoute = AdminSettingsImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 
@@ -230,6 +245,12 @@ const AdminUsersCreateRoute = AdminUsersCreateImport.update({
 const AdminUsersUserIdRoute = AdminUsersUserIdImport.update({
   id: '/users/$userId',
   path: '/users/$userId',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminReviewsImportRoute = AdminReviewsImportImport.update({
+  id: '/reviews/import',
+  path: '/reviews/import',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 
@@ -411,6 +432,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackOrderImport
       parentRoute: typeof rootRoute
     }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsImport
+      parentRoute: typeof AdminRouteImport
+    }
     '/admin/user': {
       id: '/admin/user'
       path: '/user'
@@ -438,6 +466,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/products/purfect-fuel-blend'
       preLoaderRoute: typeof ProductsPurfectFuelBlendImport
       parentRoute: typeof ProductsRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexImport
+      parentRoute: typeof AdminRouteImport
     }
     '/blogs/': {
       id: '/blogs/'
@@ -502,6 +537,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminReviewsCreateImport
       parentRoute: typeof AdminRouteImport
     }
+    '/admin/reviews/import': {
+      id: '/admin/reviews/import'
+      path: '/reviews/import'
+      fullPath: '/admin/reviews/import'
+      preLoaderRoute: typeof AdminReviewsImportImport
+      parentRoute: typeof AdminRouteImport
+    }
     '/admin/users/$userId': {
       id: '/admin/users/$userId'
       path: '/users/$userId'
@@ -557,7 +599,9 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AdminRouteRouteChildren {
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminUserRoute: typeof AdminUserRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   AdminBlogsBlogIdRoute: typeof AdminBlogsBlogIdRoute
   AdminBlogsCreateRoute: typeof AdminBlogsCreateRoute
   AdminOrdersOrderIdRoute: typeof AdminOrdersOrderIdRoute
@@ -566,6 +610,7 @@ interface AdminRouteRouteChildren {
   AdminProductsCreateRoute: typeof AdminProductsCreateRoute
   AdminReviewsReviewIdRoute: typeof AdminReviewsReviewIdRoute
   AdminReviewsCreateRoute: typeof AdminReviewsCreateRoute
+  AdminReviewsImportRoute: typeof AdminReviewsImportRoute
   AdminUsersUserIdRoute: typeof AdminUsersUserIdRoute
   AdminUsersCreateRoute: typeof AdminUsersCreateRoute
   AdminBlogsIndexRoute: typeof AdminBlogsIndexRoute
@@ -576,7 +621,9 @@ interface AdminRouteRouteChildren {
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminUserRoute: AdminUserRoute,
+  AdminIndexRoute: AdminIndexRoute,
   AdminBlogsBlogIdRoute: AdminBlogsBlogIdRoute,
   AdminBlogsCreateRoute: AdminBlogsCreateRoute,
   AdminOrdersOrderIdRoute: AdminOrdersOrderIdRoute,
@@ -585,6 +632,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminProductsCreateRoute: AdminProductsCreateRoute,
   AdminReviewsReviewIdRoute: AdminReviewsReviewIdRoute,
   AdminReviewsCreateRoute: AdminReviewsCreateRoute,
+  AdminReviewsImportRoute: AdminReviewsImportRoute,
   AdminUsersUserIdRoute: AdminUsersUserIdRoute,
   AdminUsersCreateRoute: AdminUsersCreateRoute,
   AdminBlogsIndexRoute: AdminBlogsIndexRoute,
@@ -645,10 +693,12 @@ export interface FileRoutesByFullPath {
   '/shipping-policy': typeof ShippingPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/track-order': typeof TrackOrderRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/user': typeof AdminUserRoute
   '/blogs/$blogSlug': typeof BlogsBlogSlugRoute
   '/products/$productId': typeof ProductsProductIdRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
+  '/admin/': typeof AdminIndexRoute
   '/blogs/': typeof BlogsIndexRoute
   '/admin/blogs/$blogId': typeof AdminBlogsBlogIdRoute
   '/admin/blogs/create': typeof AdminBlogsCreateRoute
@@ -658,6 +708,7 @@ export interface FileRoutesByFullPath {
   '/admin/products/create': typeof AdminProductsCreateRoute
   '/admin/reviews/$reviewId': typeof AdminReviewsReviewIdRoute
   '/admin/reviews/create': typeof AdminReviewsCreateRoute
+  '/admin/reviews/import': typeof AdminReviewsImportRoute
   '/admin/users/$userId': typeof AdminUsersUserIdRoute
   '/admin/users/create': typeof AdminUsersCreateRoute
   '/admin/blogs': typeof AdminBlogsIndexRoute
@@ -669,7 +720,6 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteRouteWithChildren
   '/products': typeof ProductsRouteRouteWithChildren
   '/about-us': typeof AboutUsRoute
   '/billing-terms-and-conditions': typeof BillingTermsAndConditionsRoute
@@ -685,10 +735,12 @@ export interface FileRoutesByTo {
   '/shipping-policy': typeof ShippingPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/track-order': typeof TrackOrderRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/user': typeof AdminUserRoute
   '/blogs/$blogSlug': typeof BlogsBlogSlugRoute
   '/products/$productId': typeof ProductsProductIdRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
+  '/admin': typeof AdminIndexRoute
   '/blogs': typeof BlogsIndexRoute
   '/admin/blogs/$blogId': typeof AdminBlogsBlogIdRoute
   '/admin/blogs/create': typeof AdminBlogsCreateRoute
@@ -698,6 +750,7 @@ export interface FileRoutesByTo {
   '/admin/products/create': typeof AdminProductsCreateRoute
   '/admin/reviews/$reviewId': typeof AdminReviewsReviewIdRoute
   '/admin/reviews/create': typeof AdminReviewsCreateRoute
+  '/admin/reviews/import': typeof AdminReviewsImportRoute
   '/admin/users/$userId': typeof AdminUsersUserIdRoute
   '/admin/users/create': typeof AdminUsersCreateRoute
   '/admin/blogs': typeof AdminBlogsIndexRoute
@@ -727,10 +780,12 @@ export interface FileRoutesById {
   '/shipping-policy': typeof ShippingPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/track-order': typeof TrackOrderRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/user': typeof AdminUserRoute
   '/blogs/$blogSlug': typeof BlogsBlogSlugRoute
   '/products/$productId': typeof ProductsProductIdRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
+  '/admin/': typeof AdminIndexRoute
   '/blogs/': typeof BlogsIndexRoute
   '/admin/blogs/$blogId': typeof AdminBlogsBlogIdRoute
   '/admin/blogs/create': typeof AdminBlogsCreateRoute
@@ -740,6 +795,7 @@ export interface FileRoutesById {
   '/admin/products/create': typeof AdminProductsCreateRoute
   '/admin/reviews/$reviewId': typeof AdminReviewsReviewIdRoute
   '/admin/reviews/create': typeof AdminReviewsCreateRoute
+  '/admin/reviews/import': typeof AdminReviewsImportRoute
   '/admin/users/$userId': typeof AdminUsersUserIdRoute
   '/admin/users/create': typeof AdminUsersCreateRoute
   '/admin/blogs/': typeof AdminBlogsIndexRoute
@@ -770,10 +826,12 @@ export interface FileRouteTypes {
     | '/shipping-policy'
     | '/terms-of-service'
     | '/track-order'
+    | '/admin/settings'
     | '/admin/user'
     | '/blogs/$blogSlug'
     | '/products/$productId'
     | '/products/purfect-fuel-blend'
+    | '/admin/'
     | '/blogs/'
     | '/admin/blogs/$blogId'
     | '/admin/blogs/create'
@@ -783,6 +841,7 @@ export interface FileRouteTypes {
     | '/admin/products/create'
     | '/admin/reviews/$reviewId'
     | '/admin/reviews/create'
+    | '/admin/reviews/import'
     | '/admin/users/$userId'
     | '/admin/users/create'
     | '/admin/blogs'
@@ -793,7 +852,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/admin'
     | '/products'
     | '/about-us'
     | '/billing-terms-and-conditions'
@@ -809,10 +867,12 @@ export interface FileRouteTypes {
     | '/shipping-policy'
     | '/terms-of-service'
     | '/track-order'
+    | '/admin/settings'
     | '/admin/user'
     | '/blogs/$blogSlug'
     | '/products/$productId'
     | '/products/purfect-fuel-blend'
+    | '/admin'
     | '/blogs'
     | '/admin/blogs/$blogId'
     | '/admin/blogs/create'
@@ -822,6 +882,7 @@ export interface FileRouteTypes {
     | '/admin/products/create'
     | '/admin/reviews/$reviewId'
     | '/admin/reviews/create'
+    | '/admin/reviews/import'
     | '/admin/users/$userId'
     | '/admin/users/create'
     | '/admin/blogs'
@@ -849,10 +910,12 @@ export interface FileRouteTypes {
     | '/shipping-policy'
     | '/terms-of-service'
     | '/track-order'
+    | '/admin/settings'
     | '/admin/user'
     | '/blogs/$blogSlug'
     | '/products/$productId'
     | '/products/purfect-fuel-blend'
+    | '/admin/'
     | '/blogs/'
     | '/admin/blogs/$blogId'
     | '/admin/blogs/create'
@@ -862,6 +925,7 @@ export interface FileRouteTypes {
     | '/admin/products/create'
     | '/admin/reviews/$reviewId'
     | '/admin/reviews/create'
+    | '/admin/reviews/import'
     | '/admin/users/$userId'
     | '/admin/users/create'
     | '/admin/blogs/'
@@ -950,7 +1014,9 @@ export const routeTree = rootRoute
     "/admin": {
       "filePath": "admin/route.tsx",
       "children": [
+        "/admin/settings",
         "/admin/user",
+        "/admin/",
         "/admin/blogs/$blogId",
         "/admin/blogs/create",
         "/admin/orders/$orderId",
@@ -959,6 +1025,7 @@ export const routeTree = rootRoute
         "/admin/products/create",
         "/admin/reviews/$reviewId",
         "/admin/reviews/create",
+        "/admin/reviews/import",
         "/admin/users/$userId",
         "/admin/users/create",
         "/admin/blogs/",
@@ -1024,6 +1091,10 @@ export const routeTree = rootRoute
     "/track-order": {
       "filePath": "track-order.tsx"
     },
+    "/admin/settings": {
+      "filePath": "admin/settings.tsx",
+      "parent": "/admin"
+    },
     "/admin/user": {
       "filePath": "admin/user.tsx",
       "parent": "/admin"
@@ -1039,6 +1110,10 @@ export const routeTree = rootRoute
     "/products/purfect-fuel-blend": {
       "filePath": "products/purfect-fuel-blend.tsx",
       "parent": "/products"
+    },
+    "/admin/": {
+      "filePath": "admin/index.tsx",
+      "parent": "/admin"
     },
     "/blogs/": {
       "filePath": "blogs/index.tsx",
@@ -1074,6 +1149,10 @@ export const routeTree = rootRoute
     },
     "/admin/reviews/create": {
       "filePath": "admin/reviews/create.tsx",
+      "parent": "/admin"
+    },
+    "/admin/reviews/import": {
+      "filePath": "admin/reviews/import.tsx",
       "parent": "/admin"
     },
     "/admin/users/$userId": {

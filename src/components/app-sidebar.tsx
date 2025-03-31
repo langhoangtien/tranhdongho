@@ -6,6 +6,7 @@ import {
   FilePenLine,
   Frame,
   GalleryVerticalEnd,
+  HomeIcon,
   Map,
   PieChart,
   ScrollText,
@@ -53,6 +54,11 @@ const data = {
   ],
   navMain: [
     {
+      title: "App",
+      url: "/admin",
+      icon: HomeIcon,
+    },
+    {
       title: "Người dùng",
       url: "/admin/users",
       icon: UsersRound,
@@ -96,6 +102,10 @@ const data = {
           title: "Thêm mới",
           url: "/admin/reviews/create",
         },
+        {
+          title: "Nhập đánh giá",
+          url: "/admin/reviews/import",
+        },
       ],
     },
     {
@@ -132,24 +142,6 @@ const data = {
       title: "Cài đặt",
       url: "/admin/settings",
       icon: SettingsIcon,
-      items: [
-        {
-          title: "Profile",
-          url: "/admin/settings/profile",
-        },
-        {
-          title: "Billing",
-          url: "/admin/settings/billing",
-        },
-        {
-          title: "Notifications",
-          url: "/admin/settings/notifications",
-        },
-        {
-          title: "Security",
-          url: "/admin/settings/security",
-        },
-      ],
     },
   ],
   projects: [
