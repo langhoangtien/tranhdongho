@@ -16,6 +16,7 @@ import StarIcon from "../icons/star-icon";
 import ReviewList from "../reviews";
 import { Badge } from "../ui/badge";
 import { COMPANY_NAME } from "@/config";
+import { useState } from "react";
 interface IData extends IProduct {
   images: string[];
   variants: IVariant[];
@@ -55,6 +56,8 @@ export default function PufectPage() {
     from: "/products/purfect-fuel-blend",
   });
 
+  const [radioValue, setRadioValue] = useState<number>(0);
+
   const product: IData = {
     ...productData,
     variants: productData.variants.map((variant: IVariant, i: number) => ({
@@ -65,15 +68,15 @@ export default function PufectPage() {
     })),
   };
   return (
-    <div className="max-w-7xl mx-auto p-4 rounded-lg">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="max-w-6xl mx-auto p-4 rounded-lg">
+      <div className="grid grid-cols-12  gap-6">
         {/* Hình ảnh */}
-        <div>
+        <div className="col-span-12 md:col-span-7 ">
           <ProductDetailCarousel slides={product.images} />
         </div>
 
         {/* Nội dung */}
-        <div className="flex flex-col space-y-4">
+        <div className="flex md:pl-4 lg:pl-8 flex-col col-span-12 md:col-span-5 space-y-4">
           <div className="flex items-center justify-start space-x-2 text-gray-600  text-lg">
             <span className="text-primary flex space-x-1 text-lg mr-2">
               <StarIcon className="size-4 text-primary" />
@@ -112,11 +115,11 @@ export default function PufectPage() {
           <div className="mt-4 rounded-lg">
             <p className=" flex space-x-3 items-center ">
               <span className="line-through text-xl  ">
-                ${product.minCompareAtPrice ?? ""}
+                ${product.variants[radioValue]?.compareAtPrice ?? ""}
               </span>{" "}
               <span className="font-normal text-4xl text-accent-foreground ">
                 {" "}
-                ${product.minPrice}
+                ${product.variants[radioValue]?.price}
               </span>
               <Badge>Sale</Badge>
             </p>
@@ -131,7 +134,11 @@ export default function PufectPage() {
             <p>✅ Natural ingredients</p>
           </div>
           <div className="mt-6">
-            <AddToCartPurfectSection product={product} />
+            <AddToCartPurfectSection
+              product={product}
+              radioValue={radioValue}
+              setRadioValue={setRadioValue}
+            />
           </div>
 
           <div className="mx-2 flex items-center space-x-4 md:space-x-8 text-accent-foreground font-semibold    justify-around sm:text-sm">

@@ -26,13 +26,13 @@ export default function ProductDetailCarousel({
             {slides.map((image: string) => (
               <CarouselItem key={image}>
                 <div className="p-1">
-                  <CardContent className="flex md:w-full aspect-[1/1] items-center justify-center rounded-xl p-0">
+                  <CardContent className="flex md:w-full aspect-[1/1] items-center justify-center rounded-md p-0">
                     <Image
                       alt="Product Image"
                       width={800}
                       height={800}
                       src={image}
-                      className="object-cover w-full h-full rounded-xl"
+                      className="object-cover w-full h-full rounded-md"
                       dimension={800}
                     />
                   </CardContent>
