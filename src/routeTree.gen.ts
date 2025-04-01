@@ -40,6 +40,7 @@ import { Route as AdminUsersIndexImport } from './routes/admin/users/index'
 import { Route as AdminReviewsIndexImport } from './routes/admin/reviews/index'
 import { Route as AdminProductsIndexImport } from './routes/admin/products/index'
 import { Route as AdminOrdersIndexImport } from './routes/admin/orders/index'
+import { Route as AdminEmailsIndexImport } from './routes/admin/emails/index'
 import { Route as AdminBlogsIndexImport } from './routes/admin/blogs/index'
 import { Route as AdminUsersCreateImport } from './routes/admin/users/create'
 import { Route as AdminUsersUserIdImport } from './routes/admin/users/$userId'
@@ -50,6 +51,8 @@ import { Route as AdminProductsCreateImport } from './routes/admin/products/crea
 import { Route as AdminProductsProductIdImport } from './routes/admin/products/$productId'
 import { Route as AdminOrdersCreateImport } from './routes/admin/orders/create'
 import { Route as AdminOrdersOrderIdImport } from './routes/admin/orders/$orderId'
+import { Route as AdminEmailsCreateImport } from './routes/admin/emails/create'
+import { Route as AdminEmailsEmailIdImport } from './routes/admin/emails/$emailId'
 import { Route as AdminBlogsCreateImport } from './routes/admin/blogs/create'
 import { Route as AdminBlogsBlogIdImport } from './routes/admin/blogs/$blogId'
 
@@ -230,6 +233,12 @@ const AdminOrdersIndexRoute = AdminOrdersIndexImport.update({
   getParentRoute: () => AdminRouteRoute,
 } as any)
 
+const AdminEmailsIndexRoute = AdminEmailsIndexImport.update({
+  id: '/emails/',
+  path: '/emails/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
 const AdminBlogsIndexRoute = AdminBlogsIndexImport.update({
   id: '/blogs/',
   path: '/blogs/',
@@ -287,6 +296,18 @@ const AdminOrdersCreateRoute = AdminOrdersCreateImport.update({
 const AdminOrdersOrderIdRoute = AdminOrdersOrderIdImport.update({
   id: '/orders/$orderId',
   path: '/orders/$orderId',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminEmailsCreateRoute = AdminEmailsCreateImport.update({
+  id: '/emails/create',
+  path: '/emails/create',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminEmailsEmailIdRoute = AdminEmailsEmailIdImport.update({
+  id: '/emails/$emailId',
+  path: '/emails/$emailId',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 
@@ -495,6 +516,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBlogsCreateImport
       parentRoute: typeof AdminRouteImport
     }
+    '/admin/emails/$emailId': {
+      id: '/admin/emails/$emailId'
+      path: '/emails/$emailId'
+      fullPath: '/admin/emails/$emailId'
+      preLoaderRoute: typeof AdminEmailsEmailIdImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/emails/create': {
+      id: '/admin/emails/create'
+      path: '/emails/create'
+      fullPath: '/admin/emails/create'
+      preLoaderRoute: typeof AdminEmailsCreateImport
+      parentRoute: typeof AdminRouteImport
+    }
     '/admin/orders/$orderId': {
       id: '/admin/orders/$orderId'
       path: '/orders/$orderId'
@@ -565,6 +600,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBlogsIndexImport
       parentRoute: typeof AdminRouteImport
     }
+    '/admin/emails/': {
+      id: '/admin/emails/'
+      path: '/emails'
+      fullPath: '/admin/emails'
+      preLoaderRoute: typeof AdminEmailsIndexImport
+      parentRoute: typeof AdminRouteImport
+    }
     '/admin/orders/': {
       id: '/admin/orders/'
       path: '/orders'
@@ -604,6 +646,8 @@ interface AdminRouteRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
   AdminBlogsBlogIdRoute: typeof AdminBlogsBlogIdRoute
   AdminBlogsCreateRoute: typeof AdminBlogsCreateRoute
+  AdminEmailsEmailIdRoute: typeof AdminEmailsEmailIdRoute
+  AdminEmailsCreateRoute: typeof AdminEmailsCreateRoute
   AdminOrdersOrderIdRoute: typeof AdminOrdersOrderIdRoute
   AdminOrdersCreateRoute: typeof AdminOrdersCreateRoute
   AdminProductsProductIdRoute: typeof AdminProductsProductIdRoute
@@ -614,6 +658,7 @@ interface AdminRouteRouteChildren {
   AdminUsersUserIdRoute: typeof AdminUsersUserIdRoute
   AdminUsersCreateRoute: typeof AdminUsersCreateRoute
   AdminBlogsIndexRoute: typeof AdminBlogsIndexRoute
+  AdminEmailsIndexRoute: typeof AdminEmailsIndexRoute
   AdminOrdersIndexRoute: typeof AdminOrdersIndexRoute
   AdminProductsIndexRoute: typeof AdminProductsIndexRoute
   AdminReviewsIndexRoute: typeof AdminReviewsIndexRoute
@@ -626,6 +671,8 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
   AdminBlogsBlogIdRoute: AdminBlogsBlogIdRoute,
   AdminBlogsCreateRoute: AdminBlogsCreateRoute,
+  AdminEmailsEmailIdRoute: AdminEmailsEmailIdRoute,
+  AdminEmailsCreateRoute: AdminEmailsCreateRoute,
   AdminOrdersOrderIdRoute: AdminOrdersOrderIdRoute,
   AdminOrdersCreateRoute: AdminOrdersCreateRoute,
   AdminProductsProductIdRoute: AdminProductsProductIdRoute,
@@ -636,6 +683,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminUsersUserIdRoute: AdminUsersUserIdRoute,
   AdminUsersCreateRoute: AdminUsersCreateRoute,
   AdminBlogsIndexRoute: AdminBlogsIndexRoute,
+  AdminEmailsIndexRoute: AdminEmailsIndexRoute,
   AdminOrdersIndexRoute: AdminOrdersIndexRoute,
   AdminProductsIndexRoute: AdminProductsIndexRoute,
   AdminReviewsIndexRoute: AdminReviewsIndexRoute,
@@ -702,6 +750,8 @@ export interface FileRoutesByFullPath {
   '/blogs/': typeof BlogsIndexRoute
   '/admin/blogs/$blogId': typeof AdminBlogsBlogIdRoute
   '/admin/blogs/create': typeof AdminBlogsCreateRoute
+  '/admin/emails/$emailId': typeof AdminEmailsEmailIdRoute
+  '/admin/emails/create': typeof AdminEmailsCreateRoute
   '/admin/orders/$orderId': typeof AdminOrdersOrderIdRoute
   '/admin/orders/create': typeof AdminOrdersCreateRoute
   '/admin/products/$productId': typeof AdminProductsProductIdRoute
@@ -712,6 +762,7 @@ export interface FileRoutesByFullPath {
   '/admin/users/$userId': typeof AdminUsersUserIdRoute
   '/admin/users/create': typeof AdminUsersCreateRoute
   '/admin/blogs': typeof AdminBlogsIndexRoute
+  '/admin/emails': typeof AdminEmailsIndexRoute
   '/admin/orders': typeof AdminOrdersIndexRoute
   '/admin/products': typeof AdminProductsIndexRoute
   '/admin/reviews': typeof AdminReviewsIndexRoute
@@ -744,6 +795,8 @@ export interface FileRoutesByTo {
   '/blogs': typeof BlogsIndexRoute
   '/admin/blogs/$blogId': typeof AdminBlogsBlogIdRoute
   '/admin/blogs/create': typeof AdminBlogsCreateRoute
+  '/admin/emails/$emailId': typeof AdminEmailsEmailIdRoute
+  '/admin/emails/create': typeof AdminEmailsCreateRoute
   '/admin/orders/$orderId': typeof AdminOrdersOrderIdRoute
   '/admin/orders/create': typeof AdminOrdersCreateRoute
   '/admin/products/$productId': typeof AdminProductsProductIdRoute
@@ -754,6 +807,7 @@ export interface FileRoutesByTo {
   '/admin/users/$userId': typeof AdminUsersUserIdRoute
   '/admin/users/create': typeof AdminUsersCreateRoute
   '/admin/blogs': typeof AdminBlogsIndexRoute
+  '/admin/emails': typeof AdminEmailsIndexRoute
   '/admin/orders': typeof AdminOrdersIndexRoute
   '/admin/products': typeof AdminProductsIndexRoute
   '/admin/reviews': typeof AdminReviewsIndexRoute
@@ -789,6 +843,8 @@ export interface FileRoutesById {
   '/blogs/': typeof BlogsIndexRoute
   '/admin/blogs/$blogId': typeof AdminBlogsBlogIdRoute
   '/admin/blogs/create': typeof AdminBlogsCreateRoute
+  '/admin/emails/$emailId': typeof AdminEmailsEmailIdRoute
+  '/admin/emails/create': typeof AdminEmailsCreateRoute
   '/admin/orders/$orderId': typeof AdminOrdersOrderIdRoute
   '/admin/orders/create': typeof AdminOrdersCreateRoute
   '/admin/products/$productId': typeof AdminProductsProductIdRoute
@@ -799,6 +855,7 @@ export interface FileRoutesById {
   '/admin/users/$userId': typeof AdminUsersUserIdRoute
   '/admin/users/create': typeof AdminUsersCreateRoute
   '/admin/blogs/': typeof AdminBlogsIndexRoute
+  '/admin/emails/': typeof AdminEmailsIndexRoute
   '/admin/orders/': typeof AdminOrdersIndexRoute
   '/admin/products/': typeof AdminProductsIndexRoute
   '/admin/reviews/': typeof AdminReviewsIndexRoute
@@ -835,6 +892,8 @@ export interface FileRouteTypes {
     | '/blogs/'
     | '/admin/blogs/$blogId'
     | '/admin/blogs/create'
+    | '/admin/emails/$emailId'
+    | '/admin/emails/create'
     | '/admin/orders/$orderId'
     | '/admin/orders/create'
     | '/admin/products/$productId'
@@ -845,6 +904,7 @@ export interface FileRouteTypes {
     | '/admin/users/$userId'
     | '/admin/users/create'
     | '/admin/blogs'
+    | '/admin/emails'
     | '/admin/orders'
     | '/admin/products'
     | '/admin/reviews'
@@ -876,6 +936,8 @@ export interface FileRouteTypes {
     | '/blogs'
     | '/admin/blogs/$blogId'
     | '/admin/blogs/create'
+    | '/admin/emails/$emailId'
+    | '/admin/emails/create'
     | '/admin/orders/$orderId'
     | '/admin/orders/create'
     | '/admin/products/$productId'
@@ -886,6 +948,7 @@ export interface FileRouteTypes {
     | '/admin/users/$userId'
     | '/admin/users/create'
     | '/admin/blogs'
+    | '/admin/emails'
     | '/admin/orders'
     | '/admin/products'
     | '/admin/reviews'
@@ -919,6 +982,8 @@ export interface FileRouteTypes {
     | '/blogs/'
     | '/admin/blogs/$blogId'
     | '/admin/blogs/create'
+    | '/admin/emails/$emailId'
+    | '/admin/emails/create'
     | '/admin/orders/$orderId'
     | '/admin/orders/create'
     | '/admin/products/$productId'
@@ -929,6 +994,7 @@ export interface FileRouteTypes {
     | '/admin/users/$userId'
     | '/admin/users/create'
     | '/admin/blogs/'
+    | '/admin/emails/'
     | '/admin/orders/'
     | '/admin/products/'
     | '/admin/reviews/'
@@ -1019,6 +1085,8 @@ export const routeTree = rootRoute
         "/admin/",
         "/admin/blogs/$blogId",
         "/admin/blogs/create",
+        "/admin/emails/$emailId",
+        "/admin/emails/create",
         "/admin/orders/$orderId",
         "/admin/orders/create",
         "/admin/products/$productId",
@@ -1029,6 +1097,7 @@ export const routeTree = rootRoute
         "/admin/users/$userId",
         "/admin/users/create",
         "/admin/blogs/",
+        "/admin/emails/",
         "/admin/orders/",
         "/admin/products/",
         "/admin/reviews/",
@@ -1127,6 +1196,14 @@ export const routeTree = rootRoute
       "filePath": "admin/blogs/create.tsx",
       "parent": "/admin"
     },
+    "/admin/emails/$emailId": {
+      "filePath": "admin/emails/$emailId.tsx",
+      "parent": "/admin"
+    },
+    "/admin/emails/create": {
+      "filePath": "admin/emails/create.tsx",
+      "parent": "/admin"
+    },
     "/admin/orders/$orderId": {
       "filePath": "admin/orders/$orderId.tsx",
       "parent": "/admin"
@@ -1165,6 +1242,10 @@ export const routeTree = rootRoute
     },
     "/admin/blogs/": {
       "filePath": "admin/blogs/index.tsx",
+      "parent": "/admin"
+    },
+    "/admin/emails/": {
+      "filePath": "admin/emails/index.tsx",
       "parent": "/admin"
     },
     "/admin/orders/": {

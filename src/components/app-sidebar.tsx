@@ -7,6 +7,7 @@ import {
   Frame,
   GalleryVerticalEnd,
   HomeIcon,
+  MailIcon,
   Map,
   PieChart,
   ScrollText,
@@ -120,6 +121,21 @@ const data = {
         {
           title: "Thêm mới",
           url: "/admin/orders/create",
+        },
+      ],
+    },
+    {
+      title: "Email",
+      url: "/admin/emails",
+      icon: MailIcon,
+      items: [
+        {
+          title: "Danh sách",
+          url: "/admin/emails",
+        },
+        {
+          title: "Thêm mới",
+          url: "/admin/emails/create",
         },
       ],
     },

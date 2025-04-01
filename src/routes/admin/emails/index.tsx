@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CheckIcon, Edit, PlusIcon, TrashIcon } from "lucide-react";
+import { Edit, TrashIcon, PlusIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useDebounce } from "@/hooks/use-debounce";
 import { API_URL } from "@/config";
@@ -19,32 +19,26 @@ import { LoadingTable } from "@/components/loading/table-loading";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
 import { SortableHeader } from "@/components/admin/table-custom";
 
-export const Route = createFileRoute("/admin/reviews/")({
+export const Route = createFileRoute("/admin/emails/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <ReviewPage />;
+  return <EmailPage />;
 }
 
-export interface Review {
+export interface IEmail {
   _id: string;
-  customer: string;
-  productId: string;
-  title: string;
+  sender: string;
+  recipient: string;
+  subject: string;
   body: string;
-  createdAt: string;
-  rating: number;
-  liked: number;
-  purchaseVerified: boolean;
-  images: string[];
-  videos: string[];
-  reply?: string;
+  status: "sent" | "failed" | "draft" | "queued";
 }
 
-export default function ReviewPage() {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [selectedReviews, setSelectedReviews] = useState<string[]>([]);
+export default function EmailPage() {
+  const [emails, setEmails] = useState<IEmail[]>([]);
+  const [selectedEmails, setSelectedEmails] = useState<string[]>([]);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -56,13 +50,14 @@ export default function ReviewPage() {
   const debouncedSearch = useDebounce(search);
 
   useEffect(() => {
-    setPage(1); // Reset trang về 1 khi search thay đổi
+    setPage(1);
   }, [debouncedSearch]);
 
   useEffect(() => {
-    fetchReviews();
+    fetchEmails();
   }, [debouncedSearch, page, sortField, sortOrder]);
-  const fetchReviews = async () => {
+
+  const fetchEmails = async () => {
     setLoading(true);
     setError(null);
     try {
@@ -70,16 +65,16 @@ export default function ReviewPage() {
       if (!token) throw new Error("Unauthorized: No token found");
 
       const res = await fetch(
-        `${API_URL}/reviews?page=${page}&limit=10&search=${debouncedSearch}&sortBy=${sortField}&sortOrder=${sortOrder}`,
+        `${API_URL}/emails?page=${page}&limit=10&search=${debouncedSearch}&sortBy=${sortField}&sortOrder=${sortOrder}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
 
-      if (!res.ok) throw new Error("Failed to fetch reviews");
+      if (!res.ok) throw new Error("Failed to fetch emails");
 
       const data = await res.json();
-      setReviews(data.data);
+      setEmails(data.data);
       setTotalPages(data.pagination?.totalPages ?? 1);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Unknown error");
@@ -87,7 +82,6 @@ export default function ReviewPage() {
       setLoading(false);
     }
   };
-
   const handleSort = (field: string) => {
     setSortField(field);
     setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
@@ -98,39 +92,35 @@ export default function ReviewPage() {
       const token = localStorage.getItem(STORAGE_KEY);
       if (!token) throw new Error("Unauthorized: No token found");
 
-      const res = await fetch(`${API_URL}/reviews/delete-many`, {
+      const res = await fetch(`${API_URL}/emails/delete-many`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ ids: selectedReviews }),
+        body: JSON.stringify({ ids: selectedEmails }),
       });
 
-      if (!res.ok) throw new Error("Failed to delete reviews");
+      if (!res.ok) throw new Error("Failed to delete emails");
 
-      setSelectedReviews([]);
+      setSelectedEmails([]);
       setPage(1);
-      fetchReviews();
+      fetchEmails();
     } catch (err: unknown) {
-      if (err instanceof Error) setError(err.message);
-      else {
-        setError("Unknown error");
-      }
+      setError(err instanceof Error ? err.message : "Unknown error");
     }
   };
 
   const allSelected = useMemo(
-    () => selectedReviews.length === reviews.length && reviews.length > 0,
-    [selectedReviews, reviews]
+    () => selectedEmails.length === emails.length && emails.length > 0,
+    [selectedEmails, emails]
   );
-
   return (
     <div>
       <Breadcrumbs
         items={[
           { label: "App", href: "/admin" },
-          { label: "Danh sách", isCurrent: true },
+          { label: "Emails", isCurrent: true },
         ]}
       />
       <div className="p-6 relative space-y-4">
@@ -138,23 +128,23 @@ export default function ReviewPage() {
         <div className="flex h-10 py-3 justify-between space-x-1 items-center">
           <Input
             className="max-w-xs"
-            placeholder="Tìm theo tiêu đề hoặc tên khách hàng"
+            placeholder="Tìm theo người gửi hoặc chủ đề"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
           <span className="flex space-x-2">
             <Button
-              variant={"outline"}
+              variant="outline"
               size="icon"
               onClick={handleDelete}
-              disabled={!selectedReviews.length}
+              disabled={!selectedEmails.length}
             >
               <TrashIcon
-                className={`${selectedReviews.length ? "text-destructive" : ""}`}
+                className={`$ {selectedEmails.length ? "text-destructive" : ""}`}
                 strokeWidth={1}
               />
             </Button>
-            <Link to="/admin/reviews/create">
+            <Link to="/admin/emails/create">
               <Button size="icon">
                 <PlusIcon strokeWidth={1.25} />
               </Button>
@@ -162,7 +152,6 @@ export default function ReviewPage() {
           </span>
         </div>
         {error && <p className="text-red-500">{error}</p>}
-
         <Table>
           <TableHeader>
             <TableRow>
@@ -170,42 +159,34 @@ export default function ReviewPage() {
                 <Checkbox
                   checked={allSelected}
                   onCheckedChange={(checked) =>
-                    setSelectedReviews(checked ? reviews.map((r) => r._id) : [])
+                    setSelectedEmails(checked ? emails.map((r) => r._id) : [])
                   }
                 />
               </TableHead>
               <SortableHeader
-                field="customer"
-                label="Khách hàng"
+                field="sender"
+                label="Người gửi"
                 sortField={sortField}
                 sortOrder={sortOrder}
                 onSort={handleSort}
               />
               <SortableHeader
-                field="title"
-                label="Tiêu đề"
+                field="recipient"
+                label="Người nhận"
                 sortField={sortField}
                 sortOrder={sortOrder}
                 onSort={handleSort}
               />
               <SortableHeader
-                field="rating"
-                label="Đánh giá"
+                field="subject"
+                label="Chủ đề"
                 sortField={sortField}
                 sortOrder={sortOrder}
                 onSort={handleSort}
               />
               <SortableHeader
-                field="liked"
-                label="Lượt thích"
-                sortField={sortField}
-                sortOrder={sortOrder}
-                onSort={handleSort}
-              />
-              <TableHead>Đã mua</TableHead>
-              <SortableHeader
-                field="createdAt"
-                label="Ngày tạo"
+                field="status"
+                label="Trạng thái"
                 sortField={sortField}
                 sortOrder={sortOrder}
                 onSort={handleSort}
@@ -215,37 +196,28 @@ export default function ReviewPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {reviews.map((review) => (
-              <TableRow key={review._id}>
+            {emails.map((email) => (
+              <TableRow key={email._id}>
                 <TableCell>
                   <Checkbox
-                    checked={selectedReviews.includes(review._id)}
+                    checked={selectedEmails.includes(email._id)}
                     onCheckedChange={(checked) =>
-                      setSelectedReviews((prev) =>
+                      setSelectedEmails((prev) =>
                         checked
-                          ? [...prev, review._id]
-                          : prev.filter((id) => id !== review._id)
+                          ? [...prev, email._id]
+                          : prev.filter((id) => id !== email._id)
                       )
                     }
                   />
                 </TableCell>
-                <TableCell>{review.customer}</TableCell>
-                <TableCell>{review.title}</TableCell>
-                <TableCell>{review.rating} ⭐</TableCell>
-
-                <TableCell>{review.liked} </TableCell>
-                <TableCell>
-                  {!!review.purchaseVerified && (
-                    <CheckIcon className="text-primary" size={16} />
-                  )}
-                </TableCell>
-                <TableCell>
-                  {new Date(review.createdAt).toLocaleDateString()}
-                </TableCell>
+                <TableCell>{email.sender}</TableCell>
+                <TableCell>{email.recipient}</TableCell>
+                <TableCell>{email.subject}</TableCell>
+                <TableCell>{email.status}</TableCell>
                 <TableCell>
                   <Link
-                    to="/admin/reviews/$reviewId"
-                    params={{ reviewId: review._id }}
+                    to="/admin/emails/$emailId"
+                    params={{ emailId: email._id }}
                   >
                     <Button variant="outline" size="icon">
                       <Edit strokeWidth={1} className="cursor-pointer" />

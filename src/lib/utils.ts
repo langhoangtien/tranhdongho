@@ -7,8 +7,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 enum SIZE_ENUM {
-  THUMBNAIL = 100,
-  MEDIUM = 250,
   LARGE = 400,
   EXTRA_LARGE = 800,
 }
