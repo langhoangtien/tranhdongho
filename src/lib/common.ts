@@ -138,7 +138,7 @@ export const uploadImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
       throw new Error(data.message || "Upload failed.");
     }
 
-    const images = data.files.map((file) => convertIDToURL(file, 250));
+    const images = data.files.map((file) => convertIDToURL(file, 400));
     return images;
   } catch (err) {
     console.error("Failed to upload images", err);
