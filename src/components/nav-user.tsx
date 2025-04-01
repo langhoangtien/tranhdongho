@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/auth";
 import { convertIDToURL } from "@/lib/utils";
+import { Link } from "@tanstack/react-router";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -80,10 +81,12 @@ export function NavUser() {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck strokeWidth={1.25} />
-                Account
-              </DropdownMenuItem>
+              <Link to={"/admin/profile"}>
+                <DropdownMenuItem>
+                  <BadgeCheck strokeWidth={1.25} />
+                  Account
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuItem>
                 <CreditCard strokeWidth={1.25} />
                 Billing

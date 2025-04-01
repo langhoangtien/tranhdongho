@@ -36,6 +36,7 @@ import { Route as ProductsProductIdImport } from './routes/products/$productId'
 import { Route as BlogsBlogSlugImport } from './routes/blogs/$blogSlug'
 import { Route as AdminUserImport } from './routes/admin/user'
 import { Route as AdminSettingsImport } from './routes/admin/settings'
+import { Route as AdminProfileImport } from './routes/admin/profile'
 import { Route as AdminUsersIndexImport } from './routes/admin/users/index'
 import { Route as AdminReviewsIndexImport } from './routes/admin/reviews/index'
 import { Route as AdminProductsIndexImport } from './routes/admin/products/index'
@@ -206,6 +207,12 @@ const AdminUserRoute = AdminUserImport.update({
 const AdminSettingsRoute = AdminSettingsImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminProfileRoute = AdminProfileImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 
@@ -453,6 +460,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackOrderImport
       parentRoute: typeof rootRoute
     }
+    '/admin/profile': {
+      id: '/admin/profile'
+      path: '/profile'
+      fullPath: '/admin/profile'
+      preLoaderRoute: typeof AdminProfileImport
+      parentRoute: typeof AdminRouteImport
+    }
     '/admin/settings': {
       id: '/admin/settings'
       path: '/settings'
@@ -641,6 +655,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AdminRouteRouteChildren {
+  AdminProfileRoute: typeof AdminProfileRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminUserRoute: typeof AdminUserRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -666,6 +681,7 @@ interface AdminRouteRouteChildren {
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminProfileRoute: AdminProfileRoute,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminUserRoute: AdminUserRoute,
   AdminIndexRoute: AdminIndexRoute,
@@ -741,6 +757,7 @@ export interface FileRoutesByFullPath {
   '/shipping-policy': typeof ShippingPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/track-order': typeof TrackOrderRoute
+  '/admin/profile': typeof AdminProfileRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/user': typeof AdminUserRoute
   '/blogs/$blogSlug': typeof BlogsBlogSlugRoute
@@ -786,6 +803,7 @@ export interface FileRoutesByTo {
   '/shipping-policy': typeof ShippingPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/track-order': typeof TrackOrderRoute
+  '/admin/profile': typeof AdminProfileRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/user': typeof AdminUserRoute
   '/blogs/$blogSlug': typeof BlogsBlogSlugRoute
@@ -834,6 +852,7 @@ export interface FileRoutesById {
   '/shipping-policy': typeof ShippingPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/track-order': typeof TrackOrderRoute
+  '/admin/profile': typeof AdminProfileRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/user': typeof AdminUserRoute
   '/blogs/$blogSlug': typeof BlogsBlogSlugRoute
@@ -883,6 +902,7 @@ export interface FileRouteTypes {
     | '/shipping-policy'
     | '/terms-of-service'
     | '/track-order'
+    | '/admin/profile'
     | '/admin/settings'
     | '/admin/user'
     | '/blogs/$blogSlug'
@@ -927,6 +947,7 @@ export interface FileRouteTypes {
     | '/shipping-policy'
     | '/terms-of-service'
     | '/track-order'
+    | '/admin/profile'
     | '/admin/settings'
     | '/admin/user'
     | '/blogs/$blogSlug'
@@ -973,6 +994,7 @@ export interface FileRouteTypes {
     | '/shipping-policy'
     | '/terms-of-service'
     | '/track-order'
+    | '/admin/profile'
     | '/admin/settings'
     | '/admin/user'
     | '/blogs/$blogSlug'
@@ -1080,6 +1102,7 @@ export const routeTree = rootRoute
     "/admin": {
       "filePath": "admin/route.tsx",
       "children": [
+        "/admin/profile",
         "/admin/settings",
         "/admin/user",
         "/admin/",
@@ -1159,6 +1182,10 @@ export const routeTree = rootRoute
     },
     "/track-order": {
       "filePath": "track-order.tsx"
+    },
+    "/admin/profile": {
+      "filePath": "admin/profile.tsx",
+      "parent": "/admin"
     },
     "/admin/settings": {
       "filePath": "admin/settings.tsx",
