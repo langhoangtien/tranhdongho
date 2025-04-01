@@ -90,6 +90,7 @@ export const LogoWithLink1 = ({ className }: { className?: string }) => {
     >
       {" "}
       <svg
+        className="w-full h-full"
         xmlns="http://www.w3.org/2000/svg"
         version="1.0"
         width="280.000000pt"
@@ -126,6 +127,7 @@ export const LogoWithLink2 = ({ className }: { className?: string }) => {
     >
       {" "}
       <svg
+        className="w-full h-full"
         xmlns="http://www.w3.org/2000/svg"
         version="1.0"
         width="800.000000pt"

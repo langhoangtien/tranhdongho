@@ -295,7 +295,7 @@ const ReviewList: React.FC = () => {
       <div className="space-y-4">
         {reviews.map((review) => (
           <div key={review._id} className="border-b border-border pb-6">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+            <div className="flex flex-row justify-between md:items-center">
               <div>
                 <p className="font-bold flex gap-2 items-center  text-lg">
                   <span className="flex items-center">{review.customer}</span>

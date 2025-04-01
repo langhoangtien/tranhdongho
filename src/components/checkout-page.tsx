@@ -381,9 +381,12 @@ export function CheckoutPage() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value={CheckoutStep.SHIPPING}>
-              <div className="bg-card rounded-lg shadow-sm">
-                <div className="p-6">
+            <TabsContent
+              className="rounded-lg shadow-md p-4"
+              value={CheckoutStep.SHIPPING}
+            >
+              <div>
+                <div>
                   <h2 className="text-xl font-bold mb-4">
                     Shipping Information
                   </h2>
@@ -592,7 +595,7 @@ export function CheckoutPage() {
                   </div>
                   <div className="bg-accent">
                     {!isSameShipping && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6 mb-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-2 md:p-6 mb-6">
                         <div>
                           <Input
                             id="bFirstName"
@@ -747,7 +750,7 @@ export function CheckoutPage() {
                   </div>
                 </div>
               </div>
-              <div className="flex px-6 py-4 justify-end">
+              <div className="flex justify-end">
                 <Button onClick={handleShippingSubmit} type="submit">
                   Continue to Payment
                 </Button>
@@ -756,7 +759,7 @@ export function CheckoutPage() {
 
             <TabsContent
               value={CheckoutStep.PAYMENT}
-              className="bg-background p-6 rounded-lg shadow-sm"
+              className="rounded-lg shadow-md p-4"
             >
               <div>
                 <h2 className="text-xl font-bold mb-4">Shipping Information</h2>
@@ -823,7 +826,7 @@ export function CheckoutPage() {
                       >
                         <label
                           htmlFor="radio-card"
-                          className={`flex space-x-2 justify-between border border-gray-200 p-4 rounded-lg cursor-pointer items-center ${
+                          className={`flex space-x-2 justify-between border border-gray-200 p-2 rounded-lg cursor-pointer items-center ${
                             paymentMethod === "paypal" ? "bg-background " : ""
                           }`}
                         >
