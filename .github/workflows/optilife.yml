@@ -27,7 +27,7 @@ jobs:
       - name: Add environment variables
         run: |
           echo "VITE_SERVER_URL=https://api.optilifecompany.com" >> .env
-          echo "VITE_PAYPAL_CLIENT_ID=ASwSHwggi9GFWxDBOwcJWXCbEqLVCYN2FyRgwpxhxETqiZoZJo5hfg4OTbUuCm0dWNx1zIh0zZrxShgl" >> .env
+          echo "VITE_PAYPAL_CLIENT_ID=AfNohOjS6pSLvCkmaIcy-xV5u3xv9LggUjxWlF1rsU5jNzhFxj3_mhmcjlbrvgaZZb-5I1iXhQ6dt-In" >> .env
           echo "VITE_BRANCH=optilife" >> .env
 
       # Build project
