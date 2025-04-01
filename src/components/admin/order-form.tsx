@@ -34,6 +34,7 @@ interface IVariantCart {
 const INIT_FORM_DATA = {
   products: [],
   total: 0,
+  tax: 0,
   email: "",
   status: "PENDING",
   paymentMethod: "paypal",
@@ -51,6 +52,7 @@ export default function OrderForm({ id }: { id?: string }) {
   const [formData, setFormData] = useState<{
     products: IVariantCart[];
     total: number;
+    tax: number;
     email: string;
     status: string;
     paymentMethod: string;
@@ -260,10 +262,12 @@ export default function OrderForm({ id }: { id?: string }) {
 
       const payload = {
         ...formData,
-        total: formData.products.reduce(
-          (sum, item) => sum + item.price * item.quantity,
-          0
+        total: Number(
+          formData.products
+            .reduce((sum, item) => sum + item.price * item.quantity, 0)
+            .toFixed(2)
         ),
+        tax: Number(formData.tax || 0),
       };
 
       const res = await fetch(`${API_URL}/orders${id ? `/${id}` : ""}`, {
@@ -287,6 +291,12 @@ export default function OrderForm({ id }: { id?: string }) {
     }
   };
 
+  const total = (
+    formData.products.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    ) + Number(formData.tax || 0)
+  ).toFixed(2);
   return (
     <div>
       <Breadcrumbs
@@ -418,7 +428,7 @@ export default function OrderForm({ id }: { id?: string }) {
                       />
 
                       <p className="text-primary">
-                        {product.price * product.quantity} $
+                        {(product.price * product.quantity).toFixed(2)} $
                       </p>
 
                       <Button
@@ -432,15 +442,22 @@ export default function OrderForm({ id }: { id?: string }) {
                   ))}
                 </ul>
               )}
-              <div className="mt-4">
-                <p className="text-xl font-semibold">
-                  Tổng cộng:{" "}
-                  {formData.products.reduce(
-                    (sum, item) => sum + item.price * item.quantity,
-                    0
-                  )}{" "}
-                  USD
-                </p>
+              <div className="text-xl font-semibold">
+                <div className="flex justify-between items-center mt-4">
+                  <p>Thuế</p>
+                  <Input
+                    type="number"
+                    className="w-24"
+                    value={formData.tax}
+                    onChange={(e) => updateField("tax", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <p>
+                    Tổng cộng: {total}
+                    USD
+                  </p>
+                </div>
               </div>
             </div>
             <div className="col-span-1  flex flex-col gap-4">

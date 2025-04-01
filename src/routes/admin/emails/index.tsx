@@ -34,6 +34,7 @@ export interface IEmail {
   subject: string;
   body: string;
   status: "sent" | "failed" | "draft" | "queued";
+  createdAt: string;
 }
 
 export default function EmailPage() {
@@ -184,6 +185,7 @@ export default function EmailPage() {
                 sortOrder={sortOrder}
                 onSort={handleSort}
               />
+
               <SortableHeader
                 field="status"
                 label="Trạng thái"
@@ -191,7 +193,13 @@ export default function EmailPage() {
                 sortOrder={sortOrder}
                 onSort={handleSort}
               />
-
+              <SortableHeader
+                field="createdAt"
+                label="Ngày gửi"
+                sortField={sortField}
+                sortOrder={sortOrder}
+                onSort={handleSort}
+              />
               <TableHead>Hành động</TableHead>
             </TableRow>
           </TableHeader>
@@ -214,6 +222,16 @@ export default function EmailPage() {
                 <TableCell>{email.recipient}</TableCell>
                 <TableCell>{email.subject}</TableCell>
                 <TableCell>{email.status}</TableCell>
+                <TableCell>
+                  {new Date(email.createdAt).toLocaleString("vi-VN", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                  })}
+                </TableCell>
                 <TableCell>
                   <Link
                     to="/admin/emails/$emailId"
