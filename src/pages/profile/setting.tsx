@@ -10,12 +10,13 @@ import {
 
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 const themeColors = [
-  { title: "Mặc định", value: "", border: "border-slate-500" },
+  { title: "Mặc định", value: "default", border: "border-slate-500" },
   { title: "Xanh dương", value: "theme-blue", border: "border-blue-500" },
   { title: "Xanh lá cây", value: "theme-green", border: "border-green-500" },
   { title: "Đỏ", value: "theme-red", border: "border-red-500" },
   { title: "Vàng", value: "theme-yellow", border: "border-yellow-500" },
   { title: "Tím", value: "theme-violet", border: "border-violet-500" },
+  { title: "Cam", value: "theme-orange", border: "border-orange-500" },
   { title: "Hồng", value: "theme-rose", border: "border-rose-500" },
   { title: "Zinc", value: "theme-zinc", border: "border-zinc-500" },
 ];

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Outlet, createRootRoute } from "@tanstack/react-router";
+import { Outlet, createRootRoute, useLocation } from "@tanstack/react-router";
 import NotFound from "@/components/not-found";
 
 import {
@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import ServerError from "@/components/server-error";
+import { useEffect } from "react";
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -19,6 +20,7 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
+  useScrollToTop();
   return (
     <React.Fragment>
       <Toaster
@@ -61,4 +63,13 @@ function RootComponent() {
       <Outlet />
     </React.Fragment>
   );
+}
+function useScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
 }
