@@ -389,7 +389,7 @@ const ReviewList: React.FC = () => {
         )}
       </div>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
+        <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
           <div className="space-y-6">
             <DialogHeader>
               <DialogTitle className="text-center text-3xl my-4">

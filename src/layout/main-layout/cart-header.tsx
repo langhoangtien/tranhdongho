@@ -38,7 +38,10 @@ export default function CartHeader() {
           <ShoppingCart strokeWidth={1} className="text-accent-foreground" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
+      <SheetContent
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        className="w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl"
+      >
         <SheetHeader>
           <SheetTitle>Your Bag</SheetTitle>
           <SheetDescription></SheetDescription>
