@@ -78,7 +78,8 @@ export function ThemeProvider({
       "theme-violet",
       "theme-rose",
       "theme-yellow",
-      "theme-orange"
+      "theme-orange",
+      "theme-default"
     );
 
     // Áp dụng theme
