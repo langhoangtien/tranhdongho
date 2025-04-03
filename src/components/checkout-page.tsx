@@ -184,16 +184,24 @@ export function CheckoutPage() {
     if (!facebookPixel) {
       return;
     }
+
+    let value =
+      getCartTotal() *
+      (1 +
+        calculateTax(
+          formData.shippingAddress.country,
+          formData.shippingAddress.state
+        ));
+
+    // Làm tròn số đến 2 chữ số thập phân
+    value = Math.round(value * 100) / 100;
+    console.log("Pixel purchase", value);
+
+    // Gửi value là số đã làm tròn
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).fbq("track", "Purchase", {
       currency: "USD",
-      value: formatCurrency(
-        getCartTotal() *
-          calculateTax(
-            formData.shippingAddress.country,
-            formData.shippingAddress.state
-          )
-      ),
+      value: value, // value là số đã làm tròn
     });
   };
 
