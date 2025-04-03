@@ -15,6 +15,7 @@ import { menu } from "./nav-desktop";
 import { LogoWithLink } from "@/components/logo";
 import SearchHeader from "./search";
 import CartHeader from "./cart-header";
+import { Link } from "@tanstack/react-router";
 
 export default function NavMobile() {
   return (
@@ -30,13 +31,13 @@ export default function NavMobile() {
           </SheetHeader>
           <div className="flex flex-col space-y-4 p-4 ">
             {menu.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 className="text-lg font-semibold "
-                href={item.link}
+                to={item.link}
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
           <SheetFooter>

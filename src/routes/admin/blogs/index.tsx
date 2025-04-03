@@ -132,15 +132,12 @@ function BlogPage() {
           />
           <span className="flex space-x-2">
             <Button
-              variant="outline"
+              variant={selectedBlogs.length ? "destructive" : "outline"}
               size="icon"
               onClick={handleDelete}
               disabled={!selectedBlogs.length}
             >
-              <TrashIcon
-                className={`${selectedBlogs.length ? "text-destructive" : ""}`}
-                strokeWidth={1}
-              />
+              <TrashIcon strokeWidth={1.25} />
             </Button>
             <Link to="/admin/blogs/create">
               <Button size="icon">

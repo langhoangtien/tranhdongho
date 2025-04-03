@@ -3,6 +3,7 @@ import { routeTree } from "./routeTree.gen";
 import { AuthProvider, useAuth } from "./auth";
 import { ThemeProvider } from "./components/theme-provider";
 import { CartProvider } from "./cart";
+import useFacebookPixel from "./hooks/use-facebook-pixel";
 
 // Register things for typesafety
 declare module "@tanstack/react-router" {
@@ -26,6 +27,7 @@ function InnerApp() {
 }
 
 function App() {
+  useFacebookPixel();
   return (
     <AuthProvider>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">

@@ -144,15 +144,12 @@ export default function ReviewPage() {
           />
           <span className="flex space-x-2">
             <Button
-              variant={"outline"}
+              variant={selectedReviews.length ? "destructive" : "outline"}
               size="icon"
               onClick={handleDelete}
               disabled={!selectedReviews.length}
             >
-              <TrashIcon
-                className={`${selectedReviews.length ? "text-destructive" : ""}`}
-                strokeWidth={1}
-              />
+              <TrashIcon strokeWidth={1} />
             </Button>
             <Link to="/admin/reviews/create">
               <Button size="icon">

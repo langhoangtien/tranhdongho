@@ -9,9 +9,10 @@ export const OrderStatusEnum = z.enum([
 ]);
 export const PaymentMethodEnum = z.enum([
   "paypal",
-  "credit_card",
+  "card",
   "bank_transfer",
   "cash_on_delivery",
+  "n/a",
 ]);
 
 // Schema cho từng Order Item, sử dụng productId thay vì slug

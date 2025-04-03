@@ -126,15 +126,12 @@ export default function UserPage() {
           />
           <span className="flex space-x-2">
             <Button
-              variant={"outline"}
+              variant={selectedUsers.length ? "destructive" : "outline"}
               size="icon"
               onClick={handleDelete}
               disabled={!selectedUsers.length}
             >
-              <TrashIcon
-                className={`${selectedUsers.length ? "text-destructive" : ""}`}
-                strokeWidth={1}
-              />
+              <TrashIcon strokeWidth={1} />
             </Button>
             <Link to="/admin/users/create">
               <Button size="icon">
@@ -143,7 +140,7 @@ export default function UserPage() {
             </Link>
           </span>
         </div>
-        {error && <p className="text-red-500">{error}</p>}
+        {error && <p className="text-destructive">{error}</p>}
 
         <Table>
           <TableHeader>

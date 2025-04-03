@@ -29,13 +29,10 @@ export const settingsSchema = z.object({
   mailService: z.enum(["Gmail", "Zoho", "SendGrid"]).optional(),
   smtpUser: z.string().optional(),
   smtpPass: z.string().optional(),
-  smtpPort: z.string().optional(),
-  smtpHost: z.string().optional(),
-
   paypalClientId: z.string().optional(),
   paypalSecret: z.string().optional(),
   paypalMode: z.enum(["Sandbox", "Production"]).optional(),
-  paypalApi: z.string().optional(),
+  facebookPixelId: z.string().optional(),
 });
 
 type SettingsInput = z.infer<typeof settingsSchema>;
@@ -49,12 +46,10 @@ function SettingsForm() {
     mailService: "Zoho",
     smtpUser: "",
     smtpPass: "",
-    smtpPort: "",
-    smtpHost: "",
     paypalClientId: "",
     paypalSecret: "",
     paypalMode: "Sandbox",
-    paypalApi: "",
+    facebookPixelId: "",
   });
   const [errors, setErrors] = useState<
     Partial<Record<keyof SettingsInput, string>>
@@ -166,7 +161,7 @@ function SettingsForm() {
                 aria-invalid={!!errors.companyName}
               />
               {errors.companyName && (
-                <p className="text-red-500 text-sm">{errors.companyName}</p>
+                <p className="text-destructive text-sm">{errors.companyName}</p>
               )}
             </div>
             <div>
@@ -181,7 +176,9 @@ function SettingsForm() {
                 onChange={handleChange}
               />
               {errors.companyPhone && (
-                <p className="text-red-500 text-sm">{errors.companyPhone}</p>
+                <p className="text-destructive text-sm">
+                  {errors.companyPhone}
+                </p>
               )}
             </div>
 
@@ -197,7 +194,9 @@ function SettingsForm() {
                 aria-invalid={!!errors.companyAddress}
               />
               {errors.companyAddress && (
-                <p className="text-red-500 text-sm">{errors.companyAddress}</p>
+                <p className="text-destructive text-sm">
+                  {errors.companyAddress}
+                </p>
               )}
             </div>
 
@@ -213,7 +212,26 @@ function SettingsForm() {
                 onChange={handleChange}
               />
               {errors.companWebsite && (
-                <p className="text-red-500 text-sm">{errors.companWebsite}</p>
+                <p className="text-destructive text-sm">
+                  {errors.companWebsite}
+                </p>
+              )}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-accent-foreground mb-1">
+                Facebook Pixel ID
+              </label>
+              <Input
+                placeholder="Facebook Pixel ID"
+                name="facebookPixelId"
+                value={formData.facebookPixelId}
+                aria-invalid={!!errors.facebookPixelId}
+                onChange={handleChange}
+              />
+              {errors.companWebsite && (
+                <p className="text-destructive text-sm">
+                  {errors.facebookPixelId}
+                </p>
               )}
             </div>
           </div>
@@ -227,6 +245,7 @@ function SettingsForm() {
                 onValueChange={(value) =>
                   handleSelectChange("mailService", value)
                 }
+                value={formData.mailService}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select Mail Service" />
@@ -238,7 +257,7 @@ function SettingsForm() {
                 </SelectContent>
               </Select>
               {errors.mailService && (
-                <p className="text-red-500 text-sm">{errors.mailService}</p>
+                <p className="text-destructive text-sm">{errors.mailService}</p>
               )}
             </div>
             <div>
@@ -253,7 +272,7 @@ function SettingsForm() {
                 onChange={handleChange}
               />
               {errors.smtpUser && (
-                <p className="text-red-500 text-sm">{errors.smtpUser}</p>
+                <p className="text-destructive text-sm">{errors.smtpUser}</p>
               )}
             </div>
             <div>
@@ -268,37 +287,7 @@ function SettingsForm() {
                 onChange={handleChange}
               />
               {errors.smtpPass && (
-                <p className="text-red-500 text-sm">{errors.smtpPass}</p>
-              )}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-accent-foreground mb-1">
-                SMTP Port
-              </label>
-              <Input
-                placeholder="SMTP Port"
-                name="smtpPort"
-                value={formData.smtpPort}
-                aria-invalid={!!errors.smtpPort}
-                onChange={handleChange}
-              />
-              {errors.smtpPort && (
-                <p className="text-red-500 text-sm">{errors.smtpPort}</p>
-              )}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-accent-foreground mb-1">
-                SMTP Host
-              </label>
-              <Input
-                placeholder="SMTP Host"
-                name="smtpHost"
-                value={formData.smtpHost}
-                aria-invalid={!!errors.smtpHost}
-                onChange={handleChange}
-              />
-              {errors.smtpHost && (
-                <p className="text-red-500 text-sm">{errors.smtpHost}</p>
+                <p className="text-destructive text-sm">{errors.smtpPass}</p>
               )}
             </div>
 
@@ -311,6 +300,7 @@ function SettingsForm() {
                 onValueChange={(value) =>
                   handleSelectChange("paypalMode", value)
                 }
+                value={formData.paypalMode}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select PayPal Mode" />
@@ -321,7 +311,7 @@ function SettingsForm() {
                 </SelectContent>
               </Select>
               {errors.paypalMode && (
-                <p className="text-red-500 text-sm">{errors.paypalMode}</p>
+                <p className="text-destructive text-sm">{errors.paypalMode}</p>
               )}
             </div>
             <div>
@@ -336,7 +326,9 @@ function SettingsForm() {
                 onChange={handleChange}
               />
               {errors.paypalClientId && (
-                <p className="text-red-500 text-sm">{errors.paypalClientId}</p>
+                <p className="text-destructive text-sm">
+                  {errors.paypalClientId}
+                </p>
               )}
             </div>
             <div>
@@ -351,22 +343,9 @@ function SettingsForm() {
                 onChange={handleChange}
               />
               {errors.paypalSecret && (
-                <p className="text-red-500 text-sm">{errors.paypalSecret}</p>
-              )}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-accent-foreground mb-1">
-                PayPal API URL
-              </label>
-              <Input
-                placeholder="PayPal API"
-                name="paypalApi"
-                value={formData.paypalApi}
-                aria-invalid={!!errors.paypalApi}
-                onChange={handleChange}
-              />
-              {errors.paypalApi && (
-                <p className="text-red-500 text-sm">{errors.paypalApi}</p>
+                <p className="text-destructive text-sm">
+                  {errors.paypalSecret}
+                </p>
               )}
             </div>
           </div>
