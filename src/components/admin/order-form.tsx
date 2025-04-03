@@ -23,7 +23,33 @@ interface Variant {
   productId: string;
 }
 
-interface IVariantCart {
+export interface IOrder {
+  _id: string;
+  email: string;
+  name: string;
+  status: string;
+  paymentMethod: string;
+  paymentId?: string;
+  paymentSource?: PaymentSourceResponse;
+  total: number;
+  tax: number;
+  paymentGateway?: string;
+  shippingAddress: {
+    fullName: string;
+    address: string;
+    city: string;
+    postalCode: string;
+    country: string;
+    phone: string;
+  };
+  products: IVariantCart[];
+  logisticPartner?: string;
+  trackingNumber?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IVariantCart {
   productId: string;
   variantId: string;
   name: string;
@@ -31,6 +57,44 @@ interface IVariantCart {
   price: number;
   attributes: { name: string; value: string }[];
 }
+export interface CardResponse {
+  name?: string;
+  last_digits?: string;
+  brand?: string;
+  available_networks?: string[];
+  type?: string;
+  expiry?: string;
+  bin_details?: {
+    bin?: string;
+    issuing_bank?: string;
+    bin_country_code?: string;
+  };
+}
+
+export interface PaypalWalletResponse {
+  email_address?: string;
+  account_id?: string;
+  account_status?: string;
+  name?: {
+    given_name?: string;
+    surname?: string;
+  };
+
+  businessName?: string;
+
+  address?: {
+    address_line1?: string;
+    address_line2?: string;
+    admin_area2?: string;
+    admin_area1?: string;
+    postal_code?: string;
+  };
+}
+export interface PaymentSourceResponse {
+  card?: CardResponse;
+  paypal?: PaypalWalletResponse;
+}
+
 const INIT_FORM_DATA = {
   products: [],
   total: 0,
@@ -61,7 +125,7 @@ export default function OrderForm({ id }: { id?: string }) {
     trackingNumber?: string;
     isSendEmail?: boolean;
     paymentId?: string;
-
+    paymentSource?: PaymentSourceResponse;
     shippingAddress: {
       fullName: string;
       address: string;
@@ -442,21 +506,22 @@ export default function OrderForm({ id }: { id?: string }) {
                   ))}
                 </ul>
               )}
-              <div className="text-xl font-semibold">
-                <div className="flex justify-between items-center mt-4">
-                  <p>Thuế</p>
-                  <Input
-                    type="number"
-                    className="w-24"
-                    value={formData.tax}
-                    onChange={(e) => updateField("tax", e.target.value)}
-                  />
-                </div>
-                <div>
-                  <p>
-                    Tổng cộng: {total}
-                    USD
-                  </p>
+              <div className="grid grid-cols-1 md:grid-cols-2">
+                <div></div>
+                <div className="text-xl space-y-2 font-semibold">
+                  <div className="flex justify-between items-center mt-4">
+                    <p>Thuế</p>
+                    <Input
+                      type="number"
+                      className="w-24"
+                      value={formData.tax}
+                      onChange={(e) => updateField("tax", e.target.value)}
+                    />
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <p>Tổng cộng:</p>
+                    <p>{total} USD</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -555,9 +620,10 @@ export default function OrderForm({ id }: { id?: string }) {
                     className="w-full border p-2 rounded"
                   >
                     <option value="paypal">Paypal</option>
-                    <option value="credit_card">Credit Card</option>
+                    <option value="card">Credit Card</option>
                     <option value="bank_transfer">Bank Transfer</option>
                     <option value="cash_on_delivery">Cash on Delivery</option>
+                    <option value="n/a">Không xác định</option>
                   </Select>
                 </div>
               </div>

@@ -135,15 +135,12 @@ export default function EmailPage() {
           />
           <span className="flex space-x-2">
             <Button
-              variant="outline"
+              variant={selectedEmails.length ? "destructive" : "outline"}
               size="icon"
               onClick={handleDelete}
               disabled={!selectedEmails.length}
             >
-              <TrashIcon
-                className={`$ {selectedEmails.length ? "text-destructive" : ""}`}
-                strokeWidth={1}
-              />
+              <TrashIcon strokeWidth={1.25} />
             </Button>
             <Link to="/admin/emails/create">
               <Button size="icon">

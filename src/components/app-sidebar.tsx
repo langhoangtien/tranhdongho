@@ -28,6 +28,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/auth";
+import { COMPANY_NAME } from "@/config";
 
 // This is sample data.
 const data = {
@@ -38,7 +39,7 @@ const data = {
   },
   teams: [
     {
-      name: "Acme Inc",
+      name: COMPANY_NAME,
       logo: GalleryVerticalEnd,
       plan: "Enterprise",
     },

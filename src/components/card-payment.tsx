@@ -10,6 +10,7 @@ import { CircleHelpIcon, Loader2, Lock } from "lucide-react";
 import { API_URL } from "@/config";
 import { useCart } from "@/cart";
 import { useNavigate } from "@tanstack/react-router";
+import { cn } from "@/lib/utils";
 
 export const CUSTOM_CLASS =
   "flex h-12 w-full rounded-md border border-input bg-gray-200 px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none text-accent  disabled:cursor-not-allowed disabled:opacity-50 md:text-sm";
@@ -171,7 +172,7 @@ export default function CardPayment() {
           </label>
           <input
             id="card-holder"
-            className={CUSTOM_CLASS}
+            className={cn(CUSTOM_CLASS, "text-black")}
             type="text"
             placeholder="Full name"
           />

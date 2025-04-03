@@ -155,15 +155,12 @@ export default function ProductPage() {
           <span className="flex space-x-2">
             {" "}
             <Button
-              variant={"outline"}
+              variant={selectedProducts.length ? "destructive" : "outline"}
               size="icon"
               onClick={handleDelete}
               disabled={!selectedProducts.length}
             >
-              <TrashIcon
-                className={`${selectedProducts.length ? "text-destructive" : ""}`}
-                strokeWidth={1.25}
-              />
+              <TrashIcon strokeWidth={1} />
             </Button>
             <Link to="/admin/products/create">
               <Button size="icon">

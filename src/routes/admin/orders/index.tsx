@@ -10,13 +10,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Edit, PlusIcon, TrashIcon } from "lucide-react";
+import { Edit, EyeIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useDebounce } from "@/hooks/use-debounce";
 import { API_URL } from "@/config";
 import { STORAGE_KEY } from "@/auth";
 import { LoadingTable } from "@/components/loading/table-loading";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import OrderDetails from "@/pages/admin/order/order-detail";
+import { IOrder } from "@/components/admin/order-form";
 
 export const Route = createFileRoute("/admin/orders/")({
   component: RouteComponent,
@@ -24,16 +33,6 @@ export const Route = createFileRoute("/admin/orders/")({
 
 function RouteComponent() {
   return <OrderPage />;
-}
-
-export interface IOrder {
-  _id: string;
-  email?: string;
-  name?: string;
-  status: string;
-  paymentMethod: string;
-  total?: string;
-  createdAt: string;
 }
 
 export default function OrderPage() {
@@ -45,6 +44,8 @@ export default function OrderPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const debouncedSearch = useDebounce(search);
+  const [open, setOpen] = useState(false);
+  const [orderDetail, setOrderDetail] = useState<IOrder>();
 
   useEffect(() => {
     fetchOrders();
@@ -130,15 +131,12 @@ export default function OrderPage() {
           />
           <span className="flex space-x-2">
             <Button
-              variant="outline"
+              variant={selectedOrders.length ? "destructive" : "outline"}
               size="icon"
               onClick={handleDelete}
               disabled={!selectedOrders.length}
             >
-              <TrashIcon
-                className={`${selectedOrders.length ? "text-destructive" : ""}`}
-                strokeWidth={1}
-              />
+              <TrashIcon strokeWidth={1.25} />
             </Button>
             <Link to="/admin/orders/create">
               <Button size="icon">
@@ -201,6 +199,16 @@ export default function OrderPage() {
                   })}
                 </TableCell>
                 <TableCell>
+                  <Button
+                    onClick={() => {
+                      setOrderDetail(order);
+                      setOpen(true);
+                    }}
+                    variant="outline"
+                    size="icon"
+                  >
+                    <EyeIcon></EyeIcon>
+                  </Button>
                   <Link
                     to="/admin/orders/$orderId"
                     params={{ orderId: order._id }}
@@ -229,6 +237,19 @@ export default function OrderPage() {
           </Button>
         </div>
       </div>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="min-w-fit max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Đơn hàng {orderDetail?._id}</DialogTitle>
+            <DialogDescription>
+              <p className="text-sm text-muted-foreground">
+                Thông tin chi tiết đơn hàng
+              </p>
+            </DialogDescription>
+          </DialogHeader>
+          <OrderDetails order={orderDetail} />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

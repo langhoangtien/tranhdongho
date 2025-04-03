@@ -13,8 +13,9 @@ import {
   Outlet,
   redirect,
 } from "@tanstack/react-router";
-import { BellRingIcon, HomeIcon } from "lucide-react";
+import { HomeIcon } from "lucide-react";
 import { AuthContext } from "@/auth";
+import NotificationBell from "@/layout/main-layout/notification";
 
 export const Route = createFileRoute("/admin")({
   component: RouteComponent,
@@ -39,9 +40,7 @@ function RouteComponent() {
           <div className="flex h-16 shrink-0 items-center justify-end gap-2">
             <div className="flex items-center gap-1">
               <ModeToggle />
-              <Button variant="outline" size="icon">
-                <BellRingIcon strokeWidth={1} />
-              </Button>
+              <NotificationBell />
             </div>
           </div>
         </header>

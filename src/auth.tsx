@@ -91,7 +91,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       if (!response.ok) {
-        throw new Error("Invalid credentials");
+        // Lấy thông điệp lỗi từ server nếu có
+        const errorData = await response.json();
+        throw new Error(errorData?.message || "Invalid credentials");
       }
 
       const data: ResponseLogin = await response.json();

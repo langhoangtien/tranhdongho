@@ -10,7 +10,7 @@ import { AlertCircle, CheckCheckIcon } from "lucide-react";
 import { useCart } from "@/cart";
 import { Link, useNavigate } from "@tanstack/react-router";
 
-import { API_URL, PAYPAL_CLIENT_ID } from "@/config";
+import { API_URL } from "@/config";
 import {
   PayPalHostedFieldsProvider,
   PayPalScriptProvider,
@@ -116,7 +116,11 @@ export function CheckoutPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [message, setMessage] = useState<string | null>(null);
   const [paymentMethod, setPaymentMethod] = useState("card");
-  const [clientToken, setClientToken] = useState(null);
+
+  const [paypalData, setPaypalData] = useState({
+    clientToken: null,
+    paypalClientId: null,
+  });
 
   const [formData, setFormData] = useState<ICheckoutForm>({
     email: "",
@@ -168,12 +172,38 @@ export function CheckoutPage() {
     }
     const generateClientToken = async () => {
       const response = await (
-        await fetch(`${API_URL}/payment/paypal2/generate-client-token`)
+        await fetch(`${API_URL}/payment/paypal/generate-client-data`)
       ).json();
-      setClientToken(response?.clientToken || null);
+      setPaypalData(response?.data || null);
     };
     generateClientToken();
   }, []);
+
+  const purchaseEvent = () => {
+    const facebookPixel = localStorage.getItem("fbp");
+    if (!facebookPixel) {
+      return;
+    }
+
+    let value =
+      getCartTotal() *
+      (1 +
+        calculateTax(
+          formData.shippingAddress.country,
+          formData.shippingAddress.state
+        ));
+
+    // Làm tròn số đến 2 chữ số thập phân
+    value = Math.round(value * 100) / 100;
+    console.log("Pixel purchase", value);
+
+    // Gửi value là số đã làm tròn
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).fbq("track", "Purchase", {
+      currency: "USD",
+      value: value, // value là số đã làm tròn
+    });
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -315,6 +345,7 @@ export function CheckoutPage() {
         setMessage(
           `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`
         );
+        purchaseEvent();
         console.log(
           "Capture result",
           orderData,
@@ -792,12 +823,12 @@ export function CheckoutPage() {
                   <AlertDescription>{message}</AlertDescription>
                 </Alert>
               )}
-              {clientToken ? (
+              {paypalData.clientToken && paypalData.paypalClientId ? (
                 <PayPalScriptProvider
                   options={{
-                    clientId: PAYPAL_CLIENT_ID,
+                    clientId: paypalData.paypalClientId,
                     components: "buttons,hosted-fields",
-                    dataClientToken: clientToken,
+                    dataClientToken: paypalData.clientToken,
                     intent: "capture",
                     vault: false,
                   }}
@@ -826,7 +857,7 @@ export function CheckoutPage() {
                       >
                         <label
                           htmlFor="radio-card"
-                          className={`flex space-x-2 justify-between border border-gray-200 p-2 rounded-lg cursor-pointer items-center ${
+                          className={`flex space-x-2 min-h-14 justify-between border border-gray-200 p-2 rounded-lg cursor-pointer items-center ${
                             paymentMethod === "paypal" ? "bg-background " : ""
                           }`}
                         >
@@ -851,7 +882,7 @@ export function CheckoutPage() {
 
                       <label
                         htmlFor="radio-paypal"
-                        className={`flex space-x-2 justify-between border border-gray-200 p-4 rounded-lg cursor-pointer items-center ${
+                        className={`flex space-x-2 min-h-14 justify-between border border-gray-200 p-4 rounded-lg cursor-pointer items-center ${
                           paymentMethod === "card"
                             ? "bg-background "
                             : "bg-accent"
