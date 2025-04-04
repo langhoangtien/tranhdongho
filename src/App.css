@@ -1,8 +1,8 @@
-/* From Uiverse.io by abrahamcalsin */
+/* LOADING */
+/* From Uiverse.io by abrahamcalsin  */
 .dot-spinner {
   --uib-size: 2.8rem;
   --uib-speed: 0.9s;
-  --uib-color: #183153;
   position: relative;
   display: flex;
   align-items: center;
@@ -27,7 +27,7 @@
   height: 20%;
   width: 20%;
   border-radius: 50%;
-  background-color: var(--uib-color);
+  background-color: var(--primary);
   transform: scale(0);
   opacity: 0.5;
   animation: pulse0112 calc(var(--uib-speed) * 1.111) ease-in-out infinite;

@@ -12,7 +12,13 @@ enum SIZE_ENUM {
 }
 export const convertIDToURL = (id: string, size: SIZE_ENUM = 400) => {
   if (!id) return "";
+
   return `${API_URL}/files/${id}-${size}.avif`;
+};
+export const convertIDToStaticURL = (id: string, size: SIZE_ENUM = 400) => {
+  if (!id) return "";
+  const folder = id.slice(0, 7);
+  return `${API_URL}/static/${folder}/${id}-${size}.avif`;
 };
 
 export const convertURLToID = (url: string): string | null => {

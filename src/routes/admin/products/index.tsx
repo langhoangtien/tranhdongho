@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Edit, PlusIcon, TrashIcon } from "lucide-react";
+import { Edit, EyeIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { useDebounce } from "@/hooks/use-debounce";
@@ -213,13 +213,20 @@ export default function ProductPage() {
                 <TableCell>
                   {new Date(product.createdAt || "").toLocaleDateString()}
                 </TableCell>
-                <TableCell>
+                <TableCell className="space-x-1">
+                  <Link to={`/products/${product.slug}`}>
+                    {" "}
+                    <Button variant="outline" size="icon">
+                      <EyeIcon strokeWidth={1.25}></EyeIcon>
+                    </Button>
+                  </Link>
+
                   <Link
                     to="/admin/products/$productId"
                     params={{ productId: product._id }}
                   >
                     <Button variant="outline" size="icon">
-                      <Edit strokeWidth={1} className="cursor-pointer" />
+                      <Edit strokeWidth={1.25} className="cursor-pointer" />
                     </Button>
                   </Link>
                 </TableCell>

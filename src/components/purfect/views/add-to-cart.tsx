@@ -140,7 +140,7 @@ export function AddToCartSection({ product }: { product: IProductCart }) {
                   onClick={() => handleOptionChange(option.name, value)}
                   className={`${
                     selectedOptions[option.name] === value
-                      ? "border-primary "
+                      ? "border-primary dark:border-primary"
                       : "border-border "
                   }`}
                 >

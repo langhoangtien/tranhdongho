@@ -2,6 +2,7 @@ export const COUNTRIES = [
   {
     name: "United States",
     code: "US",
+    phoneCode: "+1",
     states: [
       { name: "Alabama", code: "AL" },
       { name: "Alaska", code: "AK" },
@@ -57,6 +58,7 @@ export const COUNTRIES = [
   },
   {
     name: "Canada",
+    phoneCode: "+1",
     code: "CA",
     states: [
       { name: "Alberta", code: "AB" },
@@ -76,6 +78,7 @@ export const COUNTRIES = [
   },
   {
     name: "Denmark",
+    phoneCode: "+45",
     code: "DK",
     states: [
       { name: "Hovedstaden", code: "84" },
@@ -87,6 +90,7 @@ export const COUNTRIES = [
   },
   {
     name: "Norway",
+    phoneCode: "+47",
     code: "NO",
     states: [
       { name: "Viken", code: "30" },
@@ -104,6 +108,7 @@ export const COUNTRIES = [
   },
   {
     name: "Sweden",
+    phoneCode: "+46",
     code: "SE",
     states: [
       { name: "Stockholm", code: "AB" },
@@ -131,6 +136,7 @@ export const COUNTRIES = [
   },
   {
     name: "Finland",
+    phoneCode: "+358",
     code: "FI",
     states: [
       { name: "Uusimaa", code: "18" },
@@ -156,6 +162,7 @@ export const COUNTRIES = [
   },
   {
     name: "Netherlands",
+    phoneCode: "+31",
     code: "NL",
     states: [
       { name: "Drenthe", code: "DR" },
@@ -174,6 +181,7 @@ export const COUNTRIES = [
   },
   {
     name: "France",
+    phoneCode: "+33",
     code: "FR",
     states: [
       { name: "Auvergne-Rhône-Alpes", code: "ARA" },
@@ -193,6 +201,7 @@ export const COUNTRIES = [
   },
   {
     name: "Spain",
+    phoneCode: "+34",
     code: "ES",
     states: [
       { name: "Andalusia", code: "AN" },
@@ -216,6 +225,7 @@ export const COUNTRIES = [
   },
   {
     name: "Germany",
+    phoneCode: "+49",
     code: "DE",
     states: [
       { name: "Baden-Württemberg", code: "BW" },
@@ -238,6 +248,7 @@ export const COUNTRIES = [
   },
   {
     name: "United Kingdom",
+    phoneCode: "+44",
     code: "GB",
     states: [
       { name: "England", code: "ENG" },
@@ -248,6 +259,7 @@ export const COUNTRIES = [
   },
   {
     name: "Italy",
+    phoneCode: "+39",
     code: "IT",
     states: [
       { name: "Abruzzo", code: "65" },
@@ -273,3 +285,33 @@ export const COUNTRIES = [
     ],
   },
 ];
+
+export const postalCodeRegexMap: Record<string, RegExp> = {
+  US: /^\d{5}(-\d{4})?$/,
+  CA: /^[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d$/,
+  DK: /^\d{4}$/,
+  NO: /^\d{4}$/,
+  SE: /^\d{3} ?\d{2}$/,
+  GB: /^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/i,
+  DE: /^\d{5}$/,
+  FR: /^\d{5}$/,
+  NL: /^\d{4} ?[A-Z]{2}$/i,
+  ES: /^((0[1-9])|([1-4][0-9])|5[0-2])\d{3}$/,
+  FI: /^\d{5}$/,
+  IT: /^\d{5}$/,
+};
+
+export const countryDialingCodes: Record<string, string> = {
+  US: "+1",
+  CA: "+1",
+  DK: "+45",
+  NO: "+47",
+  SE: "+46",
+  GB: "+44",
+  DE: "+49",
+  FR: "+33",
+  NL: "+31",
+  ES: "+34",
+  FI: "+358",
+  IT: "+39",
+};
