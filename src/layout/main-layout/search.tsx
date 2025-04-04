@@ -1,5 +1,6 @@
 import { Product } from "@/components/admin/product-form";
 import Image from "@/components/image";
+import SpinerLoading from "@/components/loading/spiner-loading";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -10,17 +11,34 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { API_URL } from "@/config";
 import { useDebounce } from "@/hooks/use-debounce";
 import { Link } from "@tanstack/react-router";
 import { SearchIcon, X } from "lucide-react";
 import { useEffect, useState } from "react";
+function highlightText(text: string, query: string) {
+  const parts = text.split(new RegExp(`(${query})`, "gi"));
+  return parts.map((part, i) =>
+    part.toLowerCase() === query.toLowerCase() ? (
+      <span key={i} className="bg-accent">
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  );
+}
 
 export default function SearchHeader() {
   const [query, setQuery] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const debouncedQuery = useDebounce(query, 500);
-
+  const [open, setOpen] = useState(false);
+  const handleCloseSheet = (value: boolean) => {
+    setQuery("");
+    setOpen(value);
+  };
   useEffect(() => {
     if (!debouncedQuery) {
       setProducts([]);
@@ -28,14 +46,14 @@ export default function SearchHeader() {
     }
 
     setLoading(true);
-    fetch(`http://localhost:3000/products?search=${debouncedQuery}&limit=5`)
+    fetch(`${API_URL}/products?search=${debouncedQuery}&limit=5`)
       .then((res) => res.json())
       .then((data) => setProducts(data.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, [debouncedQuery]);
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={handleCloseSheet}>
       <SheetTrigger asChild>
         <Button size="icon" variant="outline">
           <SearchIcon
@@ -71,7 +89,10 @@ export default function SearchHeader() {
               <Card className="absolute left-0 z-10 top-12 w-full rounded-b-md rounded-t-none  shadow-lg">
                 <CardContent className="p-2">
                   {loading && (
-                    <p className="text-center text-gray-500">Loading...</p>
+                    <div className="w-full flex justify-center items-center">
+                      {" "}
+                      <SpinerLoading />
+                    </div>
                   )}
                   {!loading && products.length === 0 && (
                     <p className="text-center text-gray-500">
@@ -87,15 +108,20 @@ export default function SearchHeader() {
                         <Link
                           key={product._id}
                           to={`/products/${product.slug}`}
+                          onClick={() => handleCloseSheet(false)}
                         >
                           <div className="flex items-center gap-3 p-2 rounded-md hover:bg-accent ">
                             <Image
-                              src={product.image}
+                              src={product.image || product.images[0]}
                               alt={product.name}
                               className="w-12 h-12 object-cover rounded-md"
                             />
                             <div>
-                              <p className="font-medium">{product.name}</p>
+                              <p className="font-medium">
+                                <p className="font-medium">
+                                  {highlightText(product.name, query)}
+                                </p>
+                              </p>
                               <p className="text-sm text-gray-500">
                                 ${product.minPrice?.toFixed(2)}
                                 {product.minCompareAtPrice && (

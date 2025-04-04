@@ -1,3 +1,4 @@
+import ProductSkeleton from "@/components/product-detail-skeleton";
 import ProductPage from "@/components/purfect/product-page";
 
 import { getProductByIdOrSlug } from "@/lib/api";
@@ -6,7 +7,7 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/products/$productId")({
   component: RouteComponent,
   loader: ({ params }) => getProductByIdOrSlug(params.productId),
-  pendingComponent: () => <div>Loading...</div>,
+  pendingComponent: () => <ProductSkeleton />,
   errorComponent: () => <div>Error!</div>,
 });
 

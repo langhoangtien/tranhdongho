@@ -57,7 +57,7 @@ interface ResponseReviews {
     totalPages: number;
   };
 }
-
+const STARS_TEXT = ["Terrible", "Poor", "Average", "Good", "Excellent"];
 const reviewSchema = z.object({
   customer: z.string().min(1, "Name is required").max(50, "Name is too long"),
   rating: z
@@ -409,6 +409,7 @@ const ReviewList: React.FC = () => {
                   );
                 })}
               </div>
+              <p>{STARS_TEXT[formData.rating - 1]}</p>
               <div>
                 <Input
                   type="text"

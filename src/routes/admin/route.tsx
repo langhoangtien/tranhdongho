@@ -22,8 +22,13 @@ export const Route = createFileRoute("/admin")({
   validateSearch: z.object({
     redirect: z.string().optional().catch(""),
   }),
-  beforeLoad: ({ context, search }) => {
+  beforeLoad: async ({ context, search }) => {
     const authContext = context as { auth: AuthContext };
+
+    if (!authContext.auth.user) {
+      await authContext.auth.initialize();
+    }
+
     if (!authContext.auth.isAuthenticated) {
       throw redirect({ to: search.redirect || "/login" });
     }
