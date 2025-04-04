@@ -7,8 +7,6 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { API_URL } from "@/config";
@@ -63,10 +61,7 @@ export default function SearchHeader() {
         </Button>
       </SheetTrigger>
       <SheetContent showClose={false} side={"top"}>
-        <SheetHeader>
-          <SheetTitle></SheetTitle>
-        </SheetHeader>
-        <div className="w-full flex flex-row space-x-4 justify-center items-center p-4">
+        <div className="w-full flex flex-row space-x-4 justify-center items-center py-8 px-4">
           <div className="relative w-full max-w-2xl">
             <div className="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none">
               <SearchIcon className="w-5 h-5 text-gray-500" />
@@ -99,7 +94,7 @@ export default function SearchHeader() {
                       No products found
                     </p>
                   )}
-                  {!loading && (
+                  {!loading && !!products.length && (
                     <div className="flex flex-col gap-2 max-h-80 overflow-y-auto">
                       <p className="text-xs font-semibold text-gray-500 border-b  border-border pb-2 mb-2">
                         PRODUCTS
