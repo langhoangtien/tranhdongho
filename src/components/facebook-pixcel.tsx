@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable prefer-spread */
 /* eslint-disable prefer-rest-params */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -50,6 +51,8 @@ const FacebookPixel = () => {
     };
     initFacebookPixel();
   }, []);
+
+  return null;
 };
 
 export default FacebookPixel;
