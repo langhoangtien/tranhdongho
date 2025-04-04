@@ -18,6 +18,7 @@ import { Route as RefundAndCancellationPolicyImport } from './routes/refund-and-
 import { Route as PrivacyPolicyImport } from './routes/privacy-policy'
 import { Route as OrderCompleteImport } from './routes/order-complete'
 import { Route as LoginImport } from './routes/login'
+import { Route as LoadingImport } from './routes/loading'
 import { Route as FaqsImport } from './routes/faqs'
 import { Route as ErrorImport } from './routes/error'
 import { Route as DisclaimerImport } from './routes/disclaimer'
@@ -99,6 +100,12 @@ const OrderCompleteRoute = OrderCompleteImport.update({
 const LoginRoute = LoginImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoadingRoute = LoadingImport.update({
+  id: '/loading',
+  path: '/loading',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -409,6 +416,13 @@ declare module '@tanstack/react-router' {
       path: '/faqs'
       fullPath: '/faqs'
       preLoaderRoute: typeof FaqsImport
+      parentRoute: typeof rootRoute
+    }
+    '/loading': {
+      id: '/loading'
+      path: '/loading'
+      fullPath: '/loading'
+      preLoaderRoute: typeof LoadingImport
       parentRoute: typeof rootRoute
     }
     '/login': {
@@ -750,6 +764,7 @@ export interface FileRoutesByFullPath {
   '/disclaimer': typeof DisclaimerRoute
   '/error': typeof ErrorRoute
   '/faqs': typeof FaqsRoute
+  '/loading': typeof LoadingRoute
   '/login': typeof LoginRoute
   '/order-complete': typeof OrderCompleteRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
@@ -796,6 +811,7 @@ export interface FileRoutesByTo {
   '/disclaimer': typeof DisclaimerRoute
   '/error': typeof ErrorRoute
   '/faqs': typeof FaqsRoute
+  '/loading': typeof LoadingRoute
   '/login': typeof LoginRoute
   '/order-complete': typeof OrderCompleteRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
@@ -845,6 +861,7 @@ export interface FileRoutesById {
   '/disclaimer': typeof DisclaimerRoute
   '/error': typeof ErrorRoute
   '/faqs': typeof FaqsRoute
+  '/loading': typeof LoadingRoute
   '/login': typeof LoginRoute
   '/order-complete': typeof OrderCompleteRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
@@ -895,6 +912,7 @@ export interface FileRouteTypes {
     | '/disclaimer'
     | '/error'
     | '/faqs'
+    | '/loading'
     | '/login'
     | '/order-complete'
     | '/privacy-policy'
@@ -940,6 +958,7 @@ export interface FileRouteTypes {
     | '/disclaimer'
     | '/error'
     | '/faqs'
+    | '/loading'
     | '/login'
     | '/order-complete'
     | '/privacy-policy'
@@ -987,6 +1006,7 @@ export interface FileRouteTypes {
     | '/disclaimer'
     | '/error'
     | '/faqs'
+    | '/loading'
     | '/login'
     | '/order-complete'
     | '/privacy-policy'
@@ -1036,6 +1056,7 @@ export interface RootRouteChildren {
   DisclaimerRoute: typeof DisclaimerRoute
   ErrorRoute: typeof ErrorRoute
   FaqsRoute: typeof FaqsRoute
+  LoadingRoute: typeof LoadingRoute
   LoginRoute: typeof LoginRoute
   OrderCompleteRoute: typeof OrderCompleteRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
@@ -1057,6 +1078,7 @@ const rootRouteChildren: RootRouteChildren = {
   DisclaimerRoute: DisclaimerRoute,
   ErrorRoute: ErrorRoute,
   FaqsRoute: FaqsRoute,
+  LoadingRoute: LoadingRoute,
   LoginRoute: LoginRoute,
   OrderCompleteRoute: OrderCompleteRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
@@ -1087,6 +1109,7 @@ export const routeTree = rootRoute
         "/disclaimer",
         "/error",
         "/faqs",
+        "/loading",
         "/login",
         "/order-complete",
         "/privacy-policy",
@@ -1161,6 +1184,9 @@ export const routeTree = rootRoute
     },
     "/faqs": {
       "filePath": "faqs.tsx"
+    },
+    "/loading": {
+      "filePath": "loading.tsx"
     },
     "/login": {
       "filePath": "login.tsx"

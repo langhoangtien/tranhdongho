@@ -1,5 +1,4 @@
 import * as React from "react";
-import { UKOSplashScreen } from "./components/loading/uko-loading";
 import { CONFIG } from "./config";
 import { User } from "./routes/admin/users";
 
@@ -66,7 +65,7 @@ function setStoredUser(token: string | null) {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<User | null>(null);
-  const [isLoading, setIsLoading] = React.useState(true); // <-- Thêm trạng thái loading
+
   // const navigate = useNavigate();
   const isAuthenticated = !!user;
 
@@ -76,7 +75,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (storedUser) {
         setUser(storedUser);
       }
-      setIsLoading(false);
     }
     initialize();
   }, []);
@@ -110,7 +108,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // navigate({ to: "/login" });
   }, []);
 
-  if (isLoading) return <UKOSplashScreen />;
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
       {children}

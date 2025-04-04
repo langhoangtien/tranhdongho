@@ -90,10 +90,10 @@ const EmailView: React.FC<{ id: string }> = ({ id }) => {
             {email.status}
           </span>
         </div>
-        <div className="mt-4 p-3 border rounded-md bg-gray-100">
+        <div className="mt-4 p-3 border rounded-md bg-card">
           <span className="font-bold">Message:</span>
           <div
-            className="col-span-2 tiptap"
+            className="col-span-2 text-black tiptap"
             dangerouslySetInnerHTML={{ __html: email.body }}
           ></div>
         </div>

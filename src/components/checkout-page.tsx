@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -62,31 +60,37 @@ export type OnApproveData = {
   authCode?: string | null;
 };
 
-const addressSchema = z.object({
-  firstName: z.string(),
-  lastName: z
-    .string()
-    .min(1, {
-      message: "City is required",
-    })
-    .max(50),
-  phone: z.string().min(7).max(15),
-  address: z.string().min(1).max(200),
-  city: z
-    .string()
-    .min(1, {
-      message: "City is required",
-    })
-    .max(100),
-  state: z.string().min(1, { message: "State is required" }).max(200),
-  postalCode: z
-    .string()
-    .min(1, {
-      message: "City is required",
-    })
-    .max(20),
-  country: z.string(),
-});
+const addressSchema = z
+  .object({
+    firstName: z.string(),
+    lastName: z.string().min(1, { message: "Last name is required" }).max(50),
+    phone: z
+      .string()
+      .min(7)
+      .max(15)
+      .regex(/^\+?[0-9\s\-()]{7,15}$/, {
+        message: "Invalid phone number format",
+      }),
+    address: z.string().min(1, "Address is required").max(200),
+    city: z.string().min(1, { message: "City is required" }).max(100),
+    state: z.string().min(1, { message: "State is required" }).max(200),
+    postalCode: z.string(),
+    country: z.enum(
+      ["US", "CA", "DK", "NO", "SE", "GB", "DE", "FR", "NL", "ES", "FI", "IT"],
+      { message: "Country is required" }
+    ),
+  })
+  .refine(
+    (data) => {
+      const regex = postalCodeRegexMap[data.country];
+      return regex ? regex.test(data.postalCode) : true;
+    },
+    {
+      message: "Postal code is invalid for the selected country",
+      path: ["postalCode"],
+    }
+  );
+
 const checkoutSchema = z.object({
   voucher: z.string().optional(),
   email: z.string().email(),
@@ -98,7 +102,7 @@ const checkoutFullSchema = z.object({
   shippingAddress: addressSchema,
   billingAddress: addressSchema,
 });
-import { COUNTRIES } from "@/lib/data";
+import { COUNTRIES, countryDialingCodes, postalCodeRegexMap } from "@/lib/data";
 import { Input, Select } from "./ui/custom-ui";
 import { calculateTax } from "@/lib/common";
 
@@ -112,7 +116,7 @@ export function CheckoutPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState<CheckoutStep>(CheckoutStep.SHIPPING);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [message, setMessage] = useState<string | null>(null);
   const [paymentMethod, setPaymentMethod] = useState("card");
@@ -127,7 +131,7 @@ export function CheckoutPage() {
     shippingAddress: {
       firstName: "",
       lastName: "",
-      phone: "",
+      phone: "+1",
       address: "",
       city: "",
       postalCode: "",
@@ -137,7 +141,7 @@ export function CheckoutPage() {
     billingAddress: {
       firstName: "",
       lastName: "",
-      phone: "",
+      phone: "+1",
       address: "",
       city: "",
       postalCode: "",
@@ -146,6 +150,8 @@ export function CheckoutPage() {
     },
   });
   const validateForm = () => {
+    console.log("validateForm", formData);
+
     const result = isSameShipping
       ? checkoutSchema.safeParse(formData)
       : checkoutFullSchema.safeParse(formData);
@@ -179,6 +185,63 @@ export function CheckoutPage() {
     generateClientToken();
   }, []);
 
+  const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCountry = e.target.value;
+    const dialCode = countryDialingCodes[selectedCountry];
+    if (
+      !formData.shippingAddress.phone ||
+      !formData.shippingAddress.phone.startsWith("+")
+    ) {
+      setFormData({
+        ...formData,
+        shippingAddress: {
+          ...formData.shippingAddress,
+          country: selectedCountry,
+          state: "",
+          phone: dialCode + " ",
+        },
+      });
+    } else {
+      setFormData({
+        ...formData,
+        shippingAddress: {
+          ...formData.shippingAddress,
+          country: selectedCountry,
+          state: "",
+        },
+      });
+    }
+  };
+  const handleBillingCountryChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    if (!formData.billingAddress) return;
+    const selectedCountry = e.target.value;
+    const dialCode = countryDialingCodes[selectedCountry];
+    if (
+      !formData.billingAddress.phone ||
+      !formData.billingAddress.phone.startsWith("+")
+    ) {
+      setFormData({
+        ...formData,
+        billingAddress: {
+          ...formData.billingAddress,
+          country: selectedCountry,
+          phone: dialCode + " ",
+          state: "",
+        },
+      });
+    } else {
+      setFormData({
+        ...formData,
+        billingAddress: {
+          ...formData.billingAddress,
+          country: selectedCountry,
+          state: "",
+        },
+      });
+    }
+  };
   const purchaseEvent = () => {
     const facebookPixel = localStorage.getItem("fbp");
     if (!facebookPixel) {
@@ -236,7 +299,12 @@ export function CheckoutPage() {
 
   // Form states
 
+  useEffect(() => {
+    if (isSubmitting) validateForm();
+  }, [formData]);
+
   const handleShippingSubmit = () => {
+    setIsSubmitting(true);
     if (!validateForm()) return;
     const form = isSameShipping
       ? { ...formData, billingAddress: formData.shippingAddress }
@@ -423,6 +491,28 @@ export function CheckoutPage() {
                   </h2>
                   <div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                      <div className="md:col-span-2">
+                        <Select
+                          aria-invalid={!!errors["shippingAddress.country"]}
+                          id="country"
+                          name="country"
+                          label="Country*"
+                          className="text-foreground"
+                          value={formData.shippingAddress.country}
+                          onChange={handleCountryChange}
+                        >
+                          {COUNTRIES.map((country) => (
+                            <option key={country.code} value={country.code}>
+                              {country.name}
+                            </option>
+                          ))}
+                        </Select>
+                        {errors["shippingAddress.country"] && (
+                          <p className="text-destructive text-sm mt-0.5">
+                            {errors["shippingAddress.country"]}
+                          </p>
+                        )}
+                      </div>
                       <div>
                         <Input
                           id="firstName"
@@ -472,7 +562,7 @@ export function CheckoutPage() {
                         <Input
                           id="phone"
                           name="phone"
-                          placeholder="Phone Number"
+                          placeholder="Phone Number*"
                           aria-invalid={!!errors["shippingAddress.phone"]}
                           value={formData.shippingAddress.phone}
                           onChange={handleChangeshippingAddress}
@@ -561,30 +651,6 @@ export function CheckoutPage() {
                           </p>
                         )}
                       </div>
-                      <div>
-                        <Select
-                          id="country"
-                          name="country"
-                          label="Country*"
-                          className="text-foreground"
-                          value={formData.shippingAddress.country}
-                          onChange={(e) =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              shippingAddress: {
-                                ...prev.shippingAddress,
-                                country: e.target.value,
-                              },
-                            }))
-                          }
-                        >
-                          {COUNTRIES.map((country) => (
-                            <option key={country.code} value={country.code}>
-                              {country.name}
-                            </option>
-                          ))}
-                        </Select>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -627,6 +693,28 @@ export function CheckoutPage() {
                   <div className="bg-accent">
                     {!isSameShipping && (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-2 md:p-6 mb-6">
+                        <div className="md:col-span-2">
+                          <Select
+                            id="bcountry"
+                            name="country"
+                            label="Country*"
+                            className="bg-accent"
+                            value={formData.billingAddress?.country}
+                            onChange={handleBillingCountryChange}
+                            aria-invalid={!!errors["billingAddress.country"]}
+                          >
+                            {COUNTRIES.map((country) => (
+                              <option key={country.code} value={country.code}>
+                                {country.name}
+                              </option>
+                            ))}
+                          </Select>
+                          {errors["billingAddress.country"] && (
+                            <p className="text-destructive text-sm mt-0.5">
+                              {errors["billingAddress.country"]}
+                            </p>
+                          )}
+                        </div>
                         <div>
                           <Input
                             id="bFirstName"
@@ -678,7 +766,7 @@ export function CheckoutPage() {
                             id="bAddress"
                             name="address"
                             placeholder="Address*"
-                            aria-invalid={!!errors["shippingAddress.address"]}
+                            aria-invalid={!!errors["billingAddress.address"]}
                             value={formData.billingAddress?.address}
                             onChange={handleChangeBillingAddress}
                           />
@@ -751,30 +839,6 @@ export function CheckoutPage() {
                               {errors["billingAddress.postalCode"]}
                             </p>
                           )}
-                        </div>
-                        <div>
-                          <Select
-                            id="bcountry"
-                            name="country"
-                            label="Country*"
-                            className="bg-accent"
-                            value={formData.billingAddress?.country}
-                            onChange={(e) =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                billingAddress: {
-                                  ...prev.shippingAddress,
-                                  country: e.target.value,
-                                },
-                              }))
-                            }
-                          >
-                            {COUNTRIES.map((country) => (
-                              <option key={country.code} value={country.code}>
-                                {country.name}
-                              </option>
-                            ))}
-                          </Select>
                         </div>
                       </div>
                     )}

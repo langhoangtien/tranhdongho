@@ -78,7 +78,7 @@ const ReviewList: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [pagination, setPagination] = useState({ total: 0, totalPages: 0 });
-  const [numberReview, setNumberReview] = useState<number>(0);
+
   const [formData, setFormData] = useState({
     customer: "",
     email: "",
@@ -120,8 +120,7 @@ const ReviewList: React.FC = () => {
 
   useEffect(() => {
     const likedIds = JSON.parse(localStorage.getItem("likedIds") || "[]");
-    const numberReview = localStorage.getItem("numberReview") || "0";
-    setNumberReview(Number(numberReview));
+
     setLikedIds(likedIds);
   }, []);
 
@@ -180,10 +179,6 @@ const ReviewList: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (numberReview >= 5) {
-      toast.error("You have reached the maximum number of reviews allowed.");
-      return;
-    }
     if (!validateForm()) return;
     // Submit the form data to the server or perform any other action
     try {
@@ -206,8 +201,6 @@ const ReviewList: React.FC = () => {
           productId: "purfect-fuel-blend",
         });
         toast.success("Review submitted successfully!");
-
-        localStorage.setItem("numberReview", String(numberReview + 1));
       }
     } catch (error) {
       console.error("Error submitting review:", error);

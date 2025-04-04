@@ -198,7 +198,7 @@ export default function OrderPage() {
                     second: "2-digit",
                   })}
                 </TableCell>
-                <TableCell>
+                <TableCell className="space-x-1">
                   <Button
                     onClick={() => {
                       setOrderDetail(order);

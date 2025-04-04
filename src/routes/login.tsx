@@ -15,6 +15,7 @@ import { Eye, EyeOff, AlertCircle } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { COMPANY_NAME } from "@/config";
 
 const fallback = "/admin" as const;
 
@@ -123,7 +124,7 @@ function LoginComponent() {
         <div className="relative flex min-h-screen w-full flex-col items-center justify-center">
           <Card className="w-96 shadow-lg">
             <CardHeader>
-              <CardTitle>Login</CardTitle>
+              <CardTitle>Login to {COMPANY_NAME}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
