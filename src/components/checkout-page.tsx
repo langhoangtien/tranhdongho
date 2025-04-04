@@ -9,15 +9,8 @@ import { useCart } from "@/cart";
 import { Link, useNavigate } from "@tanstack/react-router";
 
 import { API_URL } from "@/config";
-import {
-  PayPalHostedFieldsProvider,
-  PayPalScriptProvider,
-} from "@paypal/react-paypal-js";
-import CardPayment, { SubmitPayment } from "./card-payment";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import PaypalButtonPayment from "./button-payment";
-import ListPaymentMethod from "./list-payment-method";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import PaypalIcon from "./icons/paypal-icon";
 enum CheckoutStep {
   SHIPPING = "shipping",
   PAYMENT = "payment",
@@ -119,7 +112,6 @@ export function CheckoutPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [message, setMessage] = useState<string | null>(null);
-  const [paymentMethod, setPaymentMethod] = useState("card");
 
   const [paypalData, setPaypalData] = useState({
     clientToken: null,
@@ -258,7 +250,6 @@ export function CheckoutPage() {
 
     // Làm tròn số đến 2 chữ số thập phân
     value = Math.round(value * 100) / 100;
-    console.log("Pixel purchase", value);
 
     // Gửi value là số đã làm tròn
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -324,6 +315,8 @@ export function CheckoutPage() {
   };
 
   const createOrder = async () => {
+    console.log("createOrder");
+
     const shippingPayment = {
       ...formData.shippingAddress,
       fullName: `${formData.shippingAddress.firstName} ${formData.shippingAddress.lastName}`,
@@ -654,7 +647,7 @@ export function CheckoutPage() {
                     </div>
                   </div>
                 </div>
-                <div>
+                <div className="hidden">
                   <h2 className="text-xl font-bold mb-4 px-6">
                     Billing Information
                   </h2>
@@ -891,97 +884,17 @@ export function CheckoutPage() {
                 <PayPalScriptProvider
                   options={{
                     clientId: paypalData.paypalClientId,
-                    components: "buttons,hosted-fields",
-                    dataClientToken: paypalData.clientToken,
+                    components: "buttons,hosted-fields,card-fields",
+
                     intent: "capture",
                     vault: false,
                   }}
                 >
-                  <PayPalHostedFieldsProvider
-                    styles={{
-                      ".valid": { color: "#28a745" },
-                      ".invalid": { color: "#dc3545" },
-                      input: {
-                        "font-family": "monospace",
-                        "font-size": "16px",
-                      },
-                    }}
+                  {" "}
+                  <PaypalButtonPayment
+                    onApprove={onApprove}
                     createOrder={createOrder}
-                  >
-                    <RadioGroup
-                      defaultValue="card"
-                      onValueChange={setPaymentMethod}
-                    >
-                      <div
-                        className={`rounded-md ${
-                          paymentMethod === "paypal"
-                            ? "bg-background "
-                            : "bg-accent"
-                        }`}
-                      >
-                        <label
-                          htmlFor="radio-card"
-                          className={`flex space-x-2 min-h-14 justify-between border border-gray-200 p-2 rounded-lg cursor-pointer items-center ${
-                            paymentMethod === "paypal" ? "bg-background " : ""
-                          }`}
-                        >
-                          <div className="flex space-x-2 items-center">
-                            <RadioGroupItem
-                              className="rounded-full"
-                              id="radio-card"
-                              value="card"
-                            />
-                            <span>Credit Card</span>
-                          </div>
-                          <ListPaymentMethod />
-                        </label>
-                        <div
-                          className={
-                            paymentMethod === "card" ? "block" : "hidden"
-                          }
-                        >
-                          <CardPayment />
-                        </div>
-                      </div>
-
-                      <label
-                        htmlFor="radio-paypal"
-                        className={`flex space-x-2 min-h-14 justify-between border border-gray-200 p-4 rounded-lg cursor-pointer items-center ${
-                          paymentMethod === "card"
-                            ? "bg-background "
-                            : "bg-accent"
-                        }`}
-                      >
-                        <div className="flex space-x-2 items-center">
-                          <RadioGroupItem
-                            className="rounded-full"
-                            id="radio-paypal"
-                            value="paypal"
-                          />
-                          <span>Paypal</span>
-                        </div>
-                        <span>
-                          <PaypalIcon />
-                        </span>
-                      </label>
-                    </RadioGroup>
-                    <div
-                      className={paymentMethod === "card" ? "block" : "hidden"}
-                    >
-                      <SubmitPayment />
-                    </div>
-                  </PayPalHostedFieldsProvider>
-                  <div
-                    className={
-                      paymentMethod === "paypal" ? "block w-full" : "hidden"
-                    }
-                  >
-                    {" "}
-                    <PaypalButtonPayment
-                      onApprove={onApprove}
-                      createOrder={createOrder}
-                    />
-                  </div>
+                  />
                 </PayPalScriptProvider>
               ) : (
                 <div>Loading...</div>
