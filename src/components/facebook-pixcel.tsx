@@ -12,6 +12,7 @@ const FacebookPixel = () => {
         const settings = await fetch(`${API_URL}/settings/client`);
         const settingsJson = await settings.json();
         const fbpId = settingsJson.facebookPixelId;
+        localStorage.setItem("fbp", fbpId);
         if (!fbpId) {
           console.log("Facebook Pixel ID not found in settings.");
           return;

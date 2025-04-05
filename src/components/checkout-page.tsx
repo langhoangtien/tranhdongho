@@ -113,10 +113,7 @@ export function CheckoutPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [message, setMessage] = useState<string | null>(null);
 
-  const [paypalData, setPaypalData] = useState({
-    clientToken: null,
-    paypalClientId: null,
-  });
+  const [paypalClientId, setPaypalCLientId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<ICheckoutForm>({
     email: "",
@@ -169,10 +166,14 @@ export function CheckoutPage() {
       setIsSameShipping(formJson.isSameShipping);
     }
     const generateClientToken = async () => {
-      const response = await (
-        await fetch(`${API_URL}/payment/paypal/generate-client-data`)
-      ).json();
-      setPaypalData(response?.data || null);
+      try {
+        const response = await (
+          await fetch(`${API_URL}/settings/client`)
+        ).json();
+        setPaypalCLientId(response?.paypalClientId || null);
+      } catch (error) {
+        console.error("Error fetching client token:", error);
+      }
     };
     generateClientToken();
   }, []);
@@ -880,12 +881,11 @@ export function CheckoutPage() {
                   <AlertDescription>{message}</AlertDescription>
                 </Alert>
               )}
-              {paypalData.clientToken && paypalData.paypalClientId ? (
+              {paypalClientId ? (
                 <PayPalScriptProvider
                   options={{
-                    clientId: paypalData.paypalClientId,
-                    components: "buttons,hosted-fields,card-fields",
-
+                    clientId: paypalClientId,
+                    components: "buttons",
                     intent: "capture",
                     vault: false,
                   }}
