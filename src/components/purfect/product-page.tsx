@@ -2,52 +2,18 @@ import { useLoaderData } from "@tanstack/react-router";
 import ProductDetailCarousel from "./views/product-carosel";
 
 import { Heart, TruckIcon, Undo2Icon } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTriggerCustom,
-} from "@/components/ui/accordion";
 
 import ListPaymentMethod from "../list-payment-method";
 import { IProduct, IVariant } from "@/routes/admin/products";
 import StarIcon from "../icons/star-icon";
 import ReviewList from "../reviews";
 import { AddToCartSection } from "./views/add-to-cart";
+import { formatVNCurrency } from "@/lib/utils";
 interface IData extends IProduct {
   images: string[];
   variants: IVariant[];
 }
-const data = [
-  {
-    title: "Description",
-    content:
-      "Unleash the power of the ocean with our Organic Sea Moss and Shilajit, featuring highly potent clinically dosed formulas. This comprehensive formula combines 24 essential nutrients in 2 tablets, designed to enhance your overall health and vitality. Perfect for those seeking a powerful boost to their daily wellness regimen.",
-  },
-  {
-    title: "Health Benefits",
-    content:
-      "Our Organic Sea Moss and Shilajit are designed to support a range of health functions, enhancing your overall well-being. From boosting your immune system to supporting thyroid function and improving skin health, these supplements are your gateway to a healthier life. Additional benefits include energy enhancement, stress reduction, and support for weight management, all contributing to a more vibrant and healthier you.",
-  },
-  {
-    title: "How to Use",
-    content: (
-      <p>
-        {" "}
-        As a dietary supplement, take 2 tablets of Organic Sea Moss and 1
-        tablets of Shilajit per day. For the best results, take with a meal and
-        an 8oz glass of water or as directed by your healthcare professional.{" "}
-        <br /> You may take both supplements together or take 1 in the morning
-        and 1 in the evening depending on preference.{" "}
-      </p>
-    ),
-  },
-  {
-    title: "Product Guarantee",
-    content:
-      "Experience the benefits of our Dynamic Vitality Duo risk-free with our 30-day money-back guarantee. If you’re not fully satisfied with your wellness improvement, simply return the product within 30 days for a full refund",
-  },
-];
+
 export default function ProductPage() {
   const productData = useLoaderData({
     from: "/products/$productId",
@@ -87,18 +53,19 @@ export default function ProductPage() {
               <StarIcon className="size-4" />
             </span>
             <span className="text-accent-foreground text-sm font-semibold">
-              4.9 <span className="text-gray-500">(12k)</span>
+              4.9 <span className="text-gray-500">(17.3k)</span>
             </span>
           </div>
           <div className="space-y-2 rounded-lg">
             <p className="text-4xl flex space-x-2 ">
-              <span className="font-normal "> ${product.minPrice}</span>
+              <span className="font-normal ">
+                {" "}
+                {formatVNCurrency(product.minPrice || 0)}
+              </span>
               <span className="line-through  ">
-                ${product.minCompareAtPrice ?? ""}
+                {!!product.minCompareAtPrice &&
+                  formatVNCurrency(product.minCompareAtPrice)}
               </span>{" "}
-            </p>
-            <p className="text-gray-500 text-sm">
-              Inclusive of all taxes. Shipping calculated at checkout.
             </p>
           </div>
           <div className="flex flex-col space-y-2">
@@ -123,16 +90,6 @@ export default function ProductPage() {
             </span>
           </div>
           <ListPaymentMethod />
-          <div>
-            <Accordion type="single" collapsible className="w-full">
-              {data.map((item, index) => (
-                <AccordionItem key={item.title} value={`item-${index}`}>
-                  <AccordionTriggerCustom>{item.title}</AccordionTriggerCustom>
-                  <AccordionContent>{item.content}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
         </div>
         <div
           className="col-span-2 tiptap"

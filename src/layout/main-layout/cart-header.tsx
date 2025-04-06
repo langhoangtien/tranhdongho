@@ -43,7 +43,7 @@ export default function CartHeader() {
         className="w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl"
       >
         <SheetHeader>
-          <SheetTitle>Your Bag</SheetTitle>
+          <SheetTitle>Giỏ hàng</SheetTitle>
           <SheetDescription></SheetDescription>
         </SheetHeader>
         <div className="flex-grow overflow-auto py-4 border-t px-6">
@@ -53,10 +53,8 @@ export default function CartHeader() {
                 strokeWidth={1}
                 className="h-12 w-12 mx-auto text-gray-300 mb-4"
               />
-              <p className="text-gray-500 mb-4">Your cart is empty</p>
-              <Button onClick={() => setIsOpen(false)}>
-                Continue Shopping
-              </Button>
+              <p className="text-gray-500 mb-4">Giỏ hàng của bạn đang trống</p>
+              <Button onClick={() => setIsOpen(false)}>Tiếp tục mua sắm</Button>
             </div>
           ) : (
             <ul className="space-y-6">
@@ -120,7 +118,7 @@ export default function CartHeader() {
                         onClick={() => removeItem(item.id)}
                         className="text-[var(--primary-lighter)] underline font-semibold cursor-pointer"
                       >
-                        Remove
+                        Xóa
                       </button>
                     </div>
                   </div>
@@ -134,16 +132,16 @@ export default function CartHeader() {
             <div className="border-t pt-4 space-y-4 ">
               <div className="flex justify-between mb-4 text-primary">
                 <span>Shipping</span>
-                <span className="font-semibold">Free Standard Shipping</span>
+                <span className="font-semibold">Miễn phí vận chuyển</span>
               </div>
               <div className="flex justify-between mb-4 text-primary">
-                <span className="font-semibold">Subtotal</span>
+                <span className="font-semibold">Tổng</span>
                 <span>{formatCurrency(getCartTotal())}</span>
               </div>
 
               <Link to="/checkout" onClick={() => setIsOpen(false)}>
                 <Button size="lg" className="w-full">
-                  Checkout
+                  Thanh toán
                 </Button>
               </Link>
             </div>
@@ -151,7 +149,7 @@ export default function CartHeader() {
             <SheetClose>
               {" "}
               <Button size="lg" className="w-full" variant={"outline"}>
-                Continue Shopping
+                Tiếp tục mua sắm
               </Button>
             </SheetClose>
           )}

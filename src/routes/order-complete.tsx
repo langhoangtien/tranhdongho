@@ -15,23 +15,22 @@ function OrderComplete() {
   return (
     <div className="flex flex-col items-center justify-center min-h-80 h-screen">
       <MotionContainer>
-        <h1 className="text-3xl text-center font-bold">Order Confirmed!</h1>
+        <h1 className="text-3xl text-center font-bold">Đặt hàng thành công!</h1>
 
         <OrderCompleteIllustration />
         <p> Order #: {Math.floor(100000 + Math.random() * 900000)}</p>
         <p className="text-center text-gray-500">
-          Thank you for your purchase. Your order has been placed and will be
-          processed soon. You will receive a confirmation email with your order
-          details.
+          Cảm ơn bạn đã mua hàng. Nhân viên của chúng tôi sẽ liên hệ với bạn
+          trong thời gian sớm nhất để xác nhận đơn hàng.
         </p>
         <div className="flex space-x-8">
           <Link to="/">
             <Button variant="outline">
-              <ChevronLeftIcon strokeWidth={1.5} /> Continue shopping
+              <ChevronLeftIcon strokeWidth={1.5} /> Mua sắm tiếp
             </Button>
           </Link>
           <Button>
-            Download as PDF <CloudDownloadIcon strokeWidth={1.5} />
+            Tải hóa đơn <CloudDownloadIcon strokeWidth={1.5} />
           </Button>
         </div>
       </MotionContainer>

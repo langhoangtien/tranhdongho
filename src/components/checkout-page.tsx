@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 
-import { formatCurrency } from "@/lib/utils";
+import { formatVNCurrency } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertCircle, CheckCheckIcon } from "lucide-react";
+import { CheckCheckIcon } from "lucide-react";
 import { useCart } from "@/cart";
 import { Link, useNavigate } from "@tanstack/react-router";
 
 import { API_URL } from "@/config";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import PaypalButtonPayment from "./button-payment";
 enum CheckoutStep {
   SHIPPING = "shipping",
   PAYMENT = "payment",
@@ -34,15 +32,6 @@ interface IAddress {
   postalCode: string;
   country: string;
 }
-interface IBillingAddress extends Omit<IAddress, "firstName" | "lastName"> {
-  fullName: string;
-}
-interface IPayment
-  extends Omit<ICheckoutForm, "billingAddress" | "shippingAddress"> {
-  products: { id: string; quantity: number }[];
-  billingAddress: IBillingAddress;
-  shippingAddress: IBillingAddress;
-}
 export type OnApproveData = {
   billingToken?: string | null;
   facilitatorAccessToken?: string;
@@ -56,20 +45,34 @@ export type OnApproveData = {
 const addressSchema = z
   .object({
     firstName: z.string(),
-    lastName: z.string().min(1, { message: "Last name is required" }).max(50),
+    lastName: z.string().min(1, { message: "Nhập tên" }).max(50),
     phone: z
       .string()
       .min(7)
       .max(15)
       .regex(/^\+?[0-9\s\-()]{7,15}$/, {
-        message: "Invalid phone number format",
+        message: "Số điện thoại không hợp lệ",
       }),
-    address: z.string().min(1, "Address is required").max(200),
-    city: z.string().min(1, { message: "City is required" }).max(100),
-    state: z.string().min(1, { message: "State is required" }).max(200),
+    address: z.string().min(1, "Địa chỉ bắt buộc").max(200),
+    city: z.string().min(1, { message: "Nhập quận/huyện" }).max(100),
+    state: z.string().min(1, { message: "Nhập tỉnh thành" }).max(200),
     postalCode: z.string(),
     country: z.enum(
-      ["US", "CA", "DK", "NO", "SE", "GB", "DE", "FR", "NL", "ES", "FI", "IT"],
+      [
+        "US",
+        "CA",
+        "DK",
+        "NO",
+        "SE",
+        "GB",
+        "DE",
+        "FR",
+        "NL",
+        "ES",
+        "FI",
+        "IT",
+        "VN",
+      ],
       { message: "Country is required" }
     ),
   })
@@ -86,12 +89,12 @@ const addressSchema = z
 
 const checkoutSchema = z.object({
   voucher: z.string().optional(),
-  email: z.string().email(),
+  email: z.string().email().or(z.literal("")).optional(),
   shippingAddress: addressSchema,
 });
 const checkoutFullSchema = z.object({
   voucher: z.string().optional(),
-  email: z.string().email(),
+  email: z.string().email().or(z.literal("")).optional(),
   shippingAddress: addressSchema,
   billingAddress: addressSchema,
 });
@@ -100,8 +103,8 @@ import { Input, Select } from "./ui/custom-ui";
 import { calculateTax } from "@/lib/common";
 
 import { LoadingTable } from "./loading/table-loading";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import Image from "./image";
+import { toast } from "sonner";
 
 export function CheckoutPage() {
   const { items, getCartTotal, clearCart } = useCart();
@@ -111,36 +114,31 @@ export function CheckoutPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [message, setMessage] = useState<string | null>(null);
-
-  const [paypalClientId, setPaypalCLientId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<ICheckoutForm>({
     email: "",
     shippingAddress: {
       firstName: "",
       lastName: "",
-      phone: "+1",
+      phone: "+84",
       address: "",
       city: "",
-      postalCode: "",
+      postalCode: "12345",
       state: "",
-      country: "US",
+      country: "VN",
     },
     billingAddress: {
       firstName: "",
       lastName: "",
-      phone: "+1",
+      phone: "+84",
       address: "",
       city: "",
       postalCode: "",
       state: "",
-      country: "US",
+      country: "VN",
     },
   });
   const validateForm = () => {
-    console.log("validateForm", formData);
-
     const result = isSameShipping
       ? checkoutSchema.safeParse(formData)
       : checkoutFullSchema.safeParse(formData);
@@ -158,25 +156,47 @@ export function CheckoutPage() {
     return true;
   };
 
-  useEffect(() => {
-    const form = localStorage.getItem("checkout-form");
-    if (form) {
-      const formJson = JSON.parse(form);
-      setFormData(formJson.formData);
-      setIsSameShipping(formJson.isSameShipping);
-    }
-    const generateClientToken = async () => {
-      try {
-        const response = await (
-          await fetch(`${API_URL}/settings/client`)
-        ).json();
-        setPaypalCLientId(response?.paypalClientId || null);
-      } catch (error) {
-        console.error("Error fetching client token:", error);
+  const handleOrder = async () => {
+    setIsLoading(true);
+    try {
+      const fullName =
+        `${formData.shippingAddress.firstName} ${formData.shippingAddress.lastName}`.trim();
+      const shippingAddress = {
+        ...formData.shippingAddress,
+        fullName,
+      };
+      const products = items.map((item) => ({
+        id: item.id,
+        quantity: item.quantity,
+      }));
+      const data = {
+        products,
+        email: formData.email || undefined,
+        shippingAddress: shippingAddress,
+        billingAddress: shippingAddress,
+      };
+      const response = await fetch(`${API_URL}/payment/cod`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        clearCart();
+        navigate({
+          to: "/order-complete",
+        });
+        return;
       }
-    };
-    generateClientToken();
-  }, []);
+      toast.error("Có lỗi xảy ra trong quá trình đặt hàng");
+    } catch (error) {
+      console.log(error);
+      toast.error("Có lỗi xảy ra trong quá trình đặt hàng");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCountry = e.target.value;
@@ -235,30 +255,6 @@ export function CheckoutPage() {
       });
     }
   };
-  const purchaseEvent = () => {
-    const facebookPixel = localStorage.getItem("fbp");
-    if (!facebookPixel) {
-      return;
-    }
-
-    let value =
-      getCartTotal() *
-      (1 +
-        calculateTax(
-          formData.shippingAddress.country,
-          formData.shippingAddress.state
-        ));
-
-    // Làm tròn số đến 2 chữ số thập phân
-    value = Math.round(value * 100) / 100;
-
-    // Gửi value là số đã làm tròn
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).fbq("track", "Purchase", {
-      currency: "USD",
-      value: value, // value là số đã làm tròn
-    });
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -313,118 +309,6 @@ export function CheckoutPage() {
       setFormData(form);
     }
     setStep(CheckoutStep.PAYMENT);
-  };
-
-  const createOrder = async () => {
-    console.log("createOrder");
-
-    const shippingPayment = {
-      ...formData.shippingAddress,
-      fullName: `${formData.shippingAddress.firstName} ${formData.shippingAddress.lastName}`,
-    };
-    const bfullName = isSameShipping
-      ? `${formData.shippingAddress.firstName} ${formData.shippingAddress.lastName}`
-      : `${formData.billingAddress?.firstName} ${formData.billingAddress?.lastName}`;
-    const billingPayment = formData.billingAddress
-      ? {
-          ...formData.billingAddress,
-          fullName: bfullName,
-        }
-      : shippingPayment;
-
-    const order: IPayment = {
-      ...formData,
-      products: items.map((item) => ({
-        id: item.id,
-        quantity: item.quantity,
-      })),
-      shippingAddress: shippingPayment,
-      billingAddress: billingPayment,
-    };
-
-    try {
-      const response = await fetch(`${API_URL}/payment/paypal`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // use the "body" param to optionally pass additional order information
-        // like product ids and quantities
-        body: JSON.stringify(order),
-      });
-
-      const orderData = await response.json();
-
-      if (orderData.id) {
-        return orderData.id;
-      } else {
-        const errorDetail = orderData?.details?.[0];
-        const errorMessage = errorDetail
-          ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
-          : JSON.stringify(orderData);
-
-        throw new Error(errorMessage);
-      }
-    } catch (error) {
-      console.error(error);
-      setMessage(`Could not initiate PayPal Checkout...${error}`);
-    }
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onApprove = async (data: OnApproveData, actions: any) => {
-    try {
-      setIsLoading(true);
-      const response = await fetch(
-        `${API_URL}/payment/paypal/${data.orderID}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      const orderData = await response.json();
-      // Three cases to handle:
-      //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-      //   (2) Other non-recoverable errors -> Show a failure message
-      //   (3) Successful transaction -> Show confirmation or thank you message
-
-      const errorDetail = orderData?.details?.[0];
-
-      if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
-        // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-        // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
-        return actions.restart();
-      } else if (errorDetail) {
-        // (2) Other non-recoverable errors -> Show a failure message
-        throw new Error(`${errorDetail.description} (${orderData.debug_id})`);
-      } else {
-        // (3) Successful transaction -> Show confirmation or thank you message
-        // Or go to another URL:  actions.redirect('thank_you.html');
-        const transaction = orderData.purchase_units[0].payments.captures[0];
-        setMessage(
-          `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`
-        );
-        purchaseEvent();
-        console.log(
-          "Capture result",
-          orderData,
-          JSON.stringify(orderData, null, 2)
-        );
-        clearCart();
-
-        navigate({
-          to: "/order-complete",
-        });
-      }
-    } catch (error) {
-      console.error(error);
-      setMessage(`Sorry, your transaction could not be processed...${error}`);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   if (items.length === 0) {
@@ -487,6 +371,7 @@ export function CheckoutPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                       <div className="md:col-span-2">
                         <Select
+                          disabled
                           aria-invalid={!!errors["shippingAddress.country"]}
                           id="country"
                           name="country"
@@ -507,11 +392,11 @@ export function CheckoutPage() {
                           </p>
                         )}
                       </div>
-                      <div>
+                      <div className="hidden">
                         <Input
                           id="firstName"
                           name="firstName"
-                          placeholder="First Name"
+                          placeholder="Họ"
                           aria-invalid={!!errors["shippingAddress.firstName"]}
                           value={formData.shippingAddress.firstName}
                           onChange={handleChangeshippingAddress}
@@ -526,7 +411,7 @@ export function CheckoutPage() {
                         <Input
                           id="lastName"
                           name="lastName"
-                          placeholder="Last Name*"
+                          placeholder="Họ Tên*"
                           aria-invalid={!!errors["shippingAddress.lastName"]}
                           value={formData.shippingAddress.lastName}
                           onChange={handleChangeshippingAddress}
@@ -541,7 +426,7 @@ export function CheckoutPage() {
                         <Input
                           id="email"
                           name="email"
-                          placeholder="Email Address*"
+                          placeholder="Email (Không bắt buộc)"
                           aria-invalid={!!errors["email"]}
                           value={formData.email}
                           onChange={handleChange}
@@ -556,7 +441,7 @@ export function CheckoutPage() {
                         <Input
                           id="phone"
                           name="phone"
-                          placeholder="Phone Number*"
+                          placeholder="Số điện thoại*"
                           aria-invalid={!!errors["shippingAddress.phone"]}
                           value={formData.shippingAddress.phone}
                           onChange={handleChangeshippingAddress}
@@ -571,7 +456,7 @@ export function CheckoutPage() {
                         <Input
                           id="address"
                           name="address"
-                          placeholder="Address*"
+                          placeholder="Địa chỉ*"
                           aria-invalid={!!errors["shippingAddress.address"]}
                           value={formData.shippingAddress.address}
                           onChange={handleChangeshippingAddress}
@@ -586,7 +471,7 @@ export function CheckoutPage() {
                         <Input
                           id="city"
                           name="city"
-                          placeholder="City"
+                          placeholder="Quận/Huyện/Thị xã"
                           aria-invalid={!!errors["shippingAddress.city"]}
                           value={formData.shippingAddress.city}
                           onChange={handleChangeshippingAddress}
@@ -599,7 +484,7 @@ export function CheckoutPage() {
                       </div>
                       <div>
                         <Select
-                          label="State/Region*"
+                          label="Tỉnh*"
                           id="state"
                           name="state"
                           aria-invalid={!!errors["shippingAddress.state"]}
@@ -630,7 +515,7 @@ export function CheckoutPage() {
                           </p>
                         )}
                       </div>
-                      <div>
+                      <div className="hidden">
                         <Input
                           id="postalCode"
                           name="postalCode"
@@ -851,7 +736,7 @@ export function CheckoutPage() {
               className="rounded-lg shadow-md p-4"
             >
               <div>
-                <h2 className="text-xl font-bold mb-4">Shipping Information</h2>
+                <h2 className="text-xl font-bold mb-4">Địa chỉ nhận hàng</h2>
 
                 <div className="space-y-6 mb-8">
                   <div className="bg-accent p-4 rounded text-sm">
@@ -873,32 +758,9 @@ export function CheckoutPage() {
                 </div>
               </div>
 
-              <h2 className="text-xl font-bold mb-4">Payment Information</h2>
-              {!!message && (
-                <Alert className="my-4" variant="default">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>Error</AlertTitle>
-                  <AlertDescription>{message}</AlertDescription>
-                </Alert>
-              )}
-              {paypalClientId ? (
-                <PayPalScriptProvider
-                  options={{
-                    clientId: paypalClientId,
-                    components: "buttons",
-                    intent: "capture",
-                    vault: false,
-                  }}
-                >
-                  {" "}
-                  <PaypalButtonPayment
-                    onApprove={onApprove}
-                    createOrder={createOrder}
-                  />
-                </PayPalScriptProvider>
-              ) : (
-                <div>Loading...</div>
-              )}
+              <h2 className="text-xl font-bold mb-4">Phương thức thanh toán</h2>
+              <p>COD</p>
+              <Button onClick={handleOrder}>Đặt hàng</Button>
             </TabsContent>
           </Tabs>
         </div>
@@ -922,10 +784,10 @@ export function CheckoutPage() {
                     <p className="font-medium">{item.name}</p>
                     <div className="flex justify-between mt-1">
                       <p className="text-sm">
-                        {formatCurrency(item.price)} x {item.quantity}
+                        {formatVNCurrency(item.price)} x {item.quantity}
                       </p>
                       <p className="font-medium">
-                        {formatCurrency(item.price * item.quantity)}
+                        {formatVNCurrency(item.price * item.quantity)}
                       </p>
                     </div>
                   </div>
@@ -936,7 +798,7 @@ export function CheckoutPage() {
             <div className="space-y-3 py-3 border-t">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>{formatCurrency(getCartTotal())}</span>
+                <span>{formatVNCurrency(getCartTotal())}</span>
               </div>
               <div className="flex justify-between">
                 <span>Shipping</span>
@@ -945,7 +807,7 @@ export function CheckoutPage() {
               <div className="flex justify-between">
                 <span>Tax</span>
                 <span>
-                  {formatCurrency(
+                  {formatVNCurrency(
                     getCartTotal() *
                       calculateTax(
                         formData.shippingAddress.country,
@@ -957,7 +819,7 @@ export function CheckoutPage() {
               <div className="flex justify-between font-bold text-lg pt-2 border-t">
                 <span>Total</span>
                 <span>
-                  {formatCurrency(
+                  {formatVNCurrency(
                     getCartTotal() *
                       (1 +
                         calculateTax(
@@ -976,7 +838,7 @@ export function CheckoutPage() {
                     strokeWidth={1}
                     className="h-4 w-4 mr-2 flex-shrink-0"
                   />
-                  Your order qualifies for free shipping!h
+                  Đơn hàng của bạn đủ điều kiện miễn phí vận chuyển
                 </p>
               </div>
             </div>

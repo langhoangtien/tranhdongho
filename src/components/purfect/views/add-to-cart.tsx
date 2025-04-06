@@ -23,7 +23,7 @@ export default function AddToCart(product: CartItem) {
       onClick={handleAddToCart}
       className="w-full  h-12 text-base font-semibold"
     >
-      Add To Cart | 50% OFF ➜
+      Thêm vào giỏ hàng | 50% OFF ➜
     </Button>
   );
 }
@@ -156,7 +156,7 @@ export function AddToCartSection({ product }: { product: IProductCart }) {
         onClick={handleAddToCart}
         className="w-full  h-12 text-base font-semibold"
       >
-        Add To Cart | 50% OFF ➜
+        Thêm giỏ hàng | 50% OFF ➜
       </Button>
     </div>
   );

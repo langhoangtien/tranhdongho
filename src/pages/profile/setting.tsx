@@ -46,12 +46,15 @@ export default function Setting() {
         <div className="space-y-2 flex flex-col">
           <label className="text-sm font-medium">Màu sắc</label>
           <RadioGroup
-            className="space-x-1 flex"
+            className="space-x-1 flex flex-wrap"
             onValueChange={handleColor}
             defaultValue={color}
           >
             {themeColors.map((item) => (
-              <div key={item.value} className="flex items-center space-x-2">
+              <div
+                key={item.value}
+                className="flex items-center space-x-2 flex-wrap"
+              >
                 <RadioGroupItem
                   className={item.border}
                   value={item.value}
@@ -64,7 +67,7 @@ export default function Setting() {
         </div>
         <div className="space-y-2 flex flex-col">
           <label className="text-sm font-medium">Bo tròn</label>
-          <div className="space-x-2 flex">
+          <div className="space-x-2 flex flex-wrap">
             {themeRadius.map((item) => (
               <div key={item.value} className="flex items-center  space-x-2">
                 <Button
