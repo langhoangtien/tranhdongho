@@ -3,8 +3,11 @@ import {
   AudioWaveform,
   BookOpen,
   Command,
+  FilePenLine,
   Frame,
   GalleryVerticalEnd,
+  HomeIcon,
+  MailIcon,
   Map,
   PieChart,
   ScrollText,
@@ -24,6 +27,8 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { useAuth } from "@/auth";
+import { COMPANY_NAME, CONFIG } from "@/config";
 
 // This is sample data.
 const data = {
@@ -34,7 +39,7 @@ const data = {
   },
   teams: [
     {
-      name: "Acme Inc",
+      name: `${COMPANY_NAME} ${CONFIG.appVersion}`,
       logo: GalleryVerticalEnd,
       plan: "Enterprise",
     },
@@ -51,18 +56,23 @@ const data = {
   ],
   navMain: [
     {
+      title: "App",
+      url: "/admin",
+      icon: HomeIcon,
+    },
+    {
       title: "Người dùng",
       url: "/admin/users",
       icon: UsersRound,
       isActive: true,
       items: [
         {
-          title: "Thêm mới",
-          url: "/admin/users/create",
-        },
-        {
           title: "Danh sách",
           url: "/admin/users",
+        },
+        {
+          title: "Thêm mới",
+          url: "/admin/users/create",
         },
       ],
     },
@@ -72,12 +82,12 @@ const data = {
       icon: ShirtIcon,
       items: [
         {
-          title: "Thêm mới",
-          url: "/admin/products/create",
-        },
-        {
           title: "Danh sách",
           url: "/admin/products",
+        },
+        {
+          title: "Thêm mới",
+          url: "/admin/products/create",
         },
       ],
     },
@@ -87,12 +97,16 @@ const data = {
       icon: BookOpen,
       items: [
         {
+          title: "Danh sách",
+          url: "/admin/reviews",
+        },
+        {
           title: "Thêm mới",
           url: "/admin/reviews/create",
         },
         {
-          title: "Danh sách",
-          url: "/admin/reviews",
+          title: "Nhập đánh giá",
+          url: "/admin/reviews/import",
         },
       ],
     },
@@ -102,12 +116,42 @@ const data = {
       icon: ScrollText,
       items: [
         {
+          title: "Danh sách",
+          url: "/admin/orders",
+        },
+        {
           title: "Thêm mới",
           url: "/admin/orders/create",
         },
+      ],
+    },
+    {
+      title: "Email",
+      url: "/admin/emails",
+      icon: MailIcon,
+      items: [
         {
           title: "Danh sách",
-          url: "/admin/orders",
+          url: "/admin/emails",
+        },
+        {
+          title: "Thêm mới",
+          url: "/admin/emails/create",
+        },
+      ],
+    },
+    {
+      title: "Blog",
+      url: "/admin/blogs",
+      icon: FilePenLine,
+      items: [
+        {
+          title: "Danh sách",
+          url: "/admin/blogs",
+        },
+        {
+          title: "Thêm mới",
+          url: "/admin/blogs/create",
         },
       ],
     },
@@ -115,24 +159,6 @@ const data = {
       title: "Cài đặt",
       url: "/admin/settings",
       icon: SettingsIcon,
-      items: [
-        {
-          title: "Profile",
-          url: "/admin/settings/profile",
-        },
-        {
-          title: "Billing",
-          url: "/admin/settings/billing",
-        },
-        {
-          title: "Notifications",
-          url: "/admin/settings/notifications",
-        },
-        {
-          title: "Security",
-          url: "/admin/settings/security",
-        },
-      ],
     },
   ],
   projects: [
@@ -155,6 +181,9 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const auth = useAuth();
+  if (!auth.isAuthenticated) return;
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -165,7 +194,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

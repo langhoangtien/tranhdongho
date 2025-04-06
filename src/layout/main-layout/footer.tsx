@@ -1,5 +1,6 @@
 import ListPaymentMethod from "@/components/list-payment-method";
 import { LogoWithLink } from "@/components/logo";
+import { COMPANY_NAME, CONTACT_EMAIL } from "@/config";
 import { Link } from "@tanstack/react-router";
 
 const MENU = [
@@ -39,8 +40,8 @@ export default function Footer() {
         <div className="space-y-4">
           <LogoWithLink className="w-32 h-16" />
 
-          <h2 className="text-2xl font-bold">OptiLife LLC.</h2>
-          <p className="text-sm mt-2">Email: contact@optilifecompany.com</p>
+          <h2 className="text-2xl font-bold">{COMPANY_NAME} LLC.</h2>
+          <p className="text-sm mt-2">Email: {CONTACT_EMAIL}</p>
           {/* <div className="flex space-x-4 mt-4 text-xl">
           <FaFacebookF className="cursor-pointer hover:text-blue-500" />
           <FaYoutube className="cursor-pointer hover:text-red-500" />
@@ -101,7 +102,9 @@ export default function Footer() {
         </div>
 
         <div className="flex space-x-2 mt-2 md:mt-0">
-          <p className="mt-2 md:mt-0 text-gray-400">Powered by OptiLife</p>
+          <p className="mt-2 md:mt-0 text-gray-400">
+            Powered by {COMPANY_NAME}
+          </p>
           <ListPaymentMethod />
         </div>
       </div>

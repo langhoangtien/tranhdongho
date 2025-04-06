@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-
 import {
   Sheet,
   SheetClose,
@@ -11,11 +9,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import { Menu, ShoppingCart } from "lucide-react";
+import { Menu } from "lucide-react";
 
 import { menu } from "./nav-desktop";
 import { LogoWithLink } from "@/components/logo";
 import SearchHeader from "./search";
+import CartHeader from "./cart-header";
+import { Link } from "@tanstack/react-router";
 
 export default function NavMobile() {
   return (
@@ -24,25 +24,25 @@ export default function NavMobile() {
         <SheetTrigger asChild>
           <Menu strokeWidth={1} className="size-6 "></Menu>
         </SheetTrigger>
-        <SheetContent side={"left"}>
+        <SheetContent onOpenAutoFocus={(e) => e.preventDefault()} side={"left"}>
           <SheetHeader>
             <SheetTitle></SheetTitle>
             <SheetDescription></SheetDescription>
           </SheetHeader>
           <div className="flex flex-col space-y-4 p-4 ">
             {menu.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 className="text-lg font-semibold "
-                href={item.link}
+                to={item.link}
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
           <SheetFooter>
             <SheetClose asChild>
-              <Button type="submit">Save changes</Button>
+              {/* <Button type="submit">Save changes</Button> */}
             </SheetClose>
           </SheetFooter>
         </SheetContent>
@@ -51,14 +51,7 @@ export default function NavMobile() {
       <LogoWithLink />
       <span className="flex space-x-2 items-center">
         <SearchHeader />
-        <Button size="icon" variant="outline">
-          {" "}
-          <ShoppingCart
-            strokeWidth={1}
-            className="text-accent-foreground"
-            size={24}
-          />
-        </Button>
+        <CartHeader />
       </span>
     </div>
   );

@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/products/optilife-blend')({
+export const Route = createFileRoute('/admin/emails/create')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <div>Hello "/products/optilife-blend"!</div>
+  return <div>Hello "/admin/emails/create"!</div>
 }

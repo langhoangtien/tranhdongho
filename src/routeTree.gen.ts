@@ -11,22 +11,155 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TrackOrderImport } from './routes/track-order'
+import { Route as TermsOfServiceImport } from './routes/terms-of-service'
+import { Route as ShippingPolicyImport } from './routes/shipping-policy'
+import { Route as RefundAndCancellationPolicyImport } from './routes/refund-and-cancellation-policy'
+import { Route as PrivacyPolicyImport } from './routes/privacy-policy'
+import { Route as OrderCompleteImport } from './routes/order-complete'
 import { Route as LoginImport } from './routes/login'
+import { Route as LoadingImport } from './routes/loading'
+import { Route as FaqsImport } from './routes/faqs'
+import { Route as ErrorImport } from './routes/error'
+import { Route as DisclaimerImport } from './routes/disclaimer'
+import { Route as ContactUsImport } from './routes/contact-us'
+import { Route as CheckoutImport } from './routes/checkout'
+import { Route as BillingTermsAndConditionsImport } from './routes/billing-terms-and-conditions'
+import { Route as AboutUsImport } from './routes/about-us'
+import { Route as ProductsRouteImport } from './routes/products/route'
+import { Route as BlogsRouteImport } from './routes/blogs/route'
 import { Route as AdminRouteImport } from './routes/admin/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as BlogsIndexImport } from './routes/blogs/index'
+import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as ProductsPurfectFuelBlendImport } from './routes/products/purfect-fuel-blend'
-import { Route as ProductsOptilifeBlendImport } from './routes/products/optilife-blend'
+import { Route as ProductsProductIdImport } from './routes/products/$productId'
+import { Route as BlogsBlogSlugImport } from './routes/blogs/$blogSlug'
 import { Route as AdminUserImport } from './routes/admin/user'
+import { Route as AdminSettingsImport } from './routes/admin/settings'
+import { Route as AdminProfileImport } from './routes/admin/profile'
 import { Route as AdminUsersIndexImport } from './routes/admin/users/index'
+import { Route as AdminReviewsIndexImport } from './routes/admin/reviews/index'
 import { Route as AdminProductsIndexImport } from './routes/admin/products/index'
+import { Route as AdminOrdersIndexImport } from './routes/admin/orders/index'
+import { Route as AdminEmailsIndexImport } from './routes/admin/emails/index'
+import { Route as AdminBlogsIndexImport } from './routes/admin/blogs/index'
+import { Route as AdminUsersCreateImport } from './routes/admin/users/create'
+import { Route as AdminUsersUserIdImport } from './routes/admin/users/$userId'
+import { Route as AdminReviewsImportImport } from './routes/admin/reviews/import'
+import { Route as AdminReviewsCreateImport } from './routes/admin/reviews/create'
+import { Route as AdminReviewsReviewIdImport } from './routes/admin/reviews/$reviewId'
 import { Route as AdminProductsCreateImport } from './routes/admin/products/create'
 import { Route as AdminProductsProductIdImport } from './routes/admin/products/$productId'
+import { Route as AdminOrdersCreateImport } from './routes/admin/orders/create'
+import { Route as AdminOrdersOrderIdImport } from './routes/admin/orders/$orderId'
+import { Route as AdminEmailsCreateImport } from './routes/admin/emails/create'
+import { Route as AdminEmailsEmailIdImport } from './routes/admin/emails/$emailId'
+import { Route as AdminBlogsCreateImport } from './routes/admin/blogs/create'
+import { Route as AdminBlogsBlogIdImport } from './routes/admin/blogs/$blogId'
 
 // Create/Update Routes
+
+const TrackOrderRoute = TrackOrderImport.update({
+  id: '/track-order',
+  path: '/track-order',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TermsOfServiceRoute = TermsOfServiceImport.update({
+  id: '/terms-of-service',
+  path: '/terms-of-service',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ShippingPolicyRoute = ShippingPolicyImport.update({
+  id: '/shipping-policy',
+  path: '/shipping-policy',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const RefundAndCancellationPolicyRoute =
+  RefundAndCancellationPolicyImport.update({
+    id: '/refund-and-cancellation-policy',
+    path: '/refund-and-cancellation-policy',
+    getParentRoute: () => rootRoute,
+  } as any)
+
+const PrivacyPolicyRoute = PrivacyPolicyImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const OrderCompleteRoute = OrderCompleteImport.update({
+  id: '/order-complete',
+  path: '/order-complete',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const LoginRoute = LoginImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoadingRoute = LoadingImport.update({
+  id: '/loading',
+  path: '/loading',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const FaqsRoute = FaqsImport.update({
+  id: '/faqs',
+  path: '/faqs',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ErrorRoute = ErrorImport.update({
+  id: '/error',
+  path: '/error',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DisclaimerRoute = DisclaimerImport.update({
+  id: '/disclaimer',
+  path: '/disclaimer',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ContactUsRoute = ContactUsImport.update({
+  id: '/contact-us',
+  path: '/contact-us',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CheckoutRoute = CheckoutImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BillingTermsAndConditionsRoute = BillingTermsAndConditionsImport.update({
+  id: '/billing-terms-and-conditions',
+  path: '/billing-terms-and-conditions',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AboutUsRoute = AboutUsImport.update({
+  id: '/about-us',
+  path: '/about-us',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProductsRouteRoute = ProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BlogsRouteRoute = BlogsRouteImport.update({
+  id: '/blogs',
+  path: '/blogs',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -42,21 +175,51 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ProductsPurfectFuelBlendRoute = ProductsPurfectFuelBlendImport.update({
-  id: '/products/purfect-fuel-blend',
-  path: '/products/purfect-fuel-blend',
-  getParentRoute: () => rootRoute,
+const BlogsIndexRoute = BlogsIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogsRouteRoute,
 } as any)
 
-const ProductsOptilifeBlendRoute = ProductsOptilifeBlendImport.update({
-  id: '/products/optilife-blend',
-  path: '/products/optilife-blend',
-  getParentRoute: () => rootRoute,
+const AdminIndexRoute = AdminIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const ProductsPurfectFuelBlendRoute = ProductsPurfectFuelBlendImport.update({
+  id: '/purfect-fuel-blend',
+  path: '/purfect-fuel-blend',
+  getParentRoute: () => ProductsRouteRoute,
+} as any)
+
+const ProductsProductIdRoute = ProductsProductIdImport.update({
+  id: '/$productId',
+  path: '/$productId',
+  getParentRoute: () => ProductsRouteRoute,
+} as any)
+
+const BlogsBlogSlugRoute = BlogsBlogSlugImport.update({
+  id: '/$blogSlug',
+  path: '/$blogSlug',
+  getParentRoute: () => BlogsRouteRoute,
 } as any)
 
 const AdminUserRoute = AdminUserImport.update({
   id: '/user',
   path: '/user',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminSettingsRoute = AdminSettingsImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminProfileRoute = AdminProfileImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 
@@ -66,9 +229,63 @@ const AdminUsersIndexRoute = AdminUsersIndexImport.update({
   getParentRoute: () => AdminRouteRoute,
 } as any)
 
+const AdminReviewsIndexRoute = AdminReviewsIndexImport.update({
+  id: '/reviews/',
+  path: '/reviews/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
 const AdminProductsIndexRoute = AdminProductsIndexImport.update({
   id: '/products/',
   path: '/products/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminOrdersIndexRoute = AdminOrdersIndexImport.update({
+  id: '/orders/',
+  path: '/orders/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminEmailsIndexRoute = AdminEmailsIndexImport.update({
+  id: '/emails/',
+  path: '/emails/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminBlogsIndexRoute = AdminBlogsIndexImport.update({
+  id: '/blogs/',
+  path: '/blogs/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminUsersCreateRoute = AdminUsersCreateImport.update({
+  id: '/users/create',
+  path: '/users/create',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminUsersUserIdRoute = AdminUsersUserIdImport.update({
+  id: '/users/$userId',
+  path: '/users/$userId',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminReviewsImportRoute = AdminReviewsImportImport.update({
+  id: '/reviews/import',
+  path: '/reviews/import',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminReviewsCreateRoute = AdminReviewsCreateImport.update({
+  id: '/reviews/create',
+  path: '/reviews/create',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminReviewsReviewIdRoute = AdminReviewsReviewIdImport.update({
+  id: '/reviews/$reviewId',
+  path: '/reviews/$reviewId',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 
@@ -81,6 +298,42 @@ const AdminProductsCreateRoute = AdminProductsCreateImport.update({
 const AdminProductsProductIdRoute = AdminProductsProductIdImport.update({
   id: '/products/$productId',
   path: '/products/$productId',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminOrdersCreateRoute = AdminOrdersCreateImport.update({
+  id: '/orders/create',
+  path: '/orders/create',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminOrdersOrderIdRoute = AdminOrdersOrderIdImport.update({
+  id: '/orders/$orderId',
+  path: '/orders/$orderId',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminEmailsCreateRoute = AdminEmailsCreateImport.update({
+  id: '/emails/create',
+  path: '/emails/create',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminEmailsEmailIdRoute = AdminEmailsEmailIdImport.update({
+  id: '/emails/$emailId',
+  path: '/emails/$emailId',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminBlogsCreateRoute = AdminBlogsCreateImport.update({
+  id: '/blogs/create',
+  path: '/blogs/create',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminBlogsBlogIdRoute = AdminBlogsBlogIdImport.update({
+  id: '/blogs/$blogId',
+  path: '/blogs/$blogId',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 
@@ -102,12 +355,138 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRoute
     }
+    '/blogs': {
+      id: '/blogs'
+      path: '/blogs'
+      fullPath: '/blogs'
+      preLoaderRoute: typeof BlogsRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/about-us': {
+      id: '/about-us'
+      path: '/about-us'
+      fullPath: '/about-us'
+      preLoaderRoute: typeof AboutUsImport
+      parentRoute: typeof rootRoute
+    }
+    '/billing-terms-and-conditions': {
+      id: '/billing-terms-and-conditions'
+      path: '/billing-terms-and-conditions'
+      fullPath: '/billing-terms-and-conditions'
+      preLoaderRoute: typeof BillingTermsAndConditionsImport
+      parentRoute: typeof rootRoute
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/contact-us': {
+      id: '/contact-us'
+      path: '/contact-us'
+      fullPath: '/contact-us'
+      preLoaderRoute: typeof ContactUsImport
+      parentRoute: typeof rootRoute
+    }
+    '/disclaimer': {
+      id: '/disclaimer'
+      path: '/disclaimer'
+      fullPath: '/disclaimer'
+      preLoaderRoute: typeof DisclaimerImport
+      parentRoute: typeof rootRoute
+    }
+    '/error': {
+      id: '/error'
+      path: '/error'
+      fullPath: '/error'
+      preLoaderRoute: typeof ErrorImport
+      parentRoute: typeof rootRoute
+    }
+    '/faqs': {
+      id: '/faqs'
+      path: '/faqs'
+      fullPath: '/faqs'
+      preLoaderRoute: typeof FaqsImport
+      parentRoute: typeof rootRoute
+    }
+    '/loading': {
+      id: '/loading'
+      path: '/loading'
+      fullPath: '/loading'
+      preLoaderRoute: typeof LoadingImport
+      parentRoute: typeof rootRoute
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
+    }
+    '/order-complete': {
+      id: '/order-complete'
+      path: '/order-complete'
+      fullPath: '/order-complete'
+      preLoaderRoute: typeof OrderCompleteImport
+      parentRoute: typeof rootRoute
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyImport
+      parentRoute: typeof rootRoute
+    }
+    '/refund-and-cancellation-policy': {
+      id: '/refund-and-cancellation-policy'
+      path: '/refund-and-cancellation-policy'
+      fullPath: '/refund-and-cancellation-policy'
+      preLoaderRoute: typeof RefundAndCancellationPolicyImport
+      parentRoute: typeof rootRoute
+    }
+    '/shipping-policy': {
+      id: '/shipping-policy'
+      path: '/shipping-policy'
+      fullPath: '/shipping-policy'
+      preLoaderRoute: typeof ShippingPolicyImport
+      parentRoute: typeof rootRoute
+    }
+    '/terms-of-service': {
+      id: '/terms-of-service'
+      path: '/terms-of-service'
+      fullPath: '/terms-of-service'
+      preLoaderRoute: typeof TermsOfServiceImport
+      parentRoute: typeof rootRoute
+    }
+    '/track-order': {
+      id: '/track-order'
+      path: '/track-order'
+      fullPath: '/track-order'
+      preLoaderRoute: typeof TrackOrderImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin/profile': {
+      id: '/admin/profile'
+      path: '/profile'
+      fullPath: '/admin/profile'
+      preLoaderRoute: typeof AdminProfileImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsImport
+      parentRoute: typeof AdminRouteImport
     }
     '/admin/user': {
       id: '/admin/user'
@@ -116,19 +495,82 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUserImport
       parentRoute: typeof AdminRouteImport
     }
-    '/products/optilife-blend': {
-      id: '/products/optilife-blend'
-      path: '/products/optilife-blend'
-      fullPath: '/products/optilife-blend'
-      preLoaderRoute: typeof ProductsOptilifeBlendImport
-      parentRoute: typeof rootRoute
+    '/blogs/$blogSlug': {
+      id: '/blogs/$blogSlug'
+      path: '/$blogSlug'
+      fullPath: '/blogs/$blogSlug'
+      preLoaderRoute: typeof BlogsBlogSlugImport
+      parentRoute: typeof BlogsRouteImport
+    }
+    '/products/$productId': {
+      id: '/products/$productId'
+      path: '/$productId'
+      fullPath: '/products/$productId'
+      preLoaderRoute: typeof ProductsProductIdImport
+      parentRoute: typeof ProductsRouteImport
     }
     '/products/purfect-fuel-blend': {
       id: '/products/purfect-fuel-blend'
-      path: '/products/purfect-fuel-blend'
+      path: '/purfect-fuel-blend'
       fullPath: '/products/purfect-fuel-blend'
       preLoaderRoute: typeof ProductsPurfectFuelBlendImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof ProductsRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/blogs/': {
+      id: '/blogs/'
+      path: '/'
+      fullPath: '/blogs/'
+      preLoaderRoute: typeof BlogsIndexImport
+      parentRoute: typeof BlogsRouteImport
+    }
+    '/admin/blogs/$blogId': {
+      id: '/admin/blogs/$blogId'
+      path: '/blogs/$blogId'
+      fullPath: '/admin/blogs/$blogId'
+      preLoaderRoute: typeof AdminBlogsBlogIdImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/blogs/create': {
+      id: '/admin/blogs/create'
+      path: '/blogs/create'
+      fullPath: '/admin/blogs/create'
+      preLoaderRoute: typeof AdminBlogsCreateImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/emails/$emailId': {
+      id: '/admin/emails/$emailId'
+      path: '/emails/$emailId'
+      fullPath: '/admin/emails/$emailId'
+      preLoaderRoute: typeof AdminEmailsEmailIdImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/emails/create': {
+      id: '/admin/emails/create'
+      path: '/emails/create'
+      fullPath: '/admin/emails/create'
+      preLoaderRoute: typeof AdminEmailsCreateImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/orders/$orderId': {
+      id: '/admin/orders/$orderId'
+      path: '/orders/$orderId'
+      fullPath: '/admin/orders/$orderId'
+      preLoaderRoute: typeof AdminOrdersOrderIdImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/orders/create': {
+      id: '/admin/orders/create'
+      path: '/orders/create'
+      fullPath: '/admin/orders/create'
+      preLoaderRoute: typeof AdminOrdersCreateImport
+      parentRoute: typeof AdminRouteImport
     }
     '/admin/products/$productId': {
       id: '/admin/products/$productId'
@@ -144,11 +586,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminProductsCreateImport
       parentRoute: typeof AdminRouteImport
     }
+    '/admin/reviews/$reviewId': {
+      id: '/admin/reviews/$reviewId'
+      path: '/reviews/$reviewId'
+      fullPath: '/admin/reviews/$reviewId'
+      preLoaderRoute: typeof AdminReviewsReviewIdImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/reviews/create': {
+      id: '/admin/reviews/create'
+      path: '/reviews/create'
+      fullPath: '/admin/reviews/create'
+      preLoaderRoute: typeof AdminReviewsCreateImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/reviews/import': {
+      id: '/admin/reviews/import'
+      path: '/reviews/import'
+      fullPath: '/admin/reviews/import'
+      preLoaderRoute: typeof AdminReviewsImportImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/users/$userId': {
+      id: '/admin/users/$userId'
+      path: '/users/$userId'
+      fullPath: '/admin/users/$userId'
+      preLoaderRoute: typeof AdminUsersUserIdImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/users/create': {
+      id: '/admin/users/create'
+      path: '/users/create'
+      fullPath: '/admin/users/create'
+      preLoaderRoute: typeof AdminUsersCreateImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/blogs/': {
+      id: '/admin/blogs/'
+      path: '/blogs'
+      fullPath: '/admin/blogs'
+      preLoaderRoute: typeof AdminBlogsIndexImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/emails/': {
+      id: '/admin/emails/'
+      path: '/emails'
+      fullPath: '/admin/emails'
+      preLoaderRoute: typeof AdminEmailsIndexImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/orders/': {
+      id: '/admin/orders/'
+      path: '/orders'
+      fullPath: '/admin/orders'
+      preLoaderRoute: typeof AdminOrdersIndexImport
+      parentRoute: typeof AdminRouteImport
+    }
     '/admin/products/': {
       id: '/admin/products/'
       path: '/products'
       fullPath: '/admin/products'
       preLoaderRoute: typeof AdminProductsIndexImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/reviews/': {
+      id: '/admin/reviews/'
+      path: '/reviews'
+      fullPath: '/admin/reviews'
+      preLoaderRoute: typeof AdminReviewsIndexImport
       parentRoute: typeof AdminRouteImport
     }
     '/admin/users/': {
@@ -164,18 +669,54 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AdminRouteRouteChildren {
+  AdminProfileRoute: typeof AdminProfileRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminUserRoute: typeof AdminUserRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminBlogsBlogIdRoute: typeof AdminBlogsBlogIdRoute
+  AdminBlogsCreateRoute: typeof AdminBlogsCreateRoute
+  AdminEmailsEmailIdRoute: typeof AdminEmailsEmailIdRoute
+  AdminEmailsCreateRoute: typeof AdminEmailsCreateRoute
+  AdminOrdersOrderIdRoute: typeof AdminOrdersOrderIdRoute
+  AdminOrdersCreateRoute: typeof AdminOrdersCreateRoute
   AdminProductsProductIdRoute: typeof AdminProductsProductIdRoute
   AdminProductsCreateRoute: typeof AdminProductsCreateRoute
+  AdminReviewsReviewIdRoute: typeof AdminReviewsReviewIdRoute
+  AdminReviewsCreateRoute: typeof AdminReviewsCreateRoute
+  AdminReviewsImportRoute: typeof AdminReviewsImportRoute
+  AdminUsersUserIdRoute: typeof AdminUsersUserIdRoute
+  AdminUsersCreateRoute: typeof AdminUsersCreateRoute
+  AdminBlogsIndexRoute: typeof AdminBlogsIndexRoute
+  AdminEmailsIndexRoute: typeof AdminEmailsIndexRoute
+  AdminOrdersIndexRoute: typeof AdminOrdersIndexRoute
   AdminProductsIndexRoute: typeof AdminProductsIndexRoute
+  AdminReviewsIndexRoute: typeof AdminReviewsIndexRoute
   AdminUsersIndexRoute: typeof AdminUsersIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminProfileRoute: AdminProfileRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminUserRoute: AdminUserRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  AdminBlogsBlogIdRoute: AdminBlogsBlogIdRoute,
+  AdminBlogsCreateRoute: AdminBlogsCreateRoute,
+  AdminEmailsEmailIdRoute: AdminEmailsEmailIdRoute,
+  AdminEmailsCreateRoute: AdminEmailsCreateRoute,
+  AdminOrdersOrderIdRoute: AdminOrdersOrderIdRoute,
+  AdminOrdersCreateRoute: AdminOrdersCreateRoute,
   AdminProductsProductIdRoute: AdminProductsProductIdRoute,
   AdminProductsCreateRoute: AdminProductsCreateRoute,
+  AdminReviewsReviewIdRoute: AdminReviewsReviewIdRoute,
+  AdminReviewsCreateRoute: AdminReviewsCreateRoute,
+  AdminReviewsImportRoute: AdminReviewsImportRoute,
+  AdminUsersUserIdRoute: AdminUsersUserIdRoute,
+  AdminUsersCreateRoute: AdminUsersCreateRoute,
+  AdminBlogsIndexRoute: AdminBlogsIndexRoute,
+  AdminEmailsIndexRoute: AdminEmailsIndexRoute,
+  AdminOrdersIndexRoute: AdminOrdersIndexRoute,
   AdminProductsIndexRoute: AdminProductsIndexRoute,
+  AdminReviewsIndexRoute: AdminReviewsIndexRoute,
   AdminUsersIndexRoute: AdminUsersIndexRoute,
 }
 
@@ -183,29 +724,127 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
   AdminRouteRouteChildren,
 )
 
+interface BlogsRouteRouteChildren {
+  BlogsBlogSlugRoute: typeof BlogsBlogSlugRoute
+  BlogsIndexRoute: typeof BlogsIndexRoute
+}
+
+const BlogsRouteRouteChildren: BlogsRouteRouteChildren = {
+  BlogsBlogSlugRoute: BlogsBlogSlugRoute,
+  BlogsIndexRoute: BlogsIndexRoute,
+}
+
+const BlogsRouteRouteWithChildren = BlogsRouteRoute._addFileChildren(
+  BlogsRouteRouteChildren,
+)
+
+interface ProductsRouteRouteChildren {
+  ProductsProductIdRoute: typeof ProductsProductIdRoute
+  ProductsPurfectFuelBlendRoute: typeof ProductsPurfectFuelBlendRoute
+}
+
+const ProductsRouteRouteChildren: ProductsRouteRouteChildren = {
+  ProductsProductIdRoute: ProductsProductIdRoute,
+  ProductsPurfectFuelBlendRoute: ProductsPurfectFuelBlendRoute,
+}
+
+const ProductsRouteRouteWithChildren = ProductsRouteRoute._addFileChildren(
+  ProductsRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
+  '/blogs': typeof BlogsRouteRouteWithChildren
+  '/products': typeof ProductsRouteRouteWithChildren
+  '/about-us': typeof AboutUsRoute
+  '/billing-terms-and-conditions': typeof BillingTermsAndConditionsRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact-us': typeof ContactUsRoute
+  '/disclaimer': typeof DisclaimerRoute
+  '/error': typeof ErrorRoute
+  '/faqs': typeof FaqsRoute
+  '/loading': typeof LoadingRoute
   '/login': typeof LoginRoute
+  '/order-complete': typeof OrderCompleteRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/refund-and-cancellation-policy': typeof RefundAndCancellationPolicyRoute
+  '/shipping-policy': typeof ShippingPolicyRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
+  '/track-order': typeof TrackOrderRoute
+  '/admin/profile': typeof AdminProfileRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/user': typeof AdminUserRoute
-  '/products/optilife-blend': typeof ProductsOptilifeBlendRoute
+  '/blogs/$blogSlug': typeof BlogsBlogSlugRoute
+  '/products/$productId': typeof ProductsProductIdRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
+  '/admin/': typeof AdminIndexRoute
+  '/blogs/': typeof BlogsIndexRoute
+  '/admin/blogs/$blogId': typeof AdminBlogsBlogIdRoute
+  '/admin/blogs/create': typeof AdminBlogsCreateRoute
+  '/admin/emails/$emailId': typeof AdminEmailsEmailIdRoute
+  '/admin/emails/create': typeof AdminEmailsCreateRoute
+  '/admin/orders/$orderId': typeof AdminOrdersOrderIdRoute
+  '/admin/orders/create': typeof AdminOrdersCreateRoute
   '/admin/products/$productId': typeof AdminProductsProductIdRoute
   '/admin/products/create': typeof AdminProductsCreateRoute
+  '/admin/reviews/$reviewId': typeof AdminReviewsReviewIdRoute
+  '/admin/reviews/create': typeof AdminReviewsCreateRoute
+  '/admin/reviews/import': typeof AdminReviewsImportRoute
+  '/admin/users/$userId': typeof AdminUsersUserIdRoute
+  '/admin/users/create': typeof AdminUsersCreateRoute
+  '/admin/blogs': typeof AdminBlogsIndexRoute
+  '/admin/emails': typeof AdminEmailsIndexRoute
+  '/admin/orders': typeof AdminOrdersIndexRoute
   '/admin/products': typeof AdminProductsIndexRoute
+  '/admin/reviews': typeof AdminReviewsIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteRouteWithChildren
+  '/products': typeof ProductsRouteRouteWithChildren
+  '/about-us': typeof AboutUsRoute
+  '/billing-terms-and-conditions': typeof BillingTermsAndConditionsRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact-us': typeof ContactUsRoute
+  '/disclaimer': typeof DisclaimerRoute
+  '/error': typeof ErrorRoute
+  '/faqs': typeof FaqsRoute
+  '/loading': typeof LoadingRoute
   '/login': typeof LoginRoute
+  '/order-complete': typeof OrderCompleteRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/refund-and-cancellation-policy': typeof RefundAndCancellationPolicyRoute
+  '/shipping-policy': typeof ShippingPolicyRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
+  '/track-order': typeof TrackOrderRoute
+  '/admin/profile': typeof AdminProfileRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/user': typeof AdminUserRoute
-  '/products/optilife-blend': typeof ProductsOptilifeBlendRoute
+  '/blogs/$blogSlug': typeof BlogsBlogSlugRoute
+  '/products/$productId': typeof ProductsProductIdRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
+  '/admin': typeof AdminIndexRoute
+  '/blogs': typeof BlogsIndexRoute
+  '/admin/blogs/$blogId': typeof AdminBlogsBlogIdRoute
+  '/admin/blogs/create': typeof AdminBlogsCreateRoute
+  '/admin/emails/$emailId': typeof AdminEmailsEmailIdRoute
+  '/admin/emails/create': typeof AdminEmailsCreateRoute
+  '/admin/orders/$orderId': typeof AdminOrdersOrderIdRoute
+  '/admin/orders/create': typeof AdminOrdersCreateRoute
   '/admin/products/$productId': typeof AdminProductsProductIdRoute
   '/admin/products/create': typeof AdminProductsCreateRoute
+  '/admin/reviews/$reviewId': typeof AdminReviewsReviewIdRoute
+  '/admin/reviews/create': typeof AdminReviewsCreateRoute
+  '/admin/reviews/import': typeof AdminReviewsImportRoute
+  '/admin/users/$userId': typeof AdminUsersUserIdRoute
+  '/admin/users/create': typeof AdminUsersCreateRoute
+  '/admin/blogs': typeof AdminBlogsIndexRoute
+  '/admin/emails': typeof AdminEmailsIndexRoute
+  '/admin/orders': typeof AdminOrdersIndexRoute
   '/admin/products': typeof AdminProductsIndexRoute
+  '/admin/reviews': typeof AdminReviewsIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
 }
 
@@ -213,13 +852,49 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
+  '/blogs': typeof BlogsRouteRouteWithChildren
+  '/products': typeof ProductsRouteRouteWithChildren
+  '/about-us': typeof AboutUsRoute
+  '/billing-terms-and-conditions': typeof BillingTermsAndConditionsRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact-us': typeof ContactUsRoute
+  '/disclaimer': typeof DisclaimerRoute
+  '/error': typeof ErrorRoute
+  '/faqs': typeof FaqsRoute
+  '/loading': typeof LoadingRoute
   '/login': typeof LoginRoute
+  '/order-complete': typeof OrderCompleteRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/refund-and-cancellation-policy': typeof RefundAndCancellationPolicyRoute
+  '/shipping-policy': typeof ShippingPolicyRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
+  '/track-order': typeof TrackOrderRoute
+  '/admin/profile': typeof AdminProfileRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/user': typeof AdminUserRoute
-  '/products/optilife-blend': typeof ProductsOptilifeBlendRoute
+  '/blogs/$blogSlug': typeof BlogsBlogSlugRoute
+  '/products/$productId': typeof ProductsProductIdRoute
   '/products/purfect-fuel-blend': typeof ProductsPurfectFuelBlendRoute
+  '/admin/': typeof AdminIndexRoute
+  '/blogs/': typeof BlogsIndexRoute
+  '/admin/blogs/$blogId': typeof AdminBlogsBlogIdRoute
+  '/admin/blogs/create': typeof AdminBlogsCreateRoute
+  '/admin/emails/$emailId': typeof AdminEmailsEmailIdRoute
+  '/admin/emails/create': typeof AdminEmailsCreateRoute
+  '/admin/orders/$orderId': typeof AdminOrdersOrderIdRoute
+  '/admin/orders/create': typeof AdminOrdersCreateRoute
   '/admin/products/$productId': typeof AdminProductsProductIdRoute
   '/admin/products/create': typeof AdminProductsCreateRoute
+  '/admin/reviews/$reviewId': typeof AdminReviewsReviewIdRoute
+  '/admin/reviews/create': typeof AdminReviewsCreateRoute
+  '/admin/reviews/import': typeof AdminReviewsImportRoute
+  '/admin/users/$userId': typeof AdminUsersUserIdRoute
+  '/admin/users/create': typeof AdminUsersCreateRoute
+  '/admin/blogs/': typeof AdminBlogsIndexRoute
+  '/admin/emails/': typeof AdminEmailsIndexRoute
+  '/admin/orders/': typeof AdminOrdersIndexRoute
   '/admin/products/': typeof AdminProductsIndexRoute
+  '/admin/reviews/': typeof AdminReviewsIndexRoute
   '/admin/users/': typeof AdminUsersIndexRoute
 }
 
@@ -228,37 +903,143 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/blogs'
+    | '/products'
+    | '/about-us'
+    | '/billing-terms-and-conditions'
+    | '/checkout'
+    | '/contact-us'
+    | '/disclaimer'
+    | '/error'
+    | '/faqs'
+    | '/loading'
     | '/login'
+    | '/order-complete'
+    | '/privacy-policy'
+    | '/refund-and-cancellation-policy'
+    | '/shipping-policy'
+    | '/terms-of-service'
+    | '/track-order'
+    | '/admin/profile'
+    | '/admin/settings'
     | '/admin/user'
-    | '/products/optilife-blend'
+    | '/blogs/$blogSlug'
+    | '/products/$productId'
     | '/products/purfect-fuel-blend'
+    | '/admin/'
+    | '/blogs/'
+    | '/admin/blogs/$blogId'
+    | '/admin/blogs/create'
+    | '/admin/emails/$emailId'
+    | '/admin/emails/create'
+    | '/admin/orders/$orderId'
+    | '/admin/orders/create'
     | '/admin/products/$productId'
     | '/admin/products/create'
+    | '/admin/reviews/$reviewId'
+    | '/admin/reviews/create'
+    | '/admin/reviews/import'
+    | '/admin/users/$userId'
+    | '/admin/users/create'
+    | '/admin/blogs'
+    | '/admin/emails'
+    | '/admin/orders'
     | '/admin/products'
+    | '/admin/reviews'
     | '/admin/users'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/admin'
+    | '/products'
+    | '/about-us'
+    | '/billing-terms-and-conditions'
+    | '/checkout'
+    | '/contact-us'
+    | '/disclaimer'
+    | '/error'
+    | '/faqs'
+    | '/loading'
     | '/login'
+    | '/order-complete'
+    | '/privacy-policy'
+    | '/refund-and-cancellation-policy'
+    | '/shipping-policy'
+    | '/terms-of-service'
+    | '/track-order'
+    | '/admin/profile'
+    | '/admin/settings'
     | '/admin/user'
-    | '/products/optilife-blend'
+    | '/blogs/$blogSlug'
+    | '/products/$productId'
     | '/products/purfect-fuel-blend'
+    | '/admin'
+    | '/blogs'
+    | '/admin/blogs/$blogId'
+    | '/admin/blogs/create'
+    | '/admin/emails/$emailId'
+    | '/admin/emails/create'
+    | '/admin/orders/$orderId'
+    | '/admin/orders/create'
     | '/admin/products/$productId'
     | '/admin/products/create'
+    | '/admin/reviews/$reviewId'
+    | '/admin/reviews/create'
+    | '/admin/reviews/import'
+    | '/admin/users/$userId'
+    | '/admin/users/create'
+    | '/admin/blogs'
+    | '/admin/emails'
+    | '/admin/orders'
     | '/admin/products'
+    | '/admin/reviews'
     | '/admin/users'
   id:
     | '__root__'
     | '/'
     | '/admin'
+    | '/blogs'
+    | '/products'
+    | '/about-us'
+    | '/billing-terms-and-conditions'
+    | '/checkout'
+    | '/contact-us'
+    | '/disclaimer'
+    | '/error'
+    | '/faqs'
+    | '/loading'
     | '/login'
+    | '/order-complete'
+    | '/privacy-policy'
+    | '/refund-and-cancellation-policy'
+    | '/shipping-policy'
+    | '/terms-of-service'
+    | '/track-order'
+    | '/admin/profile'
+    | '/admin/settings'
     | '/admin/user'
-    | '/products/optilife-blend'
+    | '/blogs/$blogSlug'
+    | '/products/$productId'
     | '/products/purfect-fuel-blend'
+    | '/admin/'
+    | '/blogs/'
+    | '/admin/blogs/$blogId'
+    | '/admin/blogs/create'
+    | '/admin/emails/$emailId'
+    | '/admin/emails/create'
+    | '/admin/orders/$orderId'
+    | '/admin/orders/create'
     | '/admin/products/$productId'
     | '/admin/products/create'
+    | '/admin/reviews/$reviewId'
+    | '/admin/reviews/create'
+    | '/admin/reviews/import'
+    | '/admin/users/$userId'
+    | '/admin/users/create'
+    | '/admin/blogs/'
+    | '/admin/emails/'
+    | '/admin/orders/'
     | '/admin/products/'
+    | '/admin/reviews/'
     | '/admin/users/'
   fileRoutesById: FileRoutesById
 }
@@ -266,17 +1047,45 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  BlogsRouteRoute: typeof BlogsRouteRouteWithChildren
+  ProductsRouteRoute: typeof ProductsRouteRouteWithChildren
+  AboutUsRoute: typeof AboutUsRoute
+  BillingTermsAndConditionsRoute: typeof BillingTermsAndConditionsRoute
+  CheckoutRoute: typeof CheckoutRoute
+  ContactUsRoute: typeof ContactUsRoute
+  DisclaimerRoute: typeof DisclaimerRoute
+  ErrorRoute: typeof ErrorRoute
+  FaqsRoute: typeof FaqsRoute
+  LoadingRoute: typeof LoadingRoute
   LoginRoute: typeof LoginRoute
-  ProductsOptilifeBlendRoute: typeof ProductsOptilifeBlendRoute
-  ProductsPurfectFuelBlendRoute: typeof ProductsPurfectFuelBlendRoute
+  OrderCompleteRoute: typeof OrderCompleteRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  RefundAndCancellationPolicyRoute: typeof RefundAndCancellationPolicyRoute
+  ShippingPolicyRoute: typeof ShippingPolicyRoute
+  TermsOfServiceRoute: typeof TermsOfServiceRoute
+  TrackOrderRoute: typeof TrackOrderRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRouteRoute: AdminRouteRouteWithChildren,
+  BlogsRouteRoute: BlogsRouteRouteWithChildren,
+  ProductsRouteRoute: ProductsRouteRouteWithChildren,
+  AboutUsRoute: AboutUsRoute,
+  BillingTermsAndConditionsRoute: BillingTermsAndConditionsRoute,
+  CheckoutRoute: CheckoutRoute,
+  ContactUsRoute: ContactUsRoute,
+  DisclaimerRoute: DisclaimerRoute,
+  ErrorRoute: ErrorRoute,
+  FaqsRoute: FaqsRoute,
+  LoadingRoute: LoadingRoute,
   LoginRoute: LoginRoute,
-  ProductsOptilifeBlendRoute: ProductsOptilifeBlendRoute,
-  ProductsPurfectFuelBlendRoute: ProductsPurfectFuelBlendRoute,
+  OrderCompleteRoute: OrderCompleteRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
+  RefundAndCancellationPolicyRoute: RefundAndCancellationPolicyRoute,
+  ShippingPolicyRoute: ShippingPolicyRoute,
+  TermsOfServiceRoute: TermsOfServiceRoute,
+  TrackOrderRoute: TrackOrderRoute,
 }
 
 export const routeTree = rootRoute
@@ -291,9 +1100,23 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/admin",
+        "/blogs",
+        "/products",
+        "/about-us",
+        "/billing-terms-and-conditions",
+        "/checkout",
+        "/contact-us",
+        "/disclaimer",
+        "/error",
+        "/faqs",
+        "/loading",
         "/login",
-        "/products/optilife-blend",
-        "/products/purfect-fuel-blend"
+        "/order-complete",
+        "/privacy-policy",
+        "/refund-and-cancellation-policy",
+        "/shipping-policy",
+        "/terms-of-service",
+        "/track-order"
       ]
     },
     "/": {
@@ -302,25 +1125,145 @@ export const routeTree = rootRoute
     "/admin": {
       "filePath": "admin/route.tsx",
       "children": [
+        "/admin/profile",
+        "/admin/settings",
         "/admin/user",
+        "/admin/",
+        "/admin/blogs/$blogId",
+        "/admin/blogs/create",
+        "/admin/emails/$emailId",
+        "/admin/emails/create",
+        "/admin/orders/$orderId",
+        "/admin/orders/create",
         "/admin/products/$productId",
         "/admin/products/create",
+        "/admin/reviews/$reviewId",
+        "/admin/reviews/create",
+        "/admin/reviews/import",
+        "/admin/users/$userId",
+        "/admin/users/create",
+        "/admin/blogs/",
+        "/admin/emails/",
+        "/admin/orders/",
         "/admin/products/",
+        "/admin/reviews/",
         "/admin/users/"
       ]
     },
+    "/blogs": {
+      "filePath": "blogs/route.tsx",
+      "children": [
+        "/blogs/$blogSlug",
+        "/blogs/"
+      ]
+    },
+    "/products": {
+      "filePath": "products/route.tsx",
+      "children": [
+        "/products/$productId",
+        "/products/purfect-fuel-blend"
+      ]
+    },
+    "/about-us": {
+      "filePath": "about-us.tsx"
+    },
+    "/billing-terms-and-conditions": {
+      "filePath": "billing-terms-and-conditions.tsx"
+    },
+    "/checkout": {
+      "filePath": "checkout.tsx"
+    },
+    "/contact-us": {
+      "filePath": "contact-us.tsx"
+    },
+    "/disclaimer": {
+      "filePath": "disclaimer.tsx"
+    },
+    "/error": {
+      "filePath": "error.tsx"
+    },
+    "/faqs": {
+      "filePath": "faqs.tsx"
+    },
+    "/loading": {
+      "filePath": "loading.tsx"
+    },
     "/login": {
       "filePath": "login.tsx"
+    },
+    "/order-complete": {
+      "filePath": "order-complete.tsx"
+    },
+    "/privacy-policy": {
+      "filePath": "privacy-policy.tsx"
+    },
+    "/refund-and-cancellation-policy": {
+      "filePath": "refund-and-cancellation-policy.tsx"
+    },
+    "/shipping-policy": {
+      "filePath": "shipping-policy.tsx"
+    },
+    "/terms-of-service": {
+      "filePath": "terms-of-service.tsx"
+    },
+    "/track-order": {
+      "filePath": "track-order.tsx"
+    },
+    "/admin/profile": {
+      "filePath": "admin/profile.tsx",
+      "parent": "/admin"
+    },
+    "/admin/settings": {
+      "filePath": "admin/settings.tsx",
+      "parent": "/admin"
     },
     "/admin/user": {
       "filePath": "admin/user.tsx",
       "parent": "/admin"
     },
-    "/products/optilife-blend": {
-      "filePath": "products/optilife-blend.tsx"
+    "/blogs/$blogSlug": {
+      "filePath": "blogs/$blogSlug.tsx",
+      "parent": "/blogs"
+    },
+    "/products/$productId": {
+      "filePath": "products/$productId.tsx",
+      "parent": "/products"
     },
     "/products/purfect-fuel-blend": {
-      "filePath": "products/purfect-fuel-blend.tsx"
+      "filePath": "products/purfect-fuel-blend.tsx",
+      "parent": "/products"
+    },
+    "/admin/": {
+      "filePath": "admin/index.tsx",
+      "parent": "/admin"
+    },
+    "/blogs/": {
+      "filePath": "blogs/index.tsx",
+      "parent": "/blogs"
+    },
+    "/admin/blogs/$blogId": {
+      "filePath": "admin/blogs/$blogId.tsx",
+      "parent": "/admin"
+    },
+    "/admin/blogs/create": {
+      "filePath": "admin/blogs/create.tsx",
+      "parent": "/admin"
+    },
+    "/admin/emails/$emailId": {
+      "filePath": "admin/emails/$emailId.tsx",
+      "parent": "/admin"
+    },
+    "/admin/emails/create": {
+      "filePath": "admin/emails/create.tsx",
+      "parent": "/admin"
+    },
+    "/admin/orders/$orderId": {
+      "filePath": "admin/orders/$orderId.tsx",
+      "parent": "/admin"
+    },
+    "/admin/orders/create": {
+      "filePath": "admin/orders/create.tsx",
+      "parent": "/admin"
     },
     "/admin/products/$productId": {
       "filePath": "admin/products/$productId.tsx",
@@ -330,8 +1273,44 @@ export const routeTree = rootRoute
       "filePath": "admin/products/create.tsx",
       "parent": "/admin"
     },
+    "/admin/reviews/$reviewId": {
+      "filePath": "admin/reviews/$reviewId.tsx",
+      "parent": "/admin"
+    },
+    "/admin/reviews/create": {
+      "filePath": "admin/reviews/create.tsx",
+      "parent": "/admin"
+    },
+    "/admin/reviews/import": {
+      "filePath": "admin/reviews/import.tsx",
+      "parent": "/admin"
+    },
+    "/admin/users/$userId": {
+      "filePath": "admin/users/$userId.tsx",
+      "parent": "/admin"
+    },
+    "/admin/users/create": {
+      "filePath": "admin/users/create.tsx",
+      "parent": "/admin"
+    },
+    "/admin/blogs/": {
+      "filePath": "admin/blogs/index.tsx",
+      "parent": "/admin"
+    },
+    "/admin/emails/": {
+      "filePath": "admin/emails/index.tsx",
+      "parent": "/admin"
+    },
+    "/admin/orders/": {
+      "filePath": "admin/orders/index.tsx",
+      "parent": "/admin"
+    },
     "/admin/products/": {
       "filePath": "admin/products/index.tsx",
+      "parent": "/admin"
+    },
+    "/admin/reviews/": {
+      "filePath": "admin/reviews/index.tsx",
       "parent": "/admin"
     },
     "/admin/users/": {

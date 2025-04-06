@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "../ui/button";
+import { PRODUCT_NAME } from "@/config";
 
 const stats = [
   {
@@ -11,7 +12,7 @@ const stats = [
     text: "Bottle with 20 supplements inside",
   },
   {
-    number: "23",
+    number: "23%",
     text: "Avg. increase in testosterone",
   },
   {
@@ -35,12 +36,13 @@ export default function SectionThree() {
         {/* Text Section */}
         <div className="col-span-2 md:col-span-1 text-center lg:text-left space-y-4">
           <h1 className="text-4xl font-bold text-primary">
-            With PurfectFuel ™<br />
+            With {PRODUCT_NAME}
+            <br />
             it’s easy —<br />
             to feel your best self
           </h1>
           <p>
-            PurfectFuel ™ brings you the ultimate vitality boost with our
+            {PRODUCT_NAME} brings you the ultimate vitality boost with our
             Dynamic Vitality Bundle. Crafted with highly potent herbal
             ingredients, this bundle is designed to enhance your overall
             well-being, promote energy, and support a healthy lifestyle.
@@ -64,8 +66,8 @@ export default function SectionThree() {
           {/* Button Section */}
           <div className="flex items-center">
             <Link to="/products/purfect-fuel-blend" className=" ">
-              <Button size="lg" className="rounded-full">
-                The PurfectFuel ™ Difference
+              <Button size="lg" className="h-14">
+                The {PRODUCT_NAME} Difference
               </Button>
             </Link>
           </div>

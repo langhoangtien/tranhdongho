@@ -3,7 +3,7 @@ name: Deploy React App
 on:
   push:
     branches:
-      - quitmood
+      - langtranhdongho
 
 jobs:
   build-and-deploy:
@@ -25,7 +25,10 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: Add environment variables
-        run: echo "VITE_HOST_API=https://api.quitmood.net" >> .env
+        run: |
+          echo "VITE_SERVER_URL=https://api.langtranhdongho.vn" >> .env
+          echo "VITE_PAYPAL_CLIENT_ID=ASwSHwggi9GFWxDBOwcJWXCbEqLVCYN2FyRgwpxhxETqiZoZJo5hfg4OTbUuCm0dWNx1zIh0zZrxShgl" >> .env
+          echo "VITE_BRANCH=langtranhdongho" >> .env
 
       # Build project
       - name: Build project
@@ -39,7 +42,7 @@ jobs:
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: dist/ # Thư mục build của Vite
-          target: /var/www/quitmood.net # Đường dẫn đến thư mục trên server
+          target: /var/www/langtranhdongho.vn # Đường dẫn đến thư mục trên server
 
       # Optional: Restart server (nếu cần thiết)
       - name: Restart Server

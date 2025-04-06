@@ -1,36 +1,38 @@
 import { RouterProvider, createRouter } from "@tanstack/react-router";
-
 import { routeTree } from "./routeTree.gen";
 import { AuthProvider, useAuth } from "./auth";
 import { ThemeProvider } from "./components/theme-provider";
 import { CartProvider } from "./cart";
-
-// Set up a Router instance
-const router = createRouter({
-  routeTree,
-  defaultPreload: "intent",
-  scrollRestoration: true,
-  context: {
-    auth: undefined!, // This will be set after we wrap the app in an AuthProvider
-  },
-});
+import FacebookPixel from "./components/facebook-pixcel";
+import { useVisitorTracker } from "./hooks/use-visitor-tracker";
 
 // Register things for typesafety
 declare module "@tanstack/react-router" {
   interface Register {
-    router: typeof router;
+    router: ReturnType<typeof createRouter>;
   }
 }
 
 function InnerApp() {
   const auth = useAuth();
-  return <RouterProvider router={router} context={{ auth }} />;
+
+  // Tạo router bên trong component để truyền context động
+  const router = createRouter({
+    routeTree,
+    defaultPreload: "intent",
+    scrollRestoration: true,
+    context: { auth },
+  });
+
+  return <RouterProvider router={router} />;
 }
 
 function App() {
+  useVisitorTracker();
   return (
     <AuthProvider>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <FacebookPixel />
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <CartProvider>
           <InnerApp />
         </CartProvider>

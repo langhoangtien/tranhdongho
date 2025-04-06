@@ -1,13 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { ModeToggle } from "@/components/mode-toggle";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
   SidebarInset,
@@ -15,17 +7,28 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { z } from "zod";
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
-import { BellRingIcon } from "lucide-react";
+import {
+  createFileRoute,
+  Link,
+  Outlet,
+  redirect,
+} from "@tanstack/react-router";
+import { HomeIcon } from "lucide-react";
 import { AuthContext } from "@/auth";
+import NotificationBell from "@/layout/main-layout/notification";
 
 export const Route = createFileRoute("/admin")({
   component: RouteComponent,
   validateSearch: z.object({
     redirect: z.string().optional().catch(""),
   }),
-  beforeLoad: ({ context, search }) => {
+  beforeLoad: async ({ context, search }) => {
     const authContext = context as { auth: AuthContext };
+
+    if (!authContext.auth.user) {
+      await authContext.auth.initialize();
+    }
+
     if (!authContext.auth.isAuthenticated) {
       throw redirect({ to: search.redirect || "/login" });
     }
@@ -42,30 +45,17 @@ function RouteComponent() {
           <div className="flex h-16 shrink-0 items-center justify-end gap-2">
             <div className="flex items-center gap-1">
               <ModeToggle />
-              <Button variant="outline" size="icon">
-                <BellRingIcon strokeWidth={1} />
-              </Button>
+              <NotificationBell />
             </div>
           </div>
         </header>
-        <div className="p-4">
-          {" "}
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem className="hidden md:block">
-                <BreadcrumbLink href="#">
-                  Building Your Application
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator className="hidden md:block" />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
 
         <Outlet />
+        <Link className="fixed right-4 bottom-4 z-20" to="/">
+          <Button size="icon" variant="outline">
+            <HomeIcon strokeWidth={1.25} />
+          </Button>
+        </Link>
       </SidebarInset>
     </SidebarProvider>
   );

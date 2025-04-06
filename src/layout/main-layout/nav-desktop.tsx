@@ -1,12 +1,13 @@
 import { LogoWithLink } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Link, useMatchRoute } from "@tanstack/react-router";
-import { ShoppingCart, User2Icon } from "lucide-react";
+import { User2Icon } from "lucide-react";
 import SearchHeader from "./search";
+import CartHeader from "./cart-header";
 
 export const menu = [
   { name: "About Us", link: "/about-us" },
-  { name: "Buy", link: "/products/optilife-blend" },
+  { name: "Buy", link: "/products/purfect-fuel-blend" },
   { name: "Contact", link: "/contact-us" },
   { name: "Track Order", link: "/track-order" },
 ];
@@ -34,14 +35,7 @@ export default function NavDesktop() {
         </div>
         <span className="flex space-x-2 items-center ">
           <SearchHeader />
-          <Button size="icon" variant="outline">
-            {" "}
-            <ShoppingCart
-              strokeWidth={1}
-              className="text-accent-foreground"
-              size={24}
-            />
-          </Button>
+          <CartHeader />
           <Link to="/login">
             <Button size="icon" variant="outline">
               {" "}
