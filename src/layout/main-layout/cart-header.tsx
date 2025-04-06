@@ -14,7 +14,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Link } from "@tanstack/react-router";
-import { formatCurrency } from "@/lib/utils";
+import { formatVNCurrency } from "@/lib/utils";
 import Image from "@/components/image";
 export default function CartHeader() {
   const {
@@ -112,7 +112,7 @@ export default function CartHeader() {
                     </div>
                     <div className="flex flex-col shrink-0 justify-between">
                       <p className="primary font-medium mt-1">
-                        {formatCurrency(item.price * item.quantity)}
+                        {formatVNCurrency(item.price * item.quantity)}
                       </p>
                       <button
                         onClick={() => removeItem(item.id)}
@@ -136,7 +136,7 @@ export default function CartHeader() {
               </div>
               <div className="flex justify-between mb-4 text-primary">
                 <span className="font-semibold">Tổng</span>
-                <span>{formatCurrency(getCartTotal())}</span>
+                <span>{formatVNCurrency(getCartTotal())}</span>
               </div>
 
               <Link to="/checkout" onClick={() => setIsOpen(false)}>
