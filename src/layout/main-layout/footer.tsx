@@ -5,33 +5,34 @@ import { Link } from "@tanstack/react-router";
 
 const MENU = [
   {
-    title: "MORE INFO",
+    title: "THÊM THÔNG TIN",
     items: [
-      { title: "Order Tracking", link: "/track-order" },
-      { title: "About Us", link: "/about-us" },
-      { title: "Blogs", link: "/blogs" },
-      { title: "Contact", link: "/contact-us" },
-      { title: "FAQs", link: "/faqs" },
+      { title: "Theo dõi đơn hàng", link: "/track-order" },
+      { title: "Về chúng tôi", link: "/about-us" },
+      { title: "Blog", link: "/blogs" },
+      { title: "Liên hệ", link: "/contact-us" },
+      { title: "Câu hỏi thường gặp", link: "/faqs" },
     ],
   },
   {
-    title: "POLICY",
+    title: "CHÍNH SÁCH",
     items: [
-      { title: "Terms of Service", link: "/terms-of-service" },
-      { title: "Privacy Policy", link: "/privacy-policy" },
-      { title: "Shipping Policy", link: "/shipping-policy" },
+      { title: "Điều khoản dịch vụ", link: "/terms-of-service" },
+      { title: "Chính sách bảo mật", link: "/privacy-policy" },
+      { title: "Chính sách vận chuyển", link: "/shipping-policy" },
       {
-        title: "Return and Refund Policy",
+        title: "Chính sách đổi trả và hoàn tiền",
         link: "/refund-and-cancellation-policy",
       },
       {
-        title: "Billing Terms and Conditions",
+        title: "Điều khoản thanh toán",
         link: "/billing-terms-and-conditions",
       },
-      { title: "Disclaimer", link: "/disclaimer" },
+      { title: "Miễn trừ trách nhiệm", link: "/disclaimer" },
     ],
   },
 ];
+
 export default function Footer() {
   return (
     <footer className="border-t bg-accent border-border  py-8 px-4 md:px-16">

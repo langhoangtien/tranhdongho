@@ -6,10 +6,10 @@ import SearchHeader from "./search";
 import CartHeader from "./cart-header";
 
 export const menu = [
-  { name: "About Us", link: "/about-us" },
-  { name: "Buy", link: "/products/purfect-fuel-blend" },
-  { name: "Contact", link: "/contact-us" },
-  { name: "Track Order", link: "/track-order" },
+  { name: "Về chúng tôi", link: "/about-us" },
+  { name: "Mua hàng", link: "/products/purfect-fuel-blend" },
+  { name: "Liên hệ", link: "/contact-us" },
+  { name: "Theo dõi đơn hàng", link: "/track-order" },
 ];
 export default function NavDesktop() {
   const matchRoute = useMatchRoute();

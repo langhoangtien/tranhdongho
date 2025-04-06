@@ -20,12 +20,12 @@ export const CONFIG: ConfigValue = {
   serverUrl: API_URL,
 };
 export const SETTING = {
-  PRODUCT_NAME: "QuitMood ™",
-  COMPANY_NAME: "Quit Mood",
-  CONTACT_EMAIL: "contact@quitmood.net",
-  CONTACT_PHONE: "+1 302 590 6135",
-  CONTACT_ADDRESS: "1111B S Governors Ave STE 28573 Dover Daleware 19904",
-  CONTACT_WEBSITE: "https://www.quitmood.net",
+  PRODUCT_NAME: "langtranhdongho ™",
+  COMPANY_NAME: "langtranhdongho",
+  CONTACT_EMAIL: "contact@langtranhdongho.vn",
+  CONTACT_PHONE: "+84 123 456 789",
+  CONTACT_ADDRESS: "Đạo Tú, Phường Song Hồ, Thị xã Thuận Thành, Tỉnh Bắc Ninh",
+  CONTACT_WEBSITE: "https://www.langtranhdongho.vn",
 };
 export const PRODUCT_NAME = SETTING.PRODUCT_NAME;
 export const COMPANY_NAME = SETTING.COMPANY_NAME;
