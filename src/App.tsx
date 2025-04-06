@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from "./auth";
 import { ThemeProvider } from "./components/theme-provider";
 import { CartProvider } from "./cart";
 import FacebookPixel from "./components/facebook-pixcel";
+import { useVisitorTracker } from "./hooks/use-visitor-tracker";
 
 // Register things for typesafety
 declare module "@tanstack/react-router" {
@@ -27,7 +28,7 @@ function InnerApp() {
 }
 
 function App() {
-  // useFacebookPixel();
+  useVisitorTracker();
   return (
     <AuthProvider>
       <FacebookPixel />

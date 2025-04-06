@@ -7,7 +7,34 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
+import { VISIT_TRACKER_KEY } from "./hooks/use-visitor-tracker";
+import { API_URL } from "./config";
+export const ADD_TO_CART_TRACKER_KEY = "add-to-cart-tracked";
+const addToCartTracking = async () => {
+  console.log("addToCartTracking called");
 
+  try {
+    const addToCartTrack = sessionStorage.getItem(ADD_TO_CART_TRACKER_KEY);
+    console.log(ADD_TO_CART_TRACKER_KEY, addToCartTrack);
+
+    if (!addToCartTrack) {
+      const data = sessionStorage.getItem(VISIT_TRACKER_KEY);
+      if (!data) return;
+      const { country, city } = JSON.parse(data);
+      await fetch(`${API_URL}/client/track-add-to-cart`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          country,
+          city,
+        }),
+      });
+      sessionStorage.setItem(ADD_TO_CART_TRACKER_KEY, JSON.stringify(true));
+    }
+  } catch (error) {
+    console.log("Error tracking add to cart:", error);
+  }
+};
 export interface CartItem {
   id: string;
   name: string;
@@ -93,8 +120,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const addItem = (item: Omit<CartItem, "quantity">) => {
     dispatch({ type: "ADD_ITEM", item });
     setIsOpen(true);
+    addToCartTracking();
   };
-
   const removeItem = (id: string) => {
     dispatch({ type: "REMOVE_ITEM", id });
   };

@@ -112,7 +112,7 @@ const ReviewList: React.FC = () => {
     rating: 5,
     purchaseVerified: false,
     hasMedia: false,
-    sortBy: "createdAt",
+    sortBy: "liked",
     sortOrder: "desc",
   });
 
@@ -182,7 +182,7 @@ const ReviewList: React.FC = () => {
     if (!validateForm()) return;
     // Submit the form data to the server or perform any other action
     try {
-      const response = await fetch(`${API_URL}/reviews/client-review`, {
+      const response = await fetch(`${API_URL}/client/review`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

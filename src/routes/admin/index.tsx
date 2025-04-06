@@ -1,15 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BoxIcon, CircleDollarSignIcon, UsersRoundIcon } from "lucide-react";
+import { Users } from "lucide-react";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import RadialChart from "@/components/admin/radial-chart";
-import BarChat from "@/components/admin/bar-chart";
+import { useEffect, useState } from "react";
+import { API_URL } from "@/config";
+import { STORAGE_KEY } from "@/auth";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export const Route = createFileRoute("/admin/")({
   component: RouteComponent,
@@ -19,67 +24,119 @@ function RouteComponent() {
   return <Dashboard />;
 }
 
-const data = [
-  {
-    title: "Doanh thu",
-    value: 6599,
-    percent: -5.07,
-    icon: <CircleDollarSignIcon size={30} strokeWidth={1.25} />,
-  },
-  {
-    title: "Khách hàng",
-    value: 3782,
-    percent: 11.01,
-    icon: <UsersRoundIcon size={30} strokeWidth={1.25} />,
-  },
-  {
-    title: "Đơn hàng",
-    value: 5359,
-    percent: -9.05,
-    icon: <BoxIcon size={30} strokeWidth={1.25} />,
-  },
-];
+type Visitor = {
+  country: string;
+  city: string;
+  totalCount: number;
+  totalAddToCart: number;
+  orderCount: number;
+  date: string;
+  topCountries: {
+    country: string;
+    count: number;
+    countAddToCart: number;
+  }[];
+};
 export default function Dashboard() {
+  const [visitor, setVisitor] = useState<Visitor>({
+    country: "",
+    city: "",
+    totalCount: 0,
+    totalAddToCart: 0,
+    topCountries: [],
+    orderCount: 0,
+    date: "",
+  });
+  const getVistor = async () => {
+    const token = localStorage.getItem(STORAGE_KEY);
+    if (!token) return;
+    try {
+      const responseJson = await fetch(`${API_URL}/geo-stat/range`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const response = await responseJson.json();
+
+      setVisitor(response);
+    } catch (error) {
+      console.error("Error fetching location:", error);
+    }
+  };
+  useEffect(() => {
+    getVistor();
+  }, []);
+
+  const data = [
+    {
+      title: "Lượt vào trang",
+      value: visitor.totalCount,
+      icon: <Users />,
+    },
+    {
+      title: "Lượt thêm vào giỏ hàng",
+      value: visitor.totalAddToCart,
+      icon: <Users />,
+    },
+    {
+      title: "Đơn hàng",
+      value: visitor.orderCount,
+
+      icon: <Users />,
+    },
+  ];
+
   return (
     <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {data.map((item) => (
-        <Card key={item.title}>
-          <CardHeader>
-            <CardTitle>{item.icon}</CardTitle>
-          </CardHeader>
-
-          <CardContent>
+      {data.map((item, index) => (
+        <Card>
+          <CardContent key={index}>
             <CardDescription>{item.title}</CardDescription>
             <p className="text-3xl font-semibold"> {item.value} </p>
-            <p
-              className={`${item.percent > 0 ? " text-green-500" : "text-red-500"}`}
-            >
-              {item.percent > 0 ? "↑" : "↓"} {item.percent}%
-            </p>
+            <p className="text-green-500">0%</p>
           </CardContent>
         </Card>
       ))}
 
       <div className="col-span-1 lg:col-span-1">
-        <RadialChart />
+        <RadialChart
+          data={[
+            {
+              browser: "safari",
+              visitors: visitor.totalCount,
+              fill: "var(--primary)",
+            },
+          ]}
+        />
       </div>
-      <div className="col-span-1 lg:col-span-2">
-        <BarChat />
+      <div className="col-span-1 lg:col-span-1">
+        <Card>
+          <Table>
+            <TableCaption>Try cập theo quốc gia.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[100px]">Quốc gia</TableHead>
+                <TableHead>Lượt ghé qua</TableHead>
+                <TableHead>Lượt thêm vào giỏ hàng</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {visitor.topCountries.map((country) => (
+                <TableRow key={country.country}>
+                  <TableCell className="font-medium">
+                    {country.country}
+                  </TableCell>
+                  <TableCell>{country.count}</TableCell>
+                  <TableCell>{country.countAddToCart}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
       </div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Monthly Target</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-4xl font-bold">75.55%</p>
-          {/* <Progress value={75.55} className="h-2" /> */}
-          <p className="text-green-500">+10%</p>
-          <p>
-            You earned $3287 today, it's higher than last month. Keep up the
-            good work!
-          </p>
-        </CardContent>
-      </Card>
     </div>
   );
 }
