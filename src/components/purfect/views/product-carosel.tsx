@@ -16,9 +16,12 @@ export default function ProductDetailCarousel({
 }: {
   slides: string[];
 }) {
+  console.log("slides", slides);
+
   if (!slides || !slides.length) return null;
+
   return (
-    <div className="bg-transparent  md:mr-8 ">
+    <div className="bg-transparent w-full  md:mr-8 ">
       <Carousel>
         <div className="relative h-auto group shrink-0 md:max-w-[805px] md:basis-[805px]">
           <CaroselIndex />

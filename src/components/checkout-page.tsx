@@ -344,7 +344,7 @@ export function CheckoutPage() {
                   step !== CheckoutStep.REVIEW
                 }
               >
-                Shipping
+                Vận chuyển
               </TabsTrigger>
               <TabsTrigger
                 value={CheckoutStep.PAYMENT}
@@ -354,7 +354,7 @@ export function CheckoutPage() {
                 }
                 disabled={step === CheckoutStep.SHIPPING}
               >
-                Payment
+                Thanh toán
               </TabsTrigger>
             </TabsList>
 
@@ -797,7 +797,7 @@ export function CheckoutPage() {
 
             <div className="space-y-3 py-3 border-t">
               <div className="flex justify-between">
-                <span>Subtotal</span>
+                <span>Tạm tính</span>
                 <span>{formatVNCurrency(getCartTotal())}</span>
               </div>
               <div className="flex justify-between">
@@ -805,7 +805,7 @@ export function CheckoutPage() {
                 <span>Free</span>
               </div>
               <div className="flex justify-between">
-                <span>Tax</span>
+                <span>Thuế</span>
                 <span>
                   {formatVNCurrency(
                     getCartTotal() *
@@ -817,7 +817,7 @@ export function CheckoutPage() {
                 </span>
               </div>
               <div className="flex justify-between font-bold text-lg pt-2 border-t">
-                <span>Total</span>
+                <span>Tổng</span>
                 <span>
                   {formatVNCurrency(
                     getCartTotal() *

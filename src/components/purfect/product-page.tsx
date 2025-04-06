@@ -30,14 +30,14 @@ export default function ProductPage() {
 
   return (
     <div className="max-w-7xl mx-auto p-4 rounded-lg">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-12  gap-6">
         {/* Hình ảnh */}
-        <div>
+        <div className="col-span-12 md:col-span-7 ">
           <ProductDetailCarousel slides={product.images} />
         </div>
 
         {/* Nội dung */}
-        <div className="flex flex-col space-y-4">
+        <div className="flex md:pl-4 lg:pl-8 flex-col col-span-12 md:col-span-5 space-y-4">
           <h2 className="text-2xl md:text-3xl  font-bold text-accent-foreground">
             {product.name}
             <span className="bg-destructive rounded-md text-white text-sm mx-2 p-1 align-top font-semibold">

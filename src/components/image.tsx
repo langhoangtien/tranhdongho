@@ -6,8 +6,6 @@ export default function Image({
   dimension,
   ...props
 }: ImgHTMLAttributes<HTMLImageElement> & { dimension?: number }) {
-  console.log("src", src);
-
   const srcConvert =
     convertIDToStaticURL(src || "", dimension) || "/no-img.svg";
 
