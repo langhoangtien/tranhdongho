@@ -7,7 +7,7 @@ import CartHeader from "./cart-header";
 
 export const menu = [
   { name: "Về chúng tôi", link: "/about-us" },
-  { name: "Mua hàng", link: "/products/purfect-fuel-blend" },
+  { name: "Mua hàng", link: "/" },
   { name: "Liên hệ", link: "/contact-us" },
   { name: "Theo dõi đơn hàng", link: "/track-order" },
 ];

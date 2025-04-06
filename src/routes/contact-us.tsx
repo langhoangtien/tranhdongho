@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import MainLayout from "@/layout/main-layout";
 import { Input, Select } from "@/components/ui/custom-ui";
 import { CheckCheck } from "lucide-react";
-import { CONTACT_ADDRESS, CONTACT_EMAIL } from "@/config";
+import { CONTACT_ADDRESS, CONTACT_EMAIL, CONTACT_PHONE } from "@/config";
 
 export const Route = createFileRoute("/contact-us")({
   component: RouteComponent,
@@ -242,7 +242,7 @@ function ContactForm() {
             {CONTACT_EMAIL}
           </a>
           <br />
-          <strong>Phone</strong>: +1 302 590 6135
+          <strong>Phone</strong>: {CONTACT_PHONE}
         </p>
       </div>
     </div>
