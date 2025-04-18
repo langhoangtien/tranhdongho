@@ -25,7 +25,7 @@ export const SETTING = {
   CONTACT_EMAIL: "contact@langtranhdongho.vn",
   CONTACT_PHONE: "+84 123 456 789",
   CONTACT_ADDRESS:
-    "Khu phố Đạo Tú, Phường Song Hồ, Thị xã Thuận Thành, Tỉnh Bắc Ninh",
+    "Khu phố Đông Hồ, Phường Song Hồ, Thị xã Thuận Thành, Tỉnh Bắc Ninh",
   CONTACT_WEBSITE: "https://www.langtranhdongho.vn",
 };
 export const PRODUCT_NAME = SETTING.PRODUCT_NAME;
